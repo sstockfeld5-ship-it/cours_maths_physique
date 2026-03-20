@@ -269,6 +269,18 @@
                 <li>Symétrie : $A$ est symétrique si $^tA = A$. Antisymétrique si $^tA = -A$.</li>
                 <li><strong>Produit (Crucial) :</strong> $^t(AB) = ^tB ^tA$ (L'ordre des facteurs s'inverse).</li>
             </ul>
+            
+            <h3>Propriétés avancées et Combinaisons classiques</h3>
+            <div class="theoreme">
+                L'opérateur de transposition permet de déduire des propriétés remarquables très utiles dans les démonstrations de concours.<br><br>
+                <strong>1. Construction de matrices symétriques :</strong><br>
+                Pour toute matrice carrée $A$, la matrice obtenue par la somme $A + ^tA$ est <strong>toujours symétrique</strong>. (En effet, $^t(A + ^tA) = ^tA + ^t(^tA) = ^tA + A$).<br>
+                <em>De la même manière, la matrice $A - ^tA$ est toujours antisymétrique.</em><br><br>
+                
+                <strong>2. Conservation de la symétrie par le produit :</strong><br>
+                Si on dispose d'une matrice $A$ symétrique et d'une matrice $B$ antisymétrique, la combinaison $AB - BA$ donne une nouvelle matrice <strong>symétrique</strong>. La démonstration repose sur le fait d'inverser l'ordre lors de la transposition du produit :<br>
+                $$ ^t(AB - BA) = ^t(AB) - ^t(BA) = ^tB^tA - ^tA^tB = (-B)A - A(-B) = -BA + AB = AB - BA $$
+            </div>
         </div>
 
         <div class="section-card">
