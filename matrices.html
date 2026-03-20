@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Cours Intégral : Matrices et Systèmes Linéaires</title>
+    
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f4f8;
+        }
+        h1 {
+            text-align: center;
+            color: #1a5276;
+            border-bottom: 4px solid #1a5276;
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        h2 {
+            color: #117a65;
+            border-bottom: 2px solid #117a65;
+            padding-bottom: 8px;
+            margin-top: 40px;
+        }
+        h3 {
+            color: #2471a3;
+            margin-top: 25px;
+        }
+        .section-card {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+            margin-bottom: 35px;
+        }
+        .definition {
+            background-color: #eaf2f8;
+            border-left: 5px solid #2980b9;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .theoreme {
+            background-color: #e9f7ef;
+            border-left: 5px solid #27ae60;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .attention {
+            background-color: #fdf2e9;
+            border-left: 5px solid #d35400;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .remarque {
+            font-style: italic;
+            color: #7f8c8d;
+            background-color: #f8f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #bdc3c7;
+        }
+        .correction-box {
+            background-color: #fdfbf7;
+            border: 1px solid #e1d5c9;
+            padding: 20px;
+            margin-top: 15px;
+            border-radius: 8px;
+        }
+        
+        /* Styles pour les matrices HTML classiques (pour l'animation) */
+        .matrix-table {
+            display: inline-block;
+            position: relative;
+            vertical-align: middle;
+            margin: 15px;
+            font-family: monospace;
+            font-size: 1.2em;
+        }
+        .matrix-table::before, .matrix-table::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 8px;
+            border: 2px solid #2c3e50;
+        }
+        .matrix-table::before { left: -4px; border-right: none; border-top-left-radius: 5px; border-bottom-left-radius: 5px; }
+        .matrix-table::after { right: -4px; border-left: none; border-top-right-radius: 5px; border-bottom-right-radius: 5px; }
+        .matrix-table table { border-collapse: collapse; }
+        .matrix-table td { padding: 8px 15px; text-align: center; }
+        .augmented-col { border-left: 2px dashed #95a5a6; background-color: #f4f6f7; }
+        .highlight { background-color: #fcf3cf; font-weight: bold; }
+        .pivot { color: #c0392b; font-weight: bold; }
+
+        /* Styles pour l'animation interactive */
+        #animation-container {
+            text-align: center;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #d5dbdb;
+        }
+        .btn {
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+        .btn:hover { background-color: #1f618d; }
+        .btn:disabled { background-color: #bdc3c7; cursor: not-allowed; }
+        #step-description {
+            font-size: 1.1em;
+            color: #2c3e50;
+            min-height: 50px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Le Cours Intégral : Algèbre Linéaire & Calcul Matriciel</h1>
+
+    <div class="section-card">
+        <h2>1. Vocabulaire et Anatomie Matricielle</h2>
+        
+        <div class="definition">
+            <strong>Matrice :</strong> Un tableau rectangulaire de nombres de type $(n, p)$, c'est-à-dire avec $n$ lignes et $p$ colonnes. On la note $A = [a_{i,j}]_{\substack{1 \le i \le n \\ 1 \le j \le p}}$. L'ensemble est noté $\mathcal{M}_{n,p}(\mathbb{K})$.
+        </div>
+        
+        <ul>
+            <li><strong>Matrice Ligne :</strong> Type $(1, p)$.</li>
+            <li><strong>Matrice Colonne :</strong> Type $(n, 1)$.</li>
+            <li><strong>Matrice Carrée :</strong> Possède le même nombre de lignes que de colonnes ($n = p$). L'ensemble est noté $\mathcal{M}_n(\mathbb{K})$.</li>
+        </ul>
+
+        <div class="definition">
+            <strong>Symbole de Kronecker et Matrices Élémentaires :</strong><br>
+            On définit $\delta_{i,j} = 1$ si $i=j$, et $0$ sinon. <br>
+            Les matrices élémentaires $E_{k,l}$ sont des matrices remplies de zéros, sauf à la ligne $k$ et la colonne $l$ où se trouve un $1$. 
+        </div>
+    </div>
+
+    <div class="section-card">
+        <h2>2. Le Calcul Matriciel</h2>
+        
+        <h3>2.1 Opérations linéaires</h3>
+        <p>L'addition ($A+B$) et la multiplication par un scalaire ($\lambda A$) se font "terme à terme". Elles nécessitent que les matrices soient de <strong>même dimension</strong>.</p>
+
+        <h3>2.2 Le Produit Matriciel ($AB$)</h3>
+        <p>Le produit n'est défini que si le <strong>nombre de colonnes de $A$ est égal au nombre de lignes de $B$</strong>. Si $A \in \mathcal{M}_{n,p}(\mathbb{K})$ et $B \in \mathcal{M}_{p,q}(\mathbb{K})$, le produit $AB$ est de taille $(n, q)$.<br>
+        Le terme général s'obtient par le produit scalaire d'une ligne par une colonne :
+        $$ c_{i,j} = \sum_{k=1}^{p} a_{i,k}b_{k,j} $$</p>
+        
+        <div class="attention">
+            <strong>Le produit n'est pas commutatif !</strong> En général, $AB \neq BA$. De plus, on peut avoir $AB = 0_{n,p}$ même si $A \neq 0$ et $B \neq 0$ (diviseurs de zéro).
+        </div>
+        <p class="remarque"><strong>Produit de matrices élémentaires :</strong> $E_{i,j} \times E_{k,l} = \delta_{j,k} E_{i,l}$.</p>
+    </div>
+
+    <div class="section-card">
+        <h2>3. Les Matrices Carrées $\mathcal{M}_n(\mathbb{K})$</h2>
+        
+        <p><strong>Matrice Identité ($I_n$) :</strong> Matrice carrée avec des $1$ sur la diagonale et des $0$ ailleurs. C'est l'élément neutre ($A I_n = I_n A = A$).</p>
+
+        <h3>Puissances et Binôme de Newton</h3>
+        <p>On définit par récurrence $A^0 = I_n$ et $A^{k+1} = A^k A$.</p>
+        <div class="theoreme">
+            <strong>Formule du Binôme :</strong><br>
+            <strong>Si et seulement si</strong> les matrices $A$ et $B$ commutent ($AB = BA$), alors pour tout entier $k$ :
+            $$ (A+B)^k = \sum_{j=0}^{k} \binom{k}{j} A^j B^{k-j} $$
+        </div>
+
+        <h3>Matrices Particulières</h3>
+        <ul>
+            <li><strong>Nilpotente :</strong> S'il existe un entier $k$ tel que $A^k = 0_{n}$.</li>
+            <li><strong>Diagonale :</strong> Tous les coefficients hors de la diagonale sont nuls. Notée $\text{diag}(d_1, \dots, d_n)$. Leurs puissances sont simples : $A^k = \text{diag}(d_1^k, \dots, d_n^k)$.</li>
+            <li><strong>Triangulaire supérieure :</strong> Les coefficients sous la diagonale sont nuls.</li>
+        </ul>
+    </div>
+
+    <div class="section-card">
+        <h2>4. La Transposition</h2>
+        
+        <div class="definition">
+            <strong>Transposée ($^tA$) :</strong> Matrice obtenue en échangeant les lignes et les colonnes de $A$. Son terme général est $a'_{i,j} = a_{j,i}$.
+        </div>
+        <p><strong>Propriétés fondamentales :</strong></p>
+        <ul>
+            <li>Symétrie : $A$ est symétrique si $^tA = A$. Antisymétrique si $^tA = -A$.</li>
+            <li><strong>Produit (Crucial) :</strong> $^t(AB) = ^tB ^tA$ (L'ordre des facteurs s'inverse).</li>
+        </ul>
+    </div>
+
+    <div class="section-card">
+        <h2>5. Les Matrices de Transformation Élémentaire</h2>
+        
+        <p>Toute opération élémentaire effectuée sur une matrice s'interprète comme la multiplication par une matrice inversible particulière. L'ensemble de ces matrices forme les <strong>matrices de transformation élémentaires</strong>.</p>
+
+        <h3>5.1 Opérations sur les lignes et Produit à Gauche</h3>
+        <div class="definition">
+            <strong>1. Matrice de Transvection :</strong> Correspond à l'opération $L_i \leftarrow L_i + \lambda L_j$ ($i \neq j$).<br>
+            Elle s'écrit : $T = I_n + \lambda E_{i,j}$.<br>
+            <em>Propriété :</em> Elle est inversible et son inverse est $I_n - \lambda E_{i,j}$.
+        </div>
+        
+        <div class="definition">
+            <strong>2. Matrice de Transposition :</strong> Correspond à l'échange de deux lignes $L_i \leftrightarrow L_j$.<br>
+            Elle s'écrit : $T = I_n - E_{i,i} - E_{j,j} + E_{i,j} + E_{j,i}$.<br>
+            <em>Propriété :</em> Elle vérifie $T^2 = I_n$. Elle est donc inversible et égale à son propre inverse.
+        </div>
+        
+        <div class="definition">
+            <strong>3. Matrice de Dilatation :</strong> Correspond à la multiplication d'une ligne par un scalaire $\lambda \neq 0$ ($L_i \leftarrow \lambda L_i$).<br>
+            Elle s'écrit : $T = I_n + (\lambda - 1)E_{i,i}$.<br>
+            <em>Propriété :</em> Elle est inversible et son inverse est $I_n + (\frac{1}{\lambda} - 1)E_{i,i}$.
+        </div>
+
+        <div class="theoreme">
+            Deux matrices $A$ et $A'$ sont <strong>équivalentes par lignes</strong> si et seulement s'il existe une matrice $E$ (produit de matrices de transformations élémentaires) telle que <strong>$A' = EA$</strong>.
+        </div>
+
+        <h3>5.2 Opérations sur les colonnes et Produit à Droite</h3>
+        <p>Les mêmes opérations peuvent s'effectuer sur les colonnes d'une matrice :
+        <ul>
+            <li>Transpositions : $C_i \leftrightarrow C_j$</li>
+            <li>Dilatations : $C_i \leftarrow \lambda C_i$ ($\lambda \neq 0$)</li>
+            <li>Transvections : $C_i \leftarrow C_i + \lambda C_j$ ($i \neq j$)</li>
+        </ul></p>
+        <div class="theoreme">
+            Effectuer une opération sur les <strong>colonnes</strong> revient à multiplier $A$ par la <strong>droite</strong>. Deux matrices sont équivalentes par colonnes si et seulement s'il existe une matrice $E$ telle que <strong>$A' = AE$</strong>.
+        </div>
+    </div>
+
+    <div class="section-card">
+        <h2>6. Systèmes Linéaires et Algorithme de Gauss-Jordan</h2>
+        
+        <p>Un système d'équations se traduit matriciellement par $AX = B$.</p>
+        
+        <h3>Échelonnement et Rang</h3>
+        <div class="theoreme">
+            <strong>Théorème de Gauss-Jordan :</strong><br>
+            Toute matrice est équivalente par lignes à une <strong>unique</strong> matrice échelonnée réduite (pivots égaux à 1, des zéros partout ailleurs dans la colonne du pivot).
+        </div>
+        <p>Le <strong>Rang ($r$)</strong> est le nombre de pivots non nuls à la fin de l'échelonnement. S'il y a $p$ inconnues et que $r < p$, il y a $p-r$ degrés de liberté (inconnues libres) et une infinité de solutions.</p>
+    </div>
+
+    <div class="section-card">
+        <h2>Animation : La méthode de Gauss-Jordan</h2>
+        <p>Résolution complète et réduction du système :<br>
+        $$ \begin{cases} x + 2y - z = 2 \\ 2x + 3y + z = 5 \\ -x - y + 3z = 2 \end{cases} $$</p>
+        
+        <div id="animation-container">
+            <div id="step-description">Chargement...</div>
+            <div id="matrix-display" class="matrix-table"></div>
+            <br><br>
+            <button id="btn-prev" class="btn" onclick="prevStep()">&#9664; Précédent</button>
+            <button id="btn-next" class="btn" onclick="nextStep()">Suivant &#9654;</button>
+        </div>
+    </div>
+
+    <div class="section-card">
+        <h2>7. Matrices Inversibles (Groupe $GL_n(\mathbb{K})$)</h2>
+
+        <div class="definition">
+            Une matrice carrée $A$ est <strong>inversible</strong> s'il existe $B \in \mathcal{M}_n(\mathbb{K})$ telle que $AB = BA = I_n$. On note $B = A^{-1}$. L'ensemble des matrices inversibles est noté $GL_n(\mathbb{K})$.
+        </div>
+        <p class="remarque"><strong>Inverse d'un produit :</strong> $(AB)^{-1} = B^{-1}A^{-1}$ (L'ordre s'inverse, comme pour la transposée).</p>
+        <p class="remarque"><strong>Inverse d'une transposée :</strong> $^t(A^{-1}) = (^tA)^{-1}$.</p>
+
+        <div class="theoreme">
+            <strong>Propriétés caractéristiques :</strong><br>
+            Pour $A \in \mathcal{M}_n(\mathbb{K})$, les propositions suivantes sont strictement équivalentes :<br>
+            1. $A \in GL_n(\mathbb{K})$ ($A$ est inversible).<br>
+            2. Il existe $B$ telle que $BA = I_n$ (ou $AB = I_n$).<br>
+            3. Le système homogène $AX = 0$ n'admet que la solution nulle ($X=0$).<br>
+            4. $\text{rg } A = n$ (Le rang est maximal).<br>
+            5. $A$ est équivalente par lignes à la matrice $I_n$.<br>
+            6. $A$ s'écrit comme un produit de matrices de transformations élémentaires.
+        </div>
+
+        <h3>7.1 Inversibilité et Systèmes Linéaires</h3>
+        <p>Si $A \in GL_n(\mathbb{K})$, pour toute colonne $B$, le système $AX = B$ admet une solution et une seule : <strong>$X = A^{-1}B$</strong> (Système de Cramer).</p>
+
+        <h3>7.2 Calcul pratique de l'inverse (Méthode de Gauss)</h3>
+        <p>On accole la matrice identité à droite de $A$ pour former $(A | I_n)$.<br>
+        On applique l'algorithme sur l'ensemble. La suite d'opérations élémentaires $E_q \dots E_2 E_1$ qui transforme $A$ en $I_n$ va simultanément transformer $I_n$ en $A^{-1}$. On obtient à la fin $(I_n | A^{-1})$.</p>
+    </div>
+
+    <div class="section-card">
+        <h2>8. Exercices de Synthèse</h2>
+        
+        <h3>Exercice 1 : Rang et Paramètres</h3>
+        <p>Un système linéaire de 4 inconnues ($x, y, z, t$) a pour matrice augmentée échelonnée :
+        $$ \left(\begin{array}{cccc|c} 1 & 2 & 0 & -1 & 5 \\ 0 & 0 & 1 & 3 & 2 \\ 0 & 0 & 0 & 0 & 0 \end{array}\right) $$
+        Donnez le rang du système, le nombre de degrés de liberté, et exprimez la solution générale.</p>
+
+        <div class="correction-box">
+            <h4>Correction Exercice 1</h4>
+            <p><strong>1. Le Rang :</strong> 2 lignes non nulles (2 pivots). Donc <strong>$r = 2$</strong>.</p>
+            <p><strong>2. Degrés de liberté :</strong> $p = 4$ inconnues. Variables libres = $p - r = 2$. Les inconnues principales sont $x$ et $z$. Les variables libres sont $y$ et $t$.</p>
+            <p><strong>3. Solution :</strong><br>
+            $z + 3t = 2 \implies z = 2 - 3t$<br>
+            $x + 2y - t = 5 \implies x = 5 - 2y + t$<br>
+            Les solutions sont de la forme $(5 - 2y + t, \ y, \ 2 - 3t, \ t)$ pour tout $y, t \in \mathbb{R}$.</p>
+        </div>
+
+        <h3>Exercice 2 : Calcul d'inverse (Matrice augmentée)</h3>
+        <p>Soit la matrice $A = \begin{pmatrix} 1 & 1 \\ 2 & 3 \end{pmatrix}$. Calculer son inverse $A^{-1}$.</p>
+
+        <div class="correction-box">
+            <h4>Correction Exercice 2</h4>
+            <p>Matrice augmentée $(A | I_2)$ :
+            $$ \left(\begin{array}{cc|cc} 1 & 1 & 1 & 0 \\ 2 & 3 & 0 & 1 \end{array}\right) $$</p>
+            <p><strong>1. Descente :</strong> On applique une transvection $L_2 \leftarrow L_2 - 2L_1$.
+            $$ \left(\begin{array}{cc|cc} 1 & 1 & 1 & 0 \\ 0 & 1 & -2 & 1 \end{array}\right) $$</p>
+            <p><strong>2. Remontée :</strong> On applique une transvection $L_1 \leftarrow L_1 - L_2$.
+            $$ \left(\begin{array}{cc|cc} 1 & 0 & 3 & -1 \\ 0 & 1 & -2 & 1 \end{array}\right) $$</p>
+            <p>Le bloc de gauche est $I_2$, donc :
+            $$ A^{-1} = \begin{pmatrix} 3 & -1 \\ -2 & 1 \end{pmatrix} $$</p>
+        </div>
+
+        <h3>Exercice 3 : Transposée d'un produit (Démonstration)</h3>
+        <p>Soit $A \in \mathcal{M}_{n}(\mathbb{R})$ symétrique et $B \in \mathcal{M}_{n}(\mathbb{R})$ antisymétrique.<br>
+        Démontrer que la matrice $M = AB - BA$ est symétrique.</p>
+
+        <div class="correction-box">
+            <h4>Correction Exercice 3</h4>
+            <p>Hypothèses : $^tA = A$ et $^tB = -B$.<br>
+            Montrons que $^tM = M$ :<br>
+            $ \begin{align*}
+            ^tM &= ^t(AB - BA) \\
+            &= ^t(AB) - ^t(BA) \\
+            &= (^tB ^tA) - (^tA ^tB) \quad \text{(On inverse l'ordre !)}
+            \end{align*} $<br>
+            On remplace :<br>
+            $ \begin{align*}
+            ^tM &= (-B)(A) - (A)(-B) \\
+            &= -BA + AB \\
+            &= AB - BA = M
+            \end{align*} $<br>
+            Puisque $^tM = M$, la matrice $M$ est bien symétrique.</p>
+        </div>
+    </div>
+
+    <script>
+        const steps = [
+            {
+                desc: "Étape 0 : Matrice augmentée initiale (A|B)",
+                mat: [[1, 2, -1, 2], [2, 3, 1, 5], [-1, -1, 3, 2]],
+                highlights: []
+            },
+            {
+                desc: "Étape 1 : <b>L<sub>2</sub> &larr; L<sub>2</sub> - 2L<sub>1</sub></b><br>Création d'un zéro sous le 1er pivot de la colonne 1.",
+                mat: [[1, 2, -1, 2], [0, -1, 3, 1], [-1, -1, 3, 2]],
+                highlights: [1]
+            },
+            {
+                desc: "Étape 2 : <b>L<sub>3</sub> &larr; L<sub>3</sub> + L<sub>1</sub></b><br>Création du second zéro dans la colonne 1.",
+                mat: [[1, 2, -1, 2], [0, -1, 3, 1], [0, 1, 2, 4]],
+                highlights: [2]
+            },
+            {
+                desc: "Étape 3 : <b>L<sub>3</sub> &larr; L<sub>3</sub> + L<sub>2</sub></b><br>Création d'un zéro sous le pivot de la colonne 2. <br><i>La matrice est maintenant échelonnée ! (Descente terminée)</i>",
+                mat: [[1, 2, -1, 2], [0, -1, 3, 1], [0, 0, 5, 5]],
+                highlights: [2]
+            },
+            {
+                desc: "Étape 4 : <b>L<sub>3</sub> &larr; L<sub>3</sub> / 5</b><br>On transforme le pivot de L3 en 1 par dilatation.",
+                mat: [[1, 2, -1, 2], [0, -1, 3, 1], [0, 0, 1, 1]],
+                highlights: [2]
+            },
+            {
+                desc: "Étape 5 : <b>L<sub>2</sub> &larr; -L<sub>2</sub></b><br>On transforme le pivot de L2 en 1 par dilatation.",
+                mat: [[1, 2, -1, 2], [0, 1, -3, -1], [0, 0, 1, 1]],
+                highlights: [1]
+            },
+            {
+                desc: "Étape 6 : <b>L<sub>1</sub> &larr; L<sub>1</sub> + L<sub>3</sub></b> et <b>L<sub>2</sub> &larr; L<sub>2</sub> + 3L<sub>3</sub></b><br>Phase de remontée : zéros au-dessus du 3ème pivot.",
+                mat: [[1, 2, 0, 3], [0, 1, 0, 2], [0, 0, 1, 1]],
+                highlights: [0, 1]
+            },
+            {
+                desc: "Étape 7 : <b>L<sub>1</sub> &larr; L<sub>1</sub> - 2L<sub>2</sub></b><br>Phase de remontée : zéro au-dessus du 2ème pivot. <br><i>La matrice est échelonnée réduite.</i>",
+                mat: [[1, 0, 0, -1], [0, 1, 0, 2], [0, 0, 1, 1]],
+                highlights: [0]
+            },
+            {
+                desc: "<b>Terminé !</b> <br>La solution se lit directement dans la dernière colonne : $x = -1$, $y = 2$, $z = 1$.",
+                mat: [[1, 0, 0, -1], [0, 1, 0, 2], [0, 0, 1, 1]],
+                highlights: []
+            }
+        ];
+
+        let currentStep = 0;
+
+        function renderMatrix() {
+            const stepData = steps[currentStep];
+            document.getElementById('step-description').innerHTML = stepData.desc;
+            
+            let html = '<table>';
+            for (let i = 0; i < stepData.mat.length; i++) {
+                let rowClass = stepData.highlights.includes(i) ? 'highlight' : '';
+                html += `<tr class="${rowClass}">`;
+                for (let j = 0; j < stepData.mat[i].length; j++) {
+                    let colClass = (j === stepData.mat[i].length - 1) ? 'augmented-col' : '';
+                    let isPivot = (i === j) ? 'pivot' : '';
+                    html += `<td class="${colClass} ${isPivot}">${stepData.mat[i][j]}</td>`;
+                }
+                html += '</tr>';
+            }
+            html += '</table>';
+            
+            document.getElementById('matrix-display').innerHTML = html;
+            
+            document.getElementById('btn-prev').disabled = (currentStep === 0);
+            document.getElementById('btn-next').disabled = (currentStep === steps.length - 1);
+
+            if (window.MathJax) {
+                MathJax.typesetPromise([document.getElementById('step-description')]);
+            }
+        }
+
+        function nextStep() {
+            if (currentStep < steps.length - 1) {
+                currentStep++;
+                renderMatrix();
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                renderMatrix();
+            }
+        }
+
+        window.onload = renderMatrix;
+    </script>
+</body>
+</html>
