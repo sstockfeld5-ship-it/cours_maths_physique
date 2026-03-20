@@ -301,11 +301,25 @@
         <div class="section-card">
             <h2>6. Systèmes Linéaires et Algorithme de Gauss-Jordan</h2>
             <p>Un système d'équations se traduit matriciellement par $AX = B$.</p>
+            
+            <h3>6.1 Échelonnement et Rang</h3>
             <div class="theoreme">
                 <strong>Théorème de Gauss-Jordan :</strong><br>
                 Toute matrice est équivalente par lignes à une <strong>unique</strong> matrice échelonnée réduite.
             </div>
             <p>Le <strong>Rang ($r$)</strong> est le nombre de pivots non nuls à la fin de l'échelonnement. S'il y a $p$ inconnues et que $r < p$, il y a $p-r$ degrés de liberté et une infinité de solutions.</p>
+
+            <h3>6.2 Les Systèmes de Cramer</h3>
+            <p>C'est le cas idéal en algèbre linéaire, très fréquent en physique et en ingénierie.</p>
+            <div class="definition">
+                <strong>Système de Cramer :</strong> Un système linéaire est appelé "système de Cramer" s'il possède <strong>autant d'équations que d'inconnues</strong> (la matrice du système $A$ est donc carrée d'ordre $n$) ET si sa matrice $A$ est <strong>inversible</strong>.
+            </div>
+            <div class="theoreme">
+                <strong>Résolution directe :</strong><br>
+                Tout système de Cramer $AX = B$ admet une <strong>unique solution</strong>. Cette solution est donnée directement par le produit matriciel :
+                $$ X = A^{-1}B $$
+                <em>Remarque : Si le système est homogène ($B = 0_n$), l'unique solution est la solution nulle $X = 0_n$.</em>
+            </div>
         </div>
 
         <div class="section-card">
@@ -451,7 +465,7 @@
                 Le système est échelonné. On résout en remontant :<br>
                 - Ligne 2 : $-5y = -10 \implies y = 2$<br>
                 - Ligne 1 : $x + 2(2) = 5 \implies x = 1$<br>
-                La solution unique est $(1, 2)$.</p>
+                La solution unique est $(1, 2)$. Il s'agit d'un <strong>système de Cramer</strong> !</p>
             </details>
 
             <h3>Exercice 7 (Inversibilité)</h3>
