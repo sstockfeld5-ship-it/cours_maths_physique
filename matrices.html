@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Le Cours Intégral : Matrices, Systèmes et Méthodes</title>
+    <title>Le Cours Intégral : Matrices, Systèmes et Exercices</title>
     
     <script>
     MathJax = {
@@ -51,6 +52,7 @@
             border-bottom: 3px solid #1a5276;
             display: flex;
             gap: 5px;
+            flex-wrap: wrap;
         }
         .tab-btn {
             background-color: #d5dbdb;
@@ -58,17 +60,19 @@
             border: none;
             outline: none;
             cursor: pointer;
-            padding: 14px 24px;
+            padding: 14px 20px;
             transition: 0.3s;
             font-size: 16px;
             font-weight: bold;
             border-radius: 8px 8px 0 0;
+            flex-grow: 1;
         }
         .tab-btn:hover { background-color: #aeb6bf; }
         .tab-btn.active { background-color: #1a5276; color: white; }
         .tabcontent { display: none; animation: fadeEffect 0.5s; }
         @keyframes fadeEffect { from {opacity: 0;} to {opacity: 1;} }
 
+        /* Boîtes de contenu */
         .section-card {
             background: #ffffff;
             padding: 30px;
@@ -106,12 +110,29 @@
             border-left: 3px solid #bdc3c7;
             margin: 15px 0;
         }
-        .correction-box {
+        
+        /* Correction Box cachée par défaut */
+        details.correction-box {
             background-color: #fdfbf7;
             border: 1px solid #e1d5c9;
-            padding: 20px;
+            padding: 15px 20px;
             margin-top: 15px;
             border-radius: 8px;
+        }
+        details.correction-box summary {
+            font-weight: bold;
+            color: #d35400;
+            cursor: pointer;
+            outline: none;
+            padding: 5px 0;
+        }
+        details.correction-box summary:hover {
+            color: #e67e22;
+        }
+        details.correction-box p {
+            margin-top: 15px;
+            border-top: 1px dashed #e1d5c9;
+            padding-top: 15px;
         }
         
         /* Styles Matrices */
@@ -174,25 +195,23 @@
     <h1>Algèbre Linéaire & Calcul Matriciel</h1>
 
     <div class="tab-container">
-        <button class="tab-btn active" onclick="openTab(event, 'Cours')">📚 Cours Complet & Exercices</button>
+        <button class="tab-btn active" onclick="openTab(event, 'Cours')">📚 Cours Complet</button>
         <button class="tab-btn" onclick="openTab(event, 'Methodes')">🛠️ Méthodes (Récurrence & Newton)</button>
+        <button class="tab-btn" onclick="openTab(event, 'Exercices')">📝 Exercices & Annales ITPE</button>
     </div>
 
     <div id="Cours" class="tabcontent" style="display: block;">
         
         <div class="section-card">
             <h2>1. Vocabulaire et Anatomie Matricielle</h2>
-            
             <div class="definition">
                 <strong>Matrice :</strong> Un tableau rectangulaire de nombres de type $(n, p)$, c'est-à-dire avec $n$ lignes et $p$ colonnes. On la note $A = [a_{i,j}]_{\substack{1 \le i \le n \\ 1 \le j \le p}}$. L'ensemble est noté $\mathcal{M}_{n,p}(\mathbb{K})$.
             </div>
-            
             <ul>
                 <li><strong>Matrice Ligne :</strong> Type $(1, p)$.</li>
                 <li><strong>Matrice Colonne :</strong> Type $(n, 1)$.</li>
                 <li><strong>Matrice Carrée :</strong> Possède le même nombre de lignes que de colonnes ($n = p$). L'ensemble est noté $\mathcal{M}_n(\mathbb{K})$.</li>
             </ul>
-
             <div class="definition">
                 <strong>Symbole de Kronecker et Matrices Élémentaires :</strong><br>
                 On définit $\delta_{i,j} = 1$ si $i=j$, et $0$ sinon. <br>
@@ -202,19 +221,15 @@
 
         <div class="section-card">
             <h2>2. Le Calcul Matriciel</h2>
-            
             <h3>2.1 Opérations linéaires</h3>
             <p>L'addition ($A+B$) et la multiplication par un scalaire ($\lambda A$) se font "terme à terme". Elles nécessitent que les matrices soient de <strong>même dimension</strong>.</p>
-
             <h3>2.2 Le Produit Matriciel ($AB$)</h3>
             <p>Le produit n'est défini que si le <strong>nombre de colonnes de $A$ est égal au nombre de lignes de $B$</strong>. Si $A \in \mathcal{M}_{n,p}(\mathbb{K})$ et $B \in \mathcal{M}_{p,q}(\mathbb{K})$, le produit $AB$ est de taille $(n, q)$.<br>
             Le terme général s'obtient par le produit scalaire d'une ligne par une colonne :
             $$ c_{i,j} = \sum_{k=1}^{p} a_{i,k}b_{k,j} $$</p>
-            
             <div class="attention">
                 <strong>Le produit n'est PAS commutatif !</strong> En général, $AB \neq BA$. De plus, on peut avoir $AB = 0_{n,p}$ même si $A \neq 0$ et $B \neq 0$.
             </div>
-            
             <div class="remarque">
                 <strong>Exceptions : Dans quels cas $AB = BA$ ?</strong><br>
                 On dit que deux matrices <em>commutent</em>. C'est le cas pour :<br>
@@ -228,18 +243,15 @@
 
         <div class="section-card">
             <h2>3. Les Matrices Carrées $\mathcal{M}_n(\mathbb{K})$</h2>
-            
             <p><strong>Matrice Identité ($I_n$) :</strong> Matrice carrée avec des $1$ sur la diagonale et des $0$ ailleurs.</p>
-
             <h3>Puissances de matrices et Puissance Zéro</h3>
             <p>On définit les puissances par récurrence : $A^k = A \times A \dots \times A$ ($k$ fois).</p>
             <div class="definition">
                 <strong>L'effet de la puissance 0 :</strong><br>
                 Par convention (absolument essentielle pour la formule du binôme), pour toute matrice carrée $A$ non nulle : 
                 $$A^0 = I_n$$
-                <em>Tout comme $x^0 = 1$ pour les nombres réels, élever une matrice à la puissance 0 donne la matrice "unité" $I_n$.</em>
+                <em>Élever une matrice à la puissance 0 donne la matrice "unité" $I_n$.</em>
             </div>
-
             <h3>Matrices Particulières</h3>
             <ul>
                 <li><strong>Nilpotente :</strong> S'il existe un entier $k$ tel que $A^k = 0_{n}$.</li>
@@ -249,7 +261,6 @@
 
         <div class="section-card">
             <h2>4. La Transposition</h2>
-            
             <div class="definition">
                 <strong>Transposée ($^tA$) :</strong> Matrice obtenue en échangeant les lignes et les colonnes de $A$. Son terme général est $a'_{i,j} = a_{j,i}$.
             </div>
@@ -262,16 +273,13 @@
 
         <div class="section-card">
             <h2>5. Les Matrices de Transformation Élémentaire</h2>
-            
             <p>Toute opération élémentaire effectuée sur une matrice s'interprète comme la multiplication par une matrice inversible particulière.</p>
-
             <h3>5.1 Opérations sur les lignes et Produit à Gauche</h3>
             <div class="definition">
                 <strong>1. Transvection ($L_i \leftarrow L_i + \lambda L_j$) :</strong> $T = I_n + \lambda E_{i,j}$. Inverse : $I_n - \lambda E_{i,j}$.<br>
                 <strong>2. Transposition ($L_i \leftrightarrow L_j$) :</strong> $T = I_n - E_{i,i} - E_{j,j} + E_{i,j} + E_{j,i}$. Inverse : Elle-même.<br>
                 <strong>3. Dilatation ($L_i \leftarrow \lambda L_i$) :</strong> $T = I_n + (\lambda - 1)E_{i,i}$. Inverse : $I_n + (\frac{1}{\lambda} - 1)E_{i,i}$.
             </div>
-
             <div class="theoreme">
                 Deux matrices $A$ et $A'$ sont <strong>équivalentes par lignes</strong> si et seulement s'il existe une matrice $E$ (produit de matrices de transformations élémentaires) telle que <strong>$A' = EA$</strong>.<br>
                 <em>(Effectuer une opération sur les colonnes revient à multiplier par la droite : $A' = AE$).</em>
@@ -280,12 +288,10 @@
 
         <div class="section-card">
             <h2>6. Systèmes Linéaires et Algorithme de Gauss-Jordan</h2>
-            
             <p>Un système d'équations se traduit matriciellement par $AX = B$.</p>
-            
             <div class="theoreme">
                 <strong>Théorème de Gauss-Jordan :</strong><br>
-                Toute matrice est équivalente par lignes à une <strong>unique</strong> matrice échelonnée réduite (pivots égaux à 1, des zéros partout ailleurs dans la colonne du pivot).
+                Toute matrice est équivalente par lignes à une <strong>unique</strong> matrice échelonnée réduite.
             </div>
             <p>Le <strong>Rang ($r$)</strong> est le nombre de pivots non nuls à la fin de l'échelonnement. S'il y a $p$ inconnues et que $r < p$, il y a $p-r$ degrés de liberté et une infinité de solutions.</p>
         </div>
@@ -303,39 +309,20 @@
 
         <div class="section-card">
             <h2>7. Matrices Inversibles (Groupe $GL_n(\mathbb{K})$)</h2>
-
             <div class="definition">
                 Une matrice carrée $A$ est <strong>inversible</strong> s'il existe $B \in \mathcal{M}_n(\mathbb{K})$ telle que $AB = BA = I_n$. On note $B = A^{-1}$. 
             </div>
             <p class="remarque"><strong>Inverse d'un produit :</strong> $(AB)^{-1} = B^{-1}A^{-1}$ (L'ordre s'inverse).</p>
-
             <div class="theoreme">
                 <strong>Propriétés caractéristiques :</strong><br>
-                Pour $A \in \mathcal{M}_n(\mathbb{K})$, les propositions suivantes sont strictement équivalentes :<br>
+                Pour $A \in \mathcal{M}_n(\mathbb{K})$, les propositions suivantes sont équivalentes :<br>
                 1. $A \in GL_n(\mathbb{K})$ ($A$ est inversible).<br>
                 2. Le système homogène $AX = 0$ n'admet que la solution nulle ($X=0$).<br>
                 3. $\text{rg } A = n$ (Le rang est maximal).<br>
                 4. $A$ est équivalente par lignes à la matrice $I_n$.
             </div>
-
-            <h3>Calcul pratique de l'inverse (Méthode de Gauss)</h3>
+            <h3>Calcul pratique de l'inverse</h3>
             <p>On accole la matrice identité à droite de $A$ pour former $(A | I_n)$. On applique l'algorithme sur l'ensemble. Lorsque le bloc de gauche $A$ se transforme en $I_n$, le bloc de droite se transforme en $A^{-1}$. On obtient $(I_n | A^{-1})$.</p>
-        </div>
-        
-        <div class="section-card">
-            <h2>8. Exercices de Synthèse</h2>
-            <h3>Exercice : Calcul d'inverse</h3>
-            <p>Soit la matrice $A = \begin{pmatrix} 1 & 1 \\ 2 & 3 \end{pmatrix}$. Calculer son inverse $A^{-1}$.</p>
-            <div class="correction-box">
-                <h4>Correction</h4>
-                <p>Matrice augmentée $(A | I_2)$ :
-                $$ \left(\begin{array}{cc|cc} 1 & 1 & 1 & 0 \\ 2 & 3 & 0 & 1 \end{array}\right) $$</p>
-                <p><strong>1. Descente :</strong> $L_2 \leftarrow L_2 - 2L_1$.
-                $$ \left(\begin{array}{cc|cc} 1 & 1 & 1 & 0 \\ 0 & 1 & -2 & 1 \end{array}\right) $$</p>
-                <p><strong>2. Remontée :</strong> $L_1 \leftarrow L_1 - L_2$.
-                $$ \left(\begin{array}{cc|cc} 1 & 0 & 3 & -1 \\ 0 & 1 & -2 & 1 \end{array}\right) $$</p>
-                <p>Le bloc de gauche est $I_2$, donc : $A^{-1} = \begin{pmatrix} 3 & -1 \\ -2 & 1 \end{pmatrix}$</p>
-            </div>
         </div>
     </div>
 
@@ -344,53 +331,184 @@
         
         <div class="section-card">
             <h2>M1. Le Binôme de Newton (Application aux matrices)</h2>
-            
             <p>La formule du Binôme de Newton sert à développer rapidement la puissance d'une somme $(A+B)^n$. En algèbre linéaire, elle est l'outil principal pour calculer la puissance d'une matrice complexe en la décomposant en deux matrices simples.</p>
-
             <div class="attention">
-                <strong>Condition absolue :</strong> On ne peut utiliser cette formule sur des matrices <strong>QUE SI ELLES COMMUTENT</strong> ($AB = BA$). Si ce n'est pas le cas, la formule est totalement fausse.
+                <strong>Condition absolue :</strong> On ne peut utiliser cette formule sur des matrices <strong>QUE SI ELLES COMMUTENT</strong> ($AB = BA$).
             </div>
-
             <div class="theoreme">
                 <strong>Formule :</strong><br>
                 Soit $A$ et $B$ deux matrices de $\mathcal{M}_n(\mathbb{K})$ telles que $AB = BA$. Pour tout $n \in \mathbb{N}$ :
                 $$ (A+B)^n = \sum_{k=0}^{n} \binom{n}{k} A^k B^{n-k} $$
             </div>
-
-            <h3>Les Coefficients Binomiaux $\binom{n}{k}$</h3>
-            <p>Se lit "k parmi n". Ce sont les coefficients multiplicateurs de la formule. On les calcule avec les factorielles : $\binom{n}{k} = \frac{n!}{k!(n-k)!}$ ou en utilisant le <strong>Triangle de Pascal</strong> pour les petites puissances.</p>
-
             <h3>Méthode Type Concours</h3>
             <p>Pour calculer $M^n$ :
-            1. On cherche à écrire $M$ sous la forme $M = \lambda I_n + N$ (où $N$ est une matrice simple, souvent nilpotente, c'est-à-dire que $N^3=0$ par exemple).
-            2. On vérifie qu'elles commutent : $I_n$ commute avec toutes les matrices, donc c'est validé.
-            3. On applique la formule :
-            $$ M^n = (\lambda I_n + N)^n = \sum_{k=0}^{n} \binom{n}{k} N^k (\lambda I_n)^{n-k} $$
-            4. Si $N$ est nilpotente (ex: $N^3=0$), la somme infinie s'arrête brusquement à $k=2$ ! Le calcul devient alors très simple.</p>
+            1. On cherche à écrire $M$ sous la forme $M = \lambda I_n + N$ (où $N$ est une matrice simple, souvent nilpotente).<br>
+            2. On vérifie qu'elles commutent : $I_n$ commute avec toutes les matrices.<br>
+            3. On applique la formule. Si $N$ est nilpotente (ex: $N^3=0$), la somme infinie s'arrête brusquement à $k=2$ !</p>
         </div>
 
         <div class="section-card">
             <h2>M2. La Démonstration par Récurrence</h2>
-            
-            <p>La récurrence est le raisonnement indispensable pour prouver une formule qui dépend d'un entier $n$ (ex: vérifier la formule de $A^n$ trouvée précédemment). Elle fonctionne comme un effet domino et se rédige TOUJOURS en 3 étapes strictes.</p>
-
+            <p>La récurrence est le raisonnement indispensable pour prouver une formule qui dépend d'un entier $n$. Elle fonctionne comme un effet domino et se rédige TOUJOURS en 3 étapes strictes.</p>
             <div class="definition">
                 Soit $P(n)$ la propriété mathématique à démontrer pour tout entier $n \ge n_0$.
             </div>
-
             <h3>Étape 1 : L'Initialisation</h3>
-            <p>On vérifie que la propriété est vraie pour le tout premier domino (souvent $n=0$ ou $n=1$).<br>
+            <p>On vérifie que la propriété est vraie pour le tout premier domino.<br>
             <em>Rédaction :</em> "Pour $n = n_0$, on a d'une part ... et d'autre part ... Donc $P(n_0)$ est vraie."</p>
 
             <h3>Étape 2 : L'Hérédité</h3>
             <p>C'est le cœur de la preuve. On suppose qu'un domino $n$ tombe, et on prouve qu'il fait tomber le domino $n+1$.<br>
-            <em>Rédaction :</em> "Soit $n \ge n_0$ un entier fixé. Supposons que $P(n)$ soit vraie (C'est l'Hypothèse de Récurrence - HR). Montrons que la propriété est vraie au rang suivant $P(n+1)$."<br>
-            <br>
-            <strong>Astuce :</strong> Lors de ton calcul pour prouver $P(n+1)$, tu <u>dois obligatoirement</u> utiliser ton HR à un moment donné. Sinon, le raisonnement est faux.</p>
+            <em>Rédaction :</em> "Soit $n \ge n_0$ un entier fixé. Supposons que $P(n)$ soit vraie (HR). Montrons que $P(n+1)$ est vraie."<br>
+            <strong>Astuce :</strong> Lors de ton calcul pour prouver $P(n+1)$, tu <u>dois obligatoirement</u> utiliser ton HR à un moment donné.</p>
 
             <h3>Étape 3 : La Conclusion</h3>
             <p>On valide l'effet domino global.<br>
             <em>Rédaction :</em> "La propriété est initialisée et héréditaire. D'après le principe de récurrence, $P(n)$ est vraie pour tout $n \ge n_0$."</p>
+        </div>
+    </div>
+
+
+    <div id="Exercices" class="tabcontent">
+        
+        <div class="section-card">
+            <h2>Partie A : L'Entraînement Fondamental (1 Exercice par notion)</h2>
+            <p>Fais ces petits exercices au brouillon pour valider chaque partie du cours avant d'attaquer les problèmes de synthèse.</p>
+
+            <h3>Exercice 1 (Définitions)</h3>
+            <p>Soit la matrice $A = (a_{i,j})$ de $\mathcal{M}_{2,3}(\mathbb{R})$ définie par la formule : $a_{i,j} = i + j$. Écrire explicitement la matrice $A$.</p>
+            <details class="correction-box">
+                <summary>▶ Voir la correction</summary>
+                <p>La matrice $A$ possède 2 lignes ($i \in \{1, 2\}$) et 3 colonnes ($j \in \{1, 2, 3\}$). On calcule chaque case en additionnant son numéro de ligne et son numéro de colonne.<br>
+                Ligne 1 : $a_{1,1} = 2$, $a_{1,2} = 3$, $a_{1,3} = 4$.<br>
+                Ligne 2 : $a_{2,1} = 3$, $a_{2,2} = 4$, $a_{2,3} = 5$.<br>
+                $$ A = \begin{pmatrix} 2 & 3 & 4 \\ 3 & 4 & 5 \end{pmatrix} $$</p>
+            </details>
+
+            <h3>Exercice 2 (Calcul & Non-commutativité)</h3>
+            <p>Soient $A = \begin{pmatrix} 1 & 2 \\ 0 & 1 \end{pmatrix}$ et $B = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$. Calculer $AB$ et $BA$. Que remarque-t-on ?</p>
+            <details class="correction-box">
+                <summary>▶ Voir la correction</summary>
+                <p>Produit "Ligne $\times$ Colonne" :<br>
+                $$ AB = \begin{pmatrix} 1\times0 + 2\times1 & 1\times1 + 2\times0 \\ 0\times0 + 1\times1 & 0\times1 + 1\times0 \end{pmatrix} = \begin{pmatrix} 2 & 1 \\ 1 & 0 \end{pmatrix} $$<br>
+                $$ BA = \begin{pmatrix} 0\times1 + 1\times0 & 0\times2 + 1\times1 \\ 1\times1 + 0\times0 & 1\times2 + 0\times1 \end{pmatrix} = \begin{pmatrix} 0 & 1 \\ 1 & 2 \end{pmatrix} $$<br>
+                <strong>Remarque :</strong> $AB \neq BA$. Les matrices ne commutent pas.</p>
+            </details>
+
+            <h3>Exercice 3 (Matrice Nilpotente)</h3>
+            <p>Soit $N = \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix}$. Calculer $N^2$ et $N^3$. Conclure.</p>
+            <details class="correction-box">
+                <summary>▶ Voir la correction</summary>
+                <p>$$ N^2 = \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix} \times \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix} $$<br>
+                $$ N^3 = N^2 \times N = \begin{pmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix} \times \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix} $$<br>
+                <strong>Conclusion :</strong> $N^3 = 0_3$. La matrice $N$ est nilpotente d'indice 3.</p>
+            </details>
+
+            <h3>Exercice 4 (Transposition et Symétrie)</h3>
+            <p>Pour toute matrice carrée $A$, démontrer que la matrice $M = A + ^tA$ est une matrice symétrique.</p>
+            <details class="correction-box">
+                <summary>▶ Voir la correction</summary>
+                <p>Pour prouver qu'une matrice est symétrique, on doit montrer que $^tM = M$. Calculons la transposée de $M$ :<br>
+                $ \begin{align*}
+                ^tM &= ^t(A + ^tA) \\
+                &= ^tA + ^t(^tA) \quad \text{(La transposée d'une somme est la somme des transposées)} \\
+                &= ^tA + A \quad \text{(L'involution : on transpose deux fois, on revient au point de départ)} \\
+                &= A + ^tA \quad \text{(L'addition matricielle est commutative)} \\
+                &= M
+                \end{align*} $<br>
+                Puisque $^tM = M$, la matrice $M$ est bien symétrique !</p>
+            </details>
+
+            <h3>Exercice 5 (Opérations élémentaires)</h3>
+            <p>Quelle est la matrice de transvection $E$ (de taille $3 \times 3$) qui correspond à l'opération $L_2 \leftarrow L_2 - 3L_1$ ? Écrire $E$ explicitement.</p>
+            <details class="correction-box">
+                <summary>▶ Voir la correction</summary>
+                <p>D'après le cours, la matrice d'une transvection $L_i \leftarrow L_i + \lambda L_j$ est $E = I_n + \lambda E_{i,j}$.<br>
+                Ici, $i=2$, $j=1$, et $\lambda = -3$.<br>
+                Donc $E = I_3 - 3E_{2,1}$. Il s'agit de la matrice identité dans laquelle on place un $-3$ à la ligne 2, colonne 1 :
+                $$ E = \begin{pmatrix} 1 & 0 & 0 \\ -3 & 1 & 0 \\ 0 & 0 & 1 \end{pmatrix} $$</p>
+            </details>
+
+            <h3>Exercice 6 (Systèmes et Gauss-Jordan)</h3>
+            <p>Résoudre par la méthode de Gauss le système : $\begin{cases} x + 2y = 5 \\ 2x - y = 0 \end{cases}$</p>
+            <details class="correction-box">
+                <summary>▶ Voir la correction</summary>
+                <p>Matrice augmentée : $\left(\begin{array}{cc|c} 1 & 2 & 5 \\ 2 & -1 & 0 \end{array}\right)$<br>
+                Opération $L_2 \leftarrow L_2 - 2L_1$ pour éliminer le 2 :<br>
+                $\left(\begin{array}{cc|c} 1 & 2 & 5 \\ 0 & -5 & -10 \end{array}\right)$<br>
+                Le système est échelonné. On résout en remontant :<br>
+                - Ligne 2 : $-5y = -10 \implies y = 2$<br>
+                - Ligne 1 : $x + 2(2) = 5 \implies x = 1$<br>
+                La solution unique est $(1, 2)$.</p>
+            </details>
+
+            <h3>Exercice 7 (Inversibilité)</h3>
+            <p>Soit $A = \begin{pmatrix} 1 & 1 \\ 2 & 3 \end{pmatrix}$. Vérifier que $A$ est inversible et calculer $A^{-1}$ via l'algorithme $(A|I_2)$.</p>
+            <details class="correction-box">
+                <summary>▶ Voir la correction</summary>
+                <p>On pose $(A | I_2)$ :
+                $$ \left(\begin{array}{cc|cc} 1 & 1 & 1 & 0 \\ 2 & 3 & 0 & 1 \end{array}\right) $$
+                <strong>Descente :</strong> $L_2 \leftarrow L_2 - 2L_1 \implies \left(\begin{array}{cc|cc} 1 & 1 & 1 & 0 \\ 0 & 1 & -2 & 1 \end{array}\right) $<br>
+                (La matrice a 2 pivots, donc son rang est 2, elle est bien inversible !)<br>
+                <strong>Remontée :</strong> $L_1 \leftarrow L_1 - L_2 \implies \left(\begin{array}{cc|cc} 1 & 0 & 3 & -1 \\ 0 & 1 & -2 & 1 \end{array}\right) $<br>
+                On lit à droite : $A^{-1} = \begin{pmatrix} 3 & -1 \\ -2 & 1 \end{pmatrix}$.</p>
+            </details>
+        </div>
+
+        <div class="section-card">
+            <h2>Partie B : Problèmes de Synthèse & Annales</h2>
+            
+            <h3>Problème 1 : Rang et Systèmes à paramètre</h3>
+            <p>Un système linéaire de 4 inconnues ($x, y, z, t$) a pour matrice augmentée échelonnée :
+            $$ \left(\begin{array}{cccc|c} 1 & 2 & 0 & -1 & 5 \\ 0 & 0 & 1 & 3 & 2 \\ 0 & 0 & 0 & a-2 & b \end{array}\right) $$
+            1. Discutez du nombre de solutions du système selon les valeurs du paramètre réel $a$ et $b$.<br>
+            2. Dans le cas où $a=2$ et $b=0$, exprimez la solution générale et le nombre de degrés de liberté.</p>
+            <details class="correction-box">
+                <summary>▶ Voir la correction</summary>
+                <p><strong>1. Discussion :</strong> La dernière ligne correspond à $(a-2)t = b$.<br>
+                - Si $a \neq 2$ : On a 3 pivots, $r=3$. L'inconnue $t = b/(a-2)$ est fixée. C'est un système compatible avec 4 inconnues et $r=3$, donc une infinité de solutions (1 degré de liberté).<br>
+                - Si $a = 2$ et $b \neq 0$ : L'équation devient $0 = b$ (impossible). Le système n'a aucune solution.<br>
+                - Si $a = 2$ et $b = 0$ : L'équation devient $0 = 0$. La ligne s'annule.</p>
+                <p><strong>2. Cas a=2, b=0 :</strong><br>
+                Le rang est $r = 2$. On a $p=4$ inconnues. Degrés de liberté = $4 - 2 = 2$.<br>
+                Variables principales : $x$ et $z$. Variables libres : $y$ et $t$.<br>
+                Système réduit : $z + 3t = 2 \implies z = 2 - 3t$<br>
+                $x + 2y - t = 5 \implies x = 5 - 2y + t$<br>
+                Solution : L'ensemble des quadruplets $(5 - 2y + t, \ y, \ 2 - 3t, \ t)$ pour tout $y, t \in \mathbb{R}$.</p>
+            </details>
+
+            <h3 style="color:#c0392b; border-bottom:1px solid #c0392b; padding-bottom:5px;">Problème 2 : Type Concours ITPE (Polynôme et Puissances)</h3>
+            <p>Soit la matrice $A = \begin{pmatrix} 0 & 1 & 1 \\ 1 & 0 & 1 \\ 1 & 1 & 0 \end{pmatrix}$. On note $J$ la matrice constituée uniquement de $1$, et $I_3$ l'identité.<br>
+            <strong>Partie A : Inversibilité</strong><br>
+            1. Calculez $A^2$ et trouvez deux réels $a$ et $b$ tels que $A^2 = aA + bI_3$.<br>
+            2. En déduire que $A$ est inversible et exprimez $A^{-1}$ en fonction de $A$ et $I_3$.<br>
+            <strong>Partie B : Puissances via le Binôme</strong><br>
+            3. Exprimez $A$ en fonction de $J$ et $I_3$.<br>
+            4. Sachant que pour tout $k \ge 1$, $J^k = 3^{k-1}J$, appliquez la formule du binôme de Newton pour exprimer $A^n$ en fonction de $n$, $J$ et $I_3$.</p>
+
+            <details class="correction-box">
+                <summary>▶ Voir la correction complète (Méthode ITPE)</summary>
+                <p><strong>Partie A :</strong><br>
+                1. $A^2 = \begin{pmatrix} 2 & 1 & 1 \\ 1 & 2 & 1 \\ 1 & 1 & 2 \end{pmatrix}$. On remarque que sur la diagonale on a $2$, et ailleurs on a $1$. En identifiant avec $aA + bI_3$, on trouve <strong>$a = 1$</strong> et <strong>$b = 2$</strong>. Donc $A^2 = A + 2I_3$.<br>
+                <br>
+                2. On réécrit l'équation : $A^2 - A = 2I_3 \implies A(A - I_3) = 2I_3$.<br>
+                On isole l'identité : $A \times \left[ \frac{1}{2}(A - I_3) \right] = I_3$.<br>
+                $A$ est donc inversible et <strong>$A^{-1} = \frac{1}{2}(A - I_3)$</strong>.</p>
+                
+                <p><strong>Partie B :</strong><br>
+                3. On observe les matrices : $A$ est la matrice $J$ à laquelle on a enlevé la diagonale de $1$. Donc <strong>$A = J - I_3$</strong>.<br>
+                <br>
+                4. $J$ et $-I_3$ commutent (l'identité commute avec tout). On applique Newton :<br>
+                $$ A^n = (J - I_3)^n = \sum_{k=0}^{n} \binom{n}{k} J^k (-I_3)^{n-k} $$<br>
+                <strong>Le piège :</strong> On sait que $J^k = 3^{k-1}J$ seulement pour $k \ge 1$. Il faut isoler le terme $k=0$ (où $J^0 = I_3$) :<br>
+                $$ A^n = (-1)^n I_3 + \sum_{k=1}^{n} \binom{n}{k} (3^{k-1}J) (-1)^{n-k} $$<br>
+                On sort le $J$ et on multiplie/divise par 3 pour faire apparaître $3^k$ :<br>
+                $$ A^n = (-1)^n I_3 + \frac{J}{3} \sum_{k=1}^{n} \binom{n}{k} 3^k (-1)^{n-k} $$<br>
+                La somme de $k=1$ à $n$ est égale à $(3 - 1)^n$ moins le terme manquant pour $k=0$ (qui vaut $3^0(-1)^n = (-1)^n$).<br>
+                Donc la somme vaut $2^n - (-1)^n$.<br>
+                <strong>Conclusion finale :</strong> 
+                $$ A^n = (-1)^n I_3 + \frac{2^n - (-1)^n}{3} J $$</p>
+            </details>
         </div>
     </div>
 
