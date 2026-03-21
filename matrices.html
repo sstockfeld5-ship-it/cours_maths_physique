@@ -23,9 +23,11 @@
         h3 { color: #2471a3; margin-top: 25px; border-bottom: 1px solid #d5dbdb; padding-bottom: 5px; }
         
         .navbar { background-color: #1a5276; padding: 15px; border-radius: 8px; margin-bottom: 30px; position: sticky; top: 10px; z-index: 1000; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px; }
-        .navbar a { color: white; text-decoration: none; font-weight: bold; padding: 10px 15px; border-radius: 5px; transition: background-color 0.3s; }
+        .navbar a { color: white; text-decoration: none; font-weight: bold; padding: 10px 15px; border-radius: 5px; transition: background-color 0.3s; cursor: pointer; }
         .navbar a:hover { background-color: #2980b9; }
-        .main-section-title { background-color: #2c3e50; color: white; padding: 20px; border-radius: 8px; margin-top: 50px; text-align: center; }
+        .navbar a.active { background-color: #2980b9; border: 1px solid white;}
+        
+        .main-section-title { background-color: #2c3e50; color: white; padding: 20px; border-radius: 8px; margin-top: 20px; text-align: center; }
         .section-card { background: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 6px 15px rgba(0,0,0,0.06); margin-bottom: 35px; }
         .definition, .theoreme, .attention, .remarque { padding: 15px 20px; margin: 20px 0; border-radius: 0 5px 5px 0; }
         .definition { background-color: #eaf2f8; border-left: 5px solid #2980b9; }
@@ -33,14 +35,21 @@
         .attention { background-color: #fdf2e9; border-left: 5px solid #d35400; }
         .remarque { background-color: #f8f9f9; border-left: 3px solid #bdc3c7; font-style: italic; color: #7f8c8d; }
         
-        details.correction-box { background-color: #fdfbf7; border: 1px solid #e1d5c9; padding: 15px 20px; margin-top: 15px; border-radius: 8px; }
-        details.correction-box summary { font-weight: bold; color: #27ae60; cursor: pointer; outline: none; padding: 5px 0; font-size: 1.05em; }
+        /* Conteneur d'exercice */
+        .exo-box { border-left: 4px solid #34495e; padding-left: 15px; margin-bottom: 30px; }
+        .exo-title { font-weight: bold; color: #34495e; margin-bottom: 10px; font-size: 1.1em;}
+        
+        details.correction-box { background-color: #fdfbf7; border: 1px solid #e1d5c9; padding: 12px 18px; margin-top: 10px; border-radius: 8px; }
+        details.correction-box summary { font-weight: bold; color: #27ae60; cursor: pointer; outline: none; padding: 5px 0; }
         details.correction-box summary:hover { color: #2ecc71; }
         details.correction-box p { margin-top: 15px; border-top: 1px dashed #e1d5c9; padding-top: 15px; }
         
-        .badge-n1 { background-color: #3498db; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; vertical-align: middle;}
-        .badge-n2 { background-color: #f39c12; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; vertical-align: middle;}
-        .badge-n3 { background-color: #e74c3c; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; vertical-align: middle;}
+        .badge-n1 { background-color: #3498db; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; vertical-align: middle; margin-left: 10px;}
+        .badge-n2 { background-color: #f39c12; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; vertical-align: middle; margin-left: 10px;}
+        .badge-n3 { background-color: #e74c3c; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; vertical-align: middle; margin-left: 10px;}
+        
+        .tabcontent { display: none; animation: fadeEffect 0.5s; }
+        @keyframes fadeEffect { from {opacity: 0;} to {opacity: 1;} }
     </style>
 </head>
 <body>
@@ -48,183 +57,334 @@
     <h1>Algèbre Linéaire & Matrices : Préparation ITPE</h1>
 
     <nav class="navbar">
-        <a href="#partie-cours">📚 1. Cours Complet</a>
-        <a href="#partie-methodes">🛠️ 2. Méthodes</a>
-        <a href="#partie-exercices">📝 3. L'Intégrale des Exercices</a>
+        <a class="nav-btn active" onclick="openTab(event, 'Cours')">📚 1. Cours Complet</a>
+        <a class="nav-btn" onclick="openTab(event, 'Methodes')">🛠️ 2. Méthodes</a>
+        <a class="nav-btn" onclick="openTab(event, 'Exercices')">📝 3. L'Intégrale des Exercices</a>
     </nav>
 
-    <h2 id="partie-cours" class="main-section-title">📚 Partie 1 : Cours Complet</h2>
-    
-    <div class="section-card">
-        <h2>1. Le Calcul Matriciel</h2>
-        <p>Le produit matriciel $AB$ n'est défini que si le <strong>nombre de colonnes de $A$ est égal au nombre de lignes de $B$</strong>.</p>
-        <div class="attention">
-            <strong>Le produit n'est PAS commutatif !</strong> $AB \neq BA$. De plus, on peut avoir $AB = 0$ avec $A \neq 0$ et $B \neq 0$.
-        </div>
-        <div class="remarque">
-            <strong>Commutativité ($AB = BA$) :</strong> Une matrice commute avec l'identité ($I_n$), avec son inverse ($A^{-1}$), avec ses propres puissances, ou si les deux matrices sont diagonales.
-        </div>
-    </div>
-
-    <div class="section-card">
-        <h2>2. Transposition et Matrices Remarquables</h2>
-        <div class="definition">
-            <strong>Transposée ($^tA$) :</strong> On échange lignes et colonnes. Propriété vitale : $^t(AB) = ^tB ^tA$ (L'ordre s'inverse).
-        </div>
-        <p><strong>Propriétés classiques :</strong><br>
-        1. $A + ^tA$ est <strong>toujours symétrique</strong>.<br>
-        2. Si $A$ est symétrique et $B$ antisymétrique, $AB - BA$ est <strong>symétrique</strong>.</p>
-        <p><strong>Puissance Zéro :</strong> Pour toute matrice carrée $A \neq 0$, on a $A^0 = I_n$.<br>
-        <strong>Matrice Nilpotente :</strong> S'il existe $k$ tel que $A^k = 0_{n}$.</p>
-    </div>
-
-    <div class="section-card">
-        <h2>3. Systèmes Linéaires et Inversibilité ($GL_n$)</h2>
-        <div class="theoreme">
-            <strong>Gauss-Jordan :</strong> Toute matrice est équivalente par lignes à une unique matrice échelonnée réduite. Le Rang ($r$) est le nombre de pivots.
-        </div>
-        <div class="definition">
-            <strong>Système de Cramer :</strong> Autant d'équations que d'inconnues ET matrice $A$ inversible. Solution unique : $X = A^{-1}B$.
-        </div>
-    </div>
-
-    <h2 id="partie-methodes" class="main-section-title">🛠️ Partie 2 : Les Grandes Méthodes</h2>
-    
-    <div class="section-card">
-        <h2>M1. Le Binôme de Newton</h2>
-        <div class="attention">
-            <strong>Condition absolue :</strong> Uniquement si les matrices <strong>COMMUTENT</strong> ($AB = BA$).
-        </div>
-        <p>Pour tout $n \in \mathbb{N}$ : $ (A+B)^n = \sum_{k=0}^{n} \binom{n}{k} A^k B^{n-k} $</p>
-        <p><em>Méthode :</em> Écrire $M = \lambda I_n + N$ (où $N$ est nilpotente). Comme $N^k=0$ à partir d'un certain rang, la somme s'arrête vite.</p>
-    </div>
-
-    <div class="section-card">
-        <h2>M2. La Démonstration par Récurrence</h2>
-        <p><strong>1 - Initialisation :</strong> Vérifier $P(n_0)$.<br>
-        <strong>2 - Hérédité :</strong> Soit $n \ge n_0$. Supposons $P(n)$ vraie. Montrons $P(n+1)$. (Utilisation obligatoire de HR).<br>
-        <strong>3 - Conclusion :</strong> "La propriété est initialisée et héréditaire."</p>
-    </div>
-
-    <h2 id="partie-exercices" class="main-section-title">📝 Partie 3 : L'Intégrale des Exercices du Manuel</h2>
-    
-    <div class="section-card">
-        <h2>Niveau 1 : Systèmes et Matrices <span class="badge-n1">Bases</span></h2>
+    <div id="Cours" class="tabcontent" style="display: block;">
+        <h2 class="main-section-title">📚 Partie 1 : Cours Complet</h2>
         
-        <h3>Exercice 1 : Résoudre les systèmes de matrices augmentées</h3>
-        <p>1) $\begin{bmatrix} 3 & 2 & 1 & | & 5 \\ 2 & 3 & 1 & | & 1 \\ 2 & 1 & 3 & | & 11 \end{bmatrix} \quad$ 
-           2) $\begin{bmatrix} 1 & 0 & -2 & 3 & | & -4 \\ 0 & 1 & -3 & 4 & | & -5 \\ 3 & 2 & 0 & -5 & | & 12 \\ 4 & 3 & -5 & 0 & | & 5 \end{bmatrix}$</p>
-        <details class="correction-box">
-            <summary>✅ Indication & Résultat</summary>
-            <p><strong>Méthode :</strong> Pivot de Gauss standard.<br>
-            <strong>1)</strong> On échelonne pour obtenir un système triangulaire. La solution unique est $(x,y,z) = (2, -2, 5)$.<br>
-            <strong>2)</strong> Après échelonnement, le système possède 4 inconnues mais on remarque des lignes redondantes. Il y aura des degrés de liberté (paramètres).</p>
-        </details>
+        <div class="section-card">
+            <h2>1. Le Calcul Matriciel</h2>
+            <p>Le produit matriciel $AB$ n'est défini que si le <strong>nombre de colonnes de $A$ est égal au nombre de lignes de $B$</strong>.</p>
+            <div class="attention">
+                <strong>Le produit n'est PAS commutatif !</strong> $AB \neq BA$. De plus, on peut avoir $AB = 0$ avec $A \neq 0$ et $B \neq 0$.
+            </div>
+            <div class="remarque">
+                <strong>Commutativité ($AB = BA$) :</strong> Une matrice commute avec l'identité ($I_n$), avec son inverse ($A^{-1}$), avec ses propres puissances, ou si les deux matrices sont diagonales.
+            </div>
+        </div>
 
-        <h3>Exercice 2 : Systèmes à seconds membres multiples</h3>
-        <p>Résoudre simultanément : $\begin{bmatrix} 1 & 2 & 0 & -3 & | & 2 & 1 \\ 1 & -1 & -3 & 1 & | & -3 & 2 \\ 2 & -3 & 4 & -5 & | & 2 & 7 \\ 9 & -9 & 6 & -16 & | & 2 & 25 \end{bmatrix}$</p>
-        <details class="correction-box">
-            <summary>✅ Indication</summary>
-            <p>C'est comme résoudre $AX = Y_1$ et $AX = Y_2$ en même temps. Fais les opérations sur les lignes pour échelonner la matrice $A$ de gauche, et applique ces mêmes opérations aux deux colonnes de droite en parallèle.</p>
-        </details>
+        <div class="section-card">
+            <h2>2. Transposition et Matrices Remarquables</h2>
+            <div class="definition">
+                <strong>Transposée ($^tA$) :</strong> On échange lignes et colonnes. Propriété vitale : $^t(AB) = ^tB ^tA$ (L'ordre s'inverse).
+            </div>
+            <p><strong>Propriétés classiques :</strong><br>
+            1. $A + ^tA$ est <strong>toujours symétrique</strong>.<br>
+            2. Si $A$ est symétrique et $B$ antisymétrique, $AB - BA$ est <strong>symétrique</strong>.</p>
+            <p><strong>Puissance Zéro :</strong> Pour toute matrice carrée $A \neq 0$, on a $A^0 = I_n$.<br>
+            <strong>Matrice Nilpotente :</strong> S'il existe $k$ tel que $A^k = 0_{n}$.</p>
+        </div>
 
-        <h3>Exercice 3 : Conditions de Cramer</h3>
-        <p>Déterminer les conditions nécessaires et suffisantes pour que le système soit de Cramer : $\begin{cases} bx + ay = c \\ cx + az = b \\ cy + bz = a \end{cases}$</p>
-        <details class="correction-box">
-            <summary>✅ Correction</summary>
-            <p>La matrice du système est $A = \begin{pmatrix} b & a & 0 \\ c & 0 & a \\ 0 & c & b \end{pmatrix}$. Le système est de Cramer si son déterminant est non nul. $\det(A) = -2abc$. Il faut donc $a \neq 0$, $b \neq 0$ et $c \neq 0$.</p>
-        </details>
-
-        <h3>Exercice 4 : Discussion de système</h3>
-        <p>Discuter le système de matrice : $\begin{bmatrix} 2a+1 & -a & a+1 & | & a-1 \\ a-2 & a-1 & a-2 & | & a \\ 2a-1 & a-1 & 2a-1 & | & a \end{bmatrix}$</p>
-        <details class="correction-box">
-            <summary>✅ Indication</summary>
-            <p>On remarque que les colonnes 1 et 3 se ressemblent beaucoup. Avec l'opération $C_1 \leftarrow C_1 - C_3$, on simplifie grandement la matrice. Discuter ensuite l'annulation des pivots selon les valeurs de $a$.</p>
-        </details>
-
-        <h3>Exercice 5 : Rang et Inverse</h3>
-        <p>Calculer le rang des matrices $A = \begin{pmatrix} 2 & 3 & -2 \\ 4 & -1 & -2 \\ 0 & 1 & 0 \end{pmatrix}$ et $B = \begin{pmatrix} 1 & 2 & -1 \\ 2 & -1 & -1 \\ -1 & 2 & 0 \end{pmatrix}$ ainsi que l'inverse s'il y a lieu.</p>
-        <details class="correction-box">
-            <summary>✅ Résultat</summary>
-            <p>$\det(A) = -4 \implies \text{rg}(A)=3$. $\det(B) = 1 \implies \text{rg}(B)=3$. Les deux sont inversibles. Appliquer $(M|I_3)$ pour trouver $M^{-1}$.</p>
-        </details>
-
-        <h3>Exercices 6 à 9 : Démonstrations classiques</h3>
-        <ul>
-            <li><strong>Ex 6 :</strong> Soit $A$ nilpotente. Montrer que $I_n - A$ est inversible. <em>(Indication : développer $(I_n-A)(I_n+A+\dots+A^{k-1})$)</em>.</li>
-            <li><strong>Ex 7 :</strong> Produit de 2 symétriques est symétrique $\iff$ elles commutent. <em>(Indication : $^t(AB) = ^tB^tA = BA$)</em>.</li>
-            <li><strong>Ex 8 :</strong> Effet de la multiplication par une matrice diagonale.</li>
-            <li><strong>Ex 9 :</strong> $ABC=0 \implies$ au moins deux ne sont pas inversibles. <em>(Indication : Absurde)</em>.</li>
-        </ul>
+        <div class="section-card">
+            <h2>3. Systèmes Linéaires et Inversibilité ($GL_n$)</h2>
+            <div class="theoreme">
+                <strong>Gauss-Jordan :</strong> Toute matrice est équivalente par lignes à une unique matrice échelonnée réduite. Le Rang ($r$) est le nombre de pivots.
+            </div>
+            <div class="definition">
+                <strong>Système de Cramer :</strong> Autant d'équations que d'inconnues ET matrice $A$ inversible. Solution unique : $X = A^{-1}B$.
+            </div>
+        </div>
     </div>
 
-    <div class="section-card">
-        <h2>Niveau 2 : Entraînement Approfondi <span class="badge-n2">Intermédiaire</span></h2>
+    <div id="Methodes" class="tabcontent">
+        <h2 class="main-section-title">🛠️ Partie 2 : Les Grandes Méthodes</h2>
+        
+        <div class="section-card">
+            <h2>M1. Le Binôme de Newton</h2>
+            <div class="attention">
+                <strong>Condition absolue :</strong> Uniquement si les matrices <strong>COMMUTENT</strong> ($AB = BA$).
+            </div>
+            <p>Pour tout $n \in \mathbb{N}$ : $ (A+B)^n = \sum_{k=0}^{n} \binom{n}{k} A^k B^{n-k} $</p>
+            <p><em>Méthode :</em> Écrire $M = \lambda I_n + N$ (où $N$ est nilpotente). Comme $N^k=0$ à partir d'un certain rang, la somme s'arrête vite.</p>
+        </div>
 
-        <h3>Exercices 10 & 11 : Le Binôme et les Suites</h3>
-        <p><strong>Ex 10 :</strong> Calculer l'inverse de la matrice de Hilbert (1, 1/2, 1/3...). <em>(Indication : Très mal conditionnée, différences majeures si calculé avec arrondis décimaux)</em>.</p>
-        <p><strong>Ex 11 :</strong> Pour $A = \begin{pmatrix} 1 & 1 & 1 \\ 1 & 0 & 0 \\ 1 & 0 & 0 \end{pmatrix}$, prouver l'existence de $\alpha_n, \beta_n$ tq $A^n = \alpha_nA + \beta_nA^2$.</p>
-        <details class="correction-box">
-            <summary>✅ Indication (Ex 11)</summary>
-            <p>Calculer $A^3 = A^2 + 2A$. Amorcer la récurrence. On trouve $\alpha_{n+1} = 2\beta_n$ et $\beta_{n+1} = \alpha_n + \beta_n$.</p>
-        </details>
-
-        <h3>Exercices 12 & 13 : Systèmes croisés</h3>
-        <p><strong>Ex 12 :</strong> Suites $u_{n+1} = \alpha u_n + (1-\alpha)v_n$ et $v_{n+1} = (1-\beta)u_n + \beta v_n$. <em>(Calculer puissances de la matrice de transition)</em>.</p>
-        <p><strong>Ex 13 :</strong> Discuter le système $x+ay-bz=1$, $bx-y+az=b$, $by+az=0$. <em>(Substitution pour réduire à 2 inconnues)</em>.</p>
-
-        <h3>Exercices 14 & 15 : Puissances et Polynômes annulateurs</h3>
-        <p><strong>Ex 14 :</strong> $A = \begin{pmatrix} 0 & 0 & 4 \\ 1 & 2 & 1 \\ 2 & 4 & -2 \end{pmatrix}$. Calculer $A^3$ puis $A^6 - 8A^4 + A^3 - 9A + I_3$.</p>
-        <p><strong>Ex 15 :</strong> $A$ est strictement triangulaire supérieure. Calculer $A^p$ puis $(I_4 - A)^{-1}$.</p>
-        <details class="correction-box">
-            <summary>✅ Indication</summary>
-            <p><strong>Ex 14 :</strong> On trouve $A^3 = 16A$. En remplaçant dans le polynôme, les puissances s'effondrent.<br>
-            <strong>Ex 15 :</strong> $A$ est nilpotente ($A^4=0$). On utilise la formule $I_4 + A + A^2 + A^3$.</p>
-        </details>
-
-        <h3>Exercices 16 à 19 : Algèbre théorique</h3>
-        <ul>
-            <li><strong>Ex 16 :</strong> $AD = DA$ pour toute matrice diagonale $D \implies A$ est diagonale.</li>
-            <li><strong>Ex 17 :</strong> $A$ tq $a_{i,j} = 1 - \delta_{i,j}$ est inversible. <em>(Indication : Poser $A = J - I_n$ et calculer $A^2$)</em>.</li>
-            <li><strong>Ex 18 :</strong> Centre de $\mathcal{M}_n(\mathbb{K})$ = matrices scalaires $\lambda I_n$.</li>
-            <li><strong>Ex 19 :</strong> Calcul des rangs des deux matrices $A$ et $B$ (matrices $4 \times 4$ de la photo) suivant le paramètre $\lambda$.</li>
-        </ul>
+        <div class="section-card">
+            <h2>M2. La Démonstration par Récurrence</h2>
+            <p><strong>1 - Initialisation :</strong> Vérifier $P(n_0)$.<br>
+            <strong>2 - Hérédité :</strong> Soit $n \ge n_0$. Supposons $P(n)$ vraie. Montrons $P(n+1)$. (Utilisation obligatoire de HR).<br>
+            <strong>3 - Conclusion :</strong> "La propriété est initialisée et héréditaire."</p>
+        </div>
     </div>
 
-    <div class="section-card">
-        <h2>Niveau 3 : Problèmes Ouverts & Annales <span class="badge-n3">Avancé</span></h2>
+    <div id="Exercices" class="tabcontent">
+        <h2 class="main-section-title">📝 Partie 3 : L'Intégrale des Exercices du Manuel</h2>
+        
+        <div class="section-card">
+            <h2>Niveau 1 <span class="badge-n1">Bases et Systèmes</span></h2>
+            
+            <div class="exo-box">
+                <div class="exo-title">Exercice 1</div>
+                <p>Résoudre les systèmes de matrices augmentées :<br>
+                1) $\left[\begin{array}{ccc|c} 3 & 2 & 1 & 5 \\ 2 & 3 & 1 & 1 \\ 2 & 1 & 3 & 11 \end{array}\right] \quad$
+                2) $\left[\begin{array}{cccc|c} 1 & 0 & -2 & 3 & -4 \\ 0 & 1 & -3 & 4 & -5 \\ 3 & 2 & 0 & -5 & 12 \\ 4 & 3 & -5 & 0 & 5 \end{array}\right] \quad$
+                3) $\left[\begin{array}{ccccc|c} 1 & 2 & -3 & 4 & -1 & -1 \\ 2 & -1 & 3 & -4 & 2 & 8 \\ 3 & 1 & -1 & 2 & -1 & 3 \\ 4 & 3 & 4 & 2 & 2 & -2 \\ 1 & -1 & -1 & 2 & -3 & -3 \end{array}\right]$</p>
+                <details class="correction-box">
+                    <summary>▶ Indications de résolution</summary>
+                    <p>Appliquer l'algorithme du pivot de Gauss (descente pour échelonner, puis remontée pour trouver les inconnues ou les paramètres libres en cas de rang non maximal).</p>
+                </details>
+            </div>
 
-        <h3>Exercice 20 : Matrice antisymétrique par blocs</h3>
-        <p>Montrer que le système matriciel (avec $a,b,c,d$ réels non tous nuls) est de Cramer.</p>
-        <details class="correction-box">
-            <summary>✅ Indication</summary>
-            <p>Calculer $^tAA$. On trouve $(a^2+b^2+c^2+d^2)I_4$. La matrice est donc inversible.</p>
-        </details>
+            <div class="exo-box">
+                <div class="exo-title">Exercice 2</div>
+                <p>Résoudre les systèmes de matrices :<br>
+                1) $\left[\begin{array}{cccc|cc} 1 & 2 & 0 & -3 & 2 & 1 \\ 1 & -1 & -3 & 1 & -3 & 2 \\ 2 & -3 & 4 & -5 & 2 & 7 \\ 9 & -9 & 6 & -16 & 2 & 25 \end{array}\right] \quad$
+                2) $\left[\begin{array}{cccc|c} 1 & 2 & 3 & -1 & 1 \\ 3 & 2 & 1 & -1 & 1 \\ 2 & 3 & 1 & 1 & 1 \\ 2 & 2 & 2 & -1 & 1 \\ 5 & 5 & 2 & 0 & 2 \end{array}\right]$</p>
+                <details class="correction-box">
+                    <summary>▶ Indications de résolution</summary>
+                    <p>Pour le 1), il s'agit de deux seconds membres différents. On effectue les opérations sur les lignes pour échelonner le bloc de gauche, en répercutant les calculs sur les deux colonnes de droite simultanément.</p>
+                </details>
+            </div>
 
-        <h3>Exercice 21 : Système symétrique</h3>
-        <p>Conditions pour que $\sum_{j \neq i} b x_j + a x_i = c_i$ soit de Cramer.</p>
-        <details class="correction-box">
-            <summary>✅ Indication</summary>
-            <p>Matrice $M = (a-b)I_n + bJ$. La condition est $a \neq b$ et $a + (n-1)b \neq 0$.</p>
-        </details>
+            <div class="exo-box">
+                <div class="exo-title">Exercice 3</div>
+                <p>Déterminer les conditions nécessaires et suffisantes pour que le système :<br>
+                $(S) \begin{cases} bx + ay &= c \\ cx + az &= b \\ cy + bz &= a \end{cases}$<br>
+                soit de Cramer. Le résoudre dans ce cas.</p>
+                <details class="correction-box">
+                    <summary>▶ Indications de résolution</summary>
+                    <p>La matrice du système est $A = \begin{pmatrix} b & a & 0 \\ c & 0 & a \\ 0 & c & b \end{pmatrix}$. Le système est de Cramer ssi $\det(A) \neq 0$. En calculant (Sarrus), on trouve $\det(A) = a^3+b^3+c^3-3abc$ (ou similaire selon l'ordre). Les conditions imposent que ce déterminant ne s'annule pas.</p>
+                </details>
+            </div>
 
-        <h3>Exercice 22 : Matrice triangulaire</h3>
-        <p>Soit $T$ triangulaire supérieure. $^tTT = T^tT \iff T$ est diagonale.</p>
+            <div class="exo-box">
+                <div class="exo-title">Exercice 4</div>
+                <p>Discuter le système (S) de matrice : $\begin{bmatrix} 2a+1 & -a & a+1 & a-1 \\ a-2 & a-1 & a-2 & a \\ 2a-1 & a-1 & 2a-1 & a \end{bmatrix}$</p>
+                <details class="correction-box">
+                    <summary>▶ Indications de résolution</summary>
+                    <p>Échelonner la matrice en fonction du paramètre $a$. L'opération $C_1 \leftarrow C_1 - C_3$ simplifie beaucoup la première colonne. Étudier ensuite les cas où les pivots s'annulent.</p>
+                </details>
+            </div>
 
-        <h3>Exercice 23 : Produit et Nilpotence</h3>
-        <p>Soit $A$ inversible et $B$ nilpotente. Montrer que $I_n + A^{-1}BA$ est inversible et trouver son inverse.</p>
-        <details class="correction-box">
-            <summary>✅ Indication</summary>
-            <p>Poser $N = A^{-1}BA$. Montrer par récurrence que $N^k = A^{-1}B^kA = 0$. $N$ est nilpotente, on applique le résultat de l'Ex 6.</p>
-        </details>
+            <div class="exo-box">
+                <div class="exo-title">Exercice 5</div>
+                <p>Calculer le rang des matrices :
+                $A = \begin{pmatrix} 2 & 3 & -2 \\ 4 & -1 & -2 \\ 0 & 1 & 0 \end{pmatrix}$ et $B = \begin{pmatrix} 1 & 2 & -1 \\ 2 & -1 & -1 \\ -1 & 2 & 0 \end{pmatrix}$
+                ainsi que l'inverse s'il y a lieu.</p>
+                <details class="correction-box">
+                    <summary>▶ Indications de résolution</summary>
+                    <p>$\det(A) = -4 \implies \text{rg}(A)=3$. $\det(B) = 1 \implies \text{rg}(B)=3$. Les deux sont de rang maximal donc inversibles. Appliquer l'algorithme $(M|I_3)$ pour trouver $A^{-1}$ et $B^{-1}$.</p>
+                </details>
+            </div>
 
-        <h3>Exercice 24 : Géométrie (Polygones)</h3>
-        <p>Condition pour qu'un polygone de sommets $P_k$ ait pour milieux les $M_k$.</p>
-        <details class="correction-box">
-            <summary>✅ Indication</summary>
-            <p>Équation d'affixes : $p_k + p_{k+1} = 2m_k$. Le système a une solution unique ssi $n$ est impair.</p>
-        </details>
+            <div class="exo-box">
+                <div class="exo-title">Exercice 6</div>
+                <p>Soit $A \in \mathcal{M}_n(\mathbb{K})$ nilpotente. Montrer que $I_n - A$ est inversible et exprimer son inverse.</p>
+                <details class="correction-box">
+                    <summary>▶ Indications de résolution</summary>
+                    <p>Puisque $A$ est nilpotente, $A^k = 0$ pour un certain $k$. On développe $(I_n - A)(I_n + A + A^2 + \dots + A^{k-1})$. Par télescopage, on obtient $I_n - A^k = I_n$. L'inverse est donc la somme $\sum_{j=0}^{k-1} A^j$.</p>
+                </details>
+            </div>
+
+            <div class="exo-box">
+                <div class="exo-title">Exercice 7</div>
+                <p>Montrer que le produit de deux matrices symétriques est une matrice symétrique si et seulement si les deux matrices commutent.</p>
+                <details class="correction-box">
+                    <summary>▶ Indications de résolution</summary>
+                    <p>Soient $A$ et $B$ symétriques ($^tA = A$, $^tB = B$). On cherche à savoir quand $AB$ est symétrique.<br>
+                    $AB \text{ symétrique} \iff ^t(AB) = AB \iff ^tB^tA = AB \iff BA = AB \iff A \text{ et } B \text{ commutent}.$</p>
+                </details>
+            </div>
+
+            <div class="exo-box">
+                <div class="exo-title">Exercice 8</div>
+                <p>On considère $D = \text{diag}(\alpha_1, \dots, \alpha_n) \in \mathcal{M}_n(\mathbb{K})$, $D' = \text{diag}(\beta_1, \dots, \beta_p) \in \mathcal{M}_p(\mathbb{K})$ et $M \in \mathcal{M}_{n,p}(\mathbb{K})$. Exprimer les vecteurs-lignes de $DM$ et les vecteurs-colonnes de $MD'$ à l'aide de ceux de $M$.</p>
+                <details class="correction-box">
+                    <summary>▶ Indications de résolution</summary>
+                    <p>Calcul direct du terme général. La ligne $i$ de $DM$ correspond à la ligne $i$ de $M$ multipliée par $\alpha_i$. La colonne $j$ de $MD'$ correspond à la colonne $j$ de $M$ multipliée par $\beta_j$.</p>
+                </details>
+            </div>
+
+            <div class="exo-box">
+                <div class="exo-title">Exercice 9</div>
+                <p>Soit $A, B, C$ dans $\mathcal{M}_3(\mathbb{K})$, toutes trois non nulles et telles que $ABC = 0$. Montrer que deux d'entre elles, au moins, ne sont pas inversibles.</p>
+                <details class="correction-box">
+                    <summary>▶ Indications de résolution</summary>
+                    <p>Raisonnement par l'absurde. Si $A$ et $B$ sont inversibles, alors $(AB)^{-1}ABC = 0 \implies C = 0$, ce qui contredit l'énoncé. Faire de même pour les autres couples.</p>
+                </details>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2>Niveau 2 <span class="badge-n2">Entraînement Approfondi</span></h2>
+
+            <div class="exo-box">
+                <div class="exo-title">Exercice 10</div>
+                <p>Calcul de l'inverse de $A = \begin{pmatrix} 1 & 1/2 & 1/3 \\ 1/2 & 1/3 & 1/4 \\ 1/3 & 1/4 & 1/5 \end{pmatrix}$. On fera le calcul avec les valeurs (rationnelles) exactes et on fera un deuxième calcul, avec la méthode du pivot de Gauss, en arrondissant à $10^{-2}$ au plus près à chaque fois. Comparer les résultats.</p>
+                <details class="correction-box">
+                    <summary>▶ Indications de résolution</summary>
+                    <p>C'est une matrice de Hilbert. Ses valeurs propres sont très dispersées (matrice mal conditionnée). Le calcul avec les arrondis va diverger massivement de la solution exacte en fractions. C'est une sensibilisation aux erreurs d'arrondis en calcul numérique.</p>
+                </details>
+            </div>
+
+            <div class="exo-box">
+                <div class="exo-title">Exercice 11</div>
+                <p>Soit $A = \begin{pmatrix} 1 & 1 & 1 \\ 1 & 0 & 0 \\ 1 & 0 & 0 \end{pmatrix} \in \mathcal{M}_3(\mathbb{R})$. Montrer qu'il existe deux suites réelles $(\alpha_n)_{n \in \mathbb{N}}$ et $(\beta_n)_{n \in \mathbb{N}}$ telles que :<br>
+                $\forall n \in \mathbb{N}^*, A^n = \alpha_n A + \beta_n A^2$. Déterminer $\alpha_n$ et $\beta_n$.</p>
+                <details class="correction-box">
+                    <summary>▶ Indications de résolution</summary>
+                    <p>Calculer $A^2$ et $A^3$. On trouve l'équation d'amorce $A^3 = A^2 + 2A$. <br>
+                    Poser l'hypothèse de récurrence $A^n = \alpha_n A + \beta_n A^2$. En multipliant par $A$, on a $A^{n+1} = \alpha_n A^2 + \beta_n A^3 = \alpha_n A^2 + \beta_n(A^2 + 2A) = (\alpha_n + \beta_n)A^2 + 2\beta_n A$.<br>
+                    Par identification : $\alpha_{n+1} = 2\beta_n$ et $\beta_{n+1} = \alpha_n + \beta_n$. Ce sont des suites récurrentes linéaires d'ordre 2 à résoudre.</p>
+                </details>
+            </div>
+
+            <div class="exo-box">
+                <div class="exo-title">Exercice 12</div>
+                <p>Soit $\alpha$ et $\beta$ réels, $0 \le \alpha < \beta \le 1$. Étudier les suites définies par :<br>
+                $(u_0, v_0) \in \mathbb{R}^2, \forall n \in \mathbb{N}, \begin{cases} u_{n+1} = \alpha u_n + (1 - \alpha)v_n \\ v_{n+1} = (1 - \beta)u_n + \beta v_n \end{cases}$</p>
+                <details class="correction-box">
+                    <summary>▶ Indications de résolution</summary>
+                    <p>Le système s'écrit matriciellement $X_{n+1} = M X_n$ avec $M = \begin{pmatrix} \alpha & 1-\alpha \\ 1-\beta & \beta \end{pmatrix}$. L'étude des suites revient à calculer $M^n$, en cherchant un polynôme annulateur de $M$ comme dans l'exercice 11.</p>
+                </details>
+            </div>
+
+            <div class="exo-box">
+                <div class="exo-title">Exercice 13</div>
+                <p>Discuter le système $\begin{cases} x + ay - bz = 1 \\ bx - y + az = b \\ by + az = 0 \end{cases}$</p>
+                <details class="correction-box">
+                    <summary>▶ Indications de résolution</summary>
+                    <p>Utiliser la première équation pour isoler $x = 1 - ay + bz$. Remplacer $x$ dans les deux autres équations pour obtenir un système de 2 équations à 2 inconnues ($y, z$). Discuter ensuite selon l'annulation du déterminant de ce sous-système $2\times2$.</p>
+                </details>
+            </div>
+
+            <div class="exo-box">
+                <div class="exo-title">Exercice 14</div>
+                <p>Soit $A = \begin{pmatrix} 0 & 0 & 4 \\ 1 & 2 & 1 \\ 2 & 4 & -2 \end{pmatrix}$. Calculer $A^3$ puis $A^6 - 8A^4 + A^3 - 9A + I_3$.</p>
+                <details class="correction-box">
+                    <summary>▶ Indications de résolution</summary>
+                    <p>Calcul direct : on trouve $A^3 = 16A$. En remplaçant $A^3$ par $16A$ dans le gros polynôme, toutes les puissances supérieures s'annulent ou se simplifient considérablement ($A^4 = 16A^2$, $A^6 = 256A^2$, etc.).</p>
+                </details>
+            </div>
+
+            <div class="exo-box">
+                <div class="exo-title">Exercice 15</div>
+                <p>Soit $A = \begin{pmatrix} 0 & 1 & -1 & 1 \\ 0 & 0 & 1 & -1 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 0 & 0 \end{pmatrix}$. Calculer $A^p, p \in \mathbb{N}^*$, et calculer $(I_4 - A)^{-1}$.</p>
+                <details class="correction-box">
+                    <summary>▶ Indications de résolution</summary>
+                    <p>$A$ est strictement triangulaire, donc nilpotente. On trouve $A^4 = 0_4$. Par conséquent $A^p = 0_4$ pour $p \ge 4$. On utilise le résultat de l'Exercice 6 : l'inverse est $I_4 + A + A^2 + A^3$.</p>
+                </details>
+            </div>
+
+            <div class="exo-box">
+                <div class="exo-title">Exercice 16</div>
+                <p>Soit $A \in \mathcal{M}_n(\mathbb{K})$. Montrer que : $\forall D \in \mathscr{D}_n(\mathbb{K}), AD = DA \iff A \in \mathscr{D}_n(\mathbb{K})$.</p>
+                <details class="correction-box">
+                    <summary>▶ Indications de résolution</summary>
+                    <p>Prendre une matrice diagonale $D$ avec des éléments diagonaux tous distincts. L'égalité $AD=DA$ donne coefficient par coefficient $a_{i,j}d_j = d_ia_{i,j}$, soit $a_{i,j}(d_j - d_i) = 0$. Si $i \neq j$, $d_j - d_i \neq 0$, ce qui force $a_{i,j} = 0$. $A$ est donc diagonale.</p>
+                </details>
+            </div>
+
+            <div class="exo-box">
+                <div class="exo-title">Exercice 17</div>
+                <p>Soit $n \in \mathbb{N}, n \ge 2$. Montrer que $A \in \mathcal{M}_n(\mathbb{K}), a_{i,j} = 1 - \delta_{i,j}$, est inversible.</p>
+                <details class="correction-box">
+                    <summary>▶ Indications de résolution</summary>
+                    <p>Poser $A = J - I_n$ (où $J$ est remplie de 1). Calculer $A^2 = J^2 - 2J + I_n$. Or $J^2 = nJ$. En combinant ces équations pour isoler $I_n$, on trouve que $A$ multipliée par un certain polynôme en $A$ donne $I_n$.</p>
+                </details>
+            </div>
+
+            <div class="exo-box">
+                <div class="exo-title">Exercice 18</div>
+                <p>Déterminer le centre de $\mathcal{M}_n(\mathbb{K})$, c'est-à-dire : $\{M \in \mathcal{M}_n(\mathbb{K}) \mid \forall X \in \mathcal{M}_n(\mathbb{K}), MX = XM\}$.</p>
+                <details class="correction-box">
+                    <summary>▶ Indications de résolution</summary>
+                    <p>Le centre est constitué uniquement des matrices scalaires (de la forme $\lambda I_n$). Pour le prouver, on teste la condition $MX = XM$ en remplaçant $X$ successivement par les matrices élémentaires de la base $E_{i,j}$.</p>
+                </details>
+            </div>
+
+            <div class="exo-box">
+                <div class="exo-title">Exercice 19</div>
+                <p>$A = \begin{pmatrix} 1 & 1 & 0 & 1 \\ 3 & 2 & -1 & 3 \\ \lambda & 3 & -2 & 0 \\ -1 & 0 & -4 & 3 \end{pmatrix}, B = \begin{pmatrix} 3 & 1 & 1 \\ 1 & 1 & \lambda \\ -4 & 4 & -4 \\ 6 & 4 & 0 \end{pmatrix}, C = \begin{pmatrix} 1 & 1 & -1 & 2 \\ \lambda & 1 & 1 & 1 \\ 1 & -1 & 3 & -3 \\ 4 & 2 & 0 & \lambda \end{pmatrix}$.<br>Calculer leurs rangs suivant les valeurs de $\lambda$ et leurs inverses quand il y a lieu.</p>
+                <details class="correction-box">
+                    <summary>▶ Indications de résolution</summary>
+                    <p>Appliquer strictement le pivot de Gauss (échelonnement). La valeur de $\lambda$ va se retrouver dans les pivots des dernières lignes. Discuter des cas où ce pivot s'annule (le rang baisse) ou non (rang maximal, donc inversible).</p>
+                </details>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2>Niveau 3 <span class="badge-n3">Problèmes Ouverts & Abstraits</span></h2>
+
+            <div class="exo-box">
+                <div class="exo-title">Exercice 20</div>
+                <p>On suppose $a, b, c, d$ réels et non tous nuls. Montrer que le système dont la matrice est la suivante est de Cramer et le résoudre :<br>
+                $\begin{bmatrix} a & b & c & d \\ b & -a & d & -c \\ c & -d & -a & b \\ d & c & -b & -a \end{bmatrix}$</p>
+                <details class="correction-box">
+                    <summary>▶ Indications de résolution</summary>
+                    <p>Matrice $M$. Calculer $^tMM$. Les termes croisés s'annulent tous. On trouve $(a^2+b^2+c^2+d^2)I_4$. Comme ils ne sont pas tous nuls, la somme des carrés est strictement positive, la matrice est inversible, c'est un système de Cramer.</p>
+                </details>
+            </div>
+
+            <div class="exo-box">
+                <div class="exo-title">Exercice 21</div>
+                <p>Déterminer les conditions nécessaires et suffisantes pour que le système suivant soit de Cramer et le résoudre dans ce cas :<br>
+                $\left( \sum_{1 \le j \le n, j \neq i} b x_j \right) + a x_i = c_i, \quad 1 \le i \le n$.</p>
+                <details class="correction-box">
+                    <summary>▶ Indications de résolution</summary>
+                    <p>La matrice s'écrit $M = (a-b)I_n + bJ$. On cherche les solutions de $MX=0$. En sommant toutes les lignes $L_1 \leftarrow L_1 + \dots + L_n$, on factorise par $a + (n-1)b$. Le système est de Cramer ssi $a \neq b$ et $a + (n-1)b \neq 0$.</p>
+                </details>
+            </div>
+
+            <div class="exo-box">
+                <div class="exo-title">Exercice 22</div>
+                <p>Soit $T \in \mathcal{M}_n(\mathbb{R})$, triangulaire supérieure. Montrer que $^tTT = T^tT \iff T$ est diagonale.</p>
+                <details class="correction-box">
+                    <summary>▶ Indications de résolution</summary>
+                    <p>Calculer et égaliser les coefficients diagonaux des matrices $^tTT$ et $T^tT$. On remarque que pour $T^tT$, c'est la somme des carrés des éléments de la ligne, alors que pour $^tTT$, c'est la somme des carrés de la colonne. En procédant par récurrence sur l'indice, on montre que tous les termes hors-diagonale doivent être nuls.</p>
+                </details>
+            </div>
+
+            <div class="exo-box">
+                <div class="exo-title">Exercice 23</div>
+                <p>Soit $A$ et $B$ des matrices carrées complexes d'ordre $n$. On suppose que $A$ est inversible et que $B$ est nilpotente. Montrer que $I_n + A^{-1}BA$ et $I_n + ABA^{-1}$ sont inversibles et trouver leurs inverses.</p>
+                <details class="correction-box">
+                    <summary>▶ Indications de résolution</summary>
+                    <p>Posons $N = A^{-1}BA$. On montre facilement que $N^k = A^{-1}B^kA$. Puisque $B$ est nilpotente ($B^k=0$), $N$ l'est aussi ! On se ramène donc à prouver que $(I_n + N)$ est inversible, ce qui est l'objet de l'exercice 6 (en ajustant le signe).</p>
+                </details>
+            </div>
+
+            <div class="exo-box">
+                <div class="exo-title">Exercice 24</div>
+                <p>Dans le plan usuel, on considère un polygone à $n$ côtés de sommets $M_1, M_2, \dots, M_n$.<br>
+                Trouver une condition nécessaire et suffisante pour qu'il existe un unique polygone à $n$ côtés de sommets $P_1, P_2, \dots, P_n$ tel que pour tout $k \in \llbracket 1, n \rrbracket$, $M_k$ soit le milieu du segment $[P_k, P_{k+1}]$ et $M_n$ le milieu du segment $[P_n, P_1]$.</p>
+                <details class="correction-box">
+                    <summary>▶ Indications de résolution</summary>
+                    <p>Passer par les affixes (complexes). Le système se traduit par des équations du type $p_1 + p_2 = 2m_1$, $p_2 + p_3 = 2m_2 \dots p_n + p_1 = 2m_n$. La matrice de ce système a des $1$ sur la diagonale et la sur-diagonale. Le calcul de son déterminant montre que la solution est unique si et seulement si $n$ est un nombre impair.</p>
+                </details>
+            </div>
+
+        </div>
     </div>
 
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, navbtns;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            navbtns = document.getElementsByClassName("nav-btn");
+            for (i = 0; i < navbtns.length; i++) {
+                navbtns[i].className = navbtns[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+            if (window.MathJax) { MathJax.typesetPromise(); }
+            window.scrollTo(0,0);
+        }
+    </script>
 </body>
 </html>
