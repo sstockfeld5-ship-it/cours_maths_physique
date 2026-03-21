@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -17,6 +16,8 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
     <style>
+        /* Styles généraux et navigation fluide */
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
@@ -44,33 +45,46 @@
         h3 {
             color: #2471a3;
             margin-top: 25px;
+            border-bottom: 1px solid #d5dbdb;
+            padding-bottom: 5px;
         }
         
-        /* Système d'onglets */
-        .tab-container {
-            margin-bottom: 20px;
-            border-bottom: 3px solid #1a5276;
+        /* Menu de navigation (Sommaire) */
+        .navbar {
+            background-color: #1a5276;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            position: sticky;
+            top: 10px;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             display: flex;
-            gap: 5px;
+            justify-content: space-around;
             flex-wrap: wrap;
+            gap: 10px;
         }
-        .tab-btn {
-            background-color: #d5dbdb;
-            color: #2c3e50;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 14px 20px;
-            transition: 0.3s;
-            font-size: 16px;
+        .navbar a {
+            color: white;
+            text-decoration: none;
             font-weight: bold;
-            border-radius: 8px 8px 0 0;
-            flex-grow: 1;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
-        .tab-btn:hover { background-color: #aeb6bf; }
-        .tab-btn.active { background-color: #1a5276; color: white; }
-        .tabcontent { display: none; animation: fadeEffect 0.5s; }
-        @keyframes fadeEffect { from {opacity: 0;} to {opacity: 1;} }
+        .navbar a:hover {
+            background-color: #2980b9;
+        }
+
+        /* En-têtes de grandes sections */
+        .main-section-title {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 50px;
+            text-align: center;
+        }
 
         /* Boîtes de contenu */
         .section-card {
@@ -80,38 +94,15 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.06);
             margin-bottom: 35px;
         }
-        .definition {
-            background-color: #eaf2f8;
-            border-left: 5px solid #2980b9;
-            padding: 15px 20px;
-            margin: 20px 0;
-            border-radius: 0 5px 5px 0;
+        .definition, .theoreme, .attention, .remarque {
+            padding: 15px 20px; margin: 20px 0; border-radius: 0 5px 5px 0;
         }
-        .theoreme {
-            background-color: #e9f7ef;
-            border-left: 5px solid #27ae60;
-            padding: 15px 20px;
-            margin: 20px 0;
-            border-radius: 0 5px 5px 0;
-        }
-        .attention {
-            background-color: #fdf2e9;
-            border-left: 5px solid #d35400;
-            padding: 15px 20px;
-            margin: 20px 0;
-            border-radius: 0 5px 5px 0;
-        }
-        .remarque {
-            font-style: italic;
-            color: #7f8c8d;
-            background-color: #f8f9f9;
-            padding: 10px;
-            border-radius: 5px;
-            border-left: 3px solid #bdc3c7;
-            margin: 15px 0;
-        }
+        .definition { background-color: #eaf2f8; border-left: 5px solid #2980b9; }
+        .theoreme { background-color: #e9f7ef; border-left: 5px solid #27ae60; }
+        .attention { background-color: #fdf2e9; border-left: 5px solid #d35400; }
+        .remarque { background-color: #f8f9f9; border-left: 3px solid #bdc3c7; font-style: italic; color: #7f8c8d; }
         
-        /* Correction Box cachée par défaut */
+        /* Correction Box (Native HTML5) */
         details.correction-box {
             background-color: #fdfbf7;
             border: 1px solid #e1d5c9;
@@ -120,354 +111,257 @@
             border-radius: 8px;
         }
         details.correction-box summary {
-            font-weight: bold;
-            color: #d35400;
-            cursor: pointer;
-            outline: none;
-            padding: 5px 0;
+            font-weight: bold; color: #d35400; cursor: pointer; outline: none; padding: 5px 0;
         }
-        details.correction-box summary:hover {
-            color: #e67e22;
-        }
+        details.correction-box summary:hover { color: #e67e22; }
         details.correction-box p {
-            margin-top: 15px;
-            border-top: 1px dashed #e1d5c9;
-            padding-top: 15px;
+            margin-top: 15px; border-top: 1px dashed #e1d5c9; padding-top: 15px;
         }
         
-        /* Styles Matrices */
+        /* Matrices HTML */
         .matrix-table {
-            display: inline-block;
-            position: relative;
-            vertical-align: middle;
-            margin: 15px;
-            font-family: monospace;
-            font-size: 1.2em;
+            display: inline-block; position: relative; vertical-align: middle; margin: 15px; font-family: monospace; font-size: 1.2em;
         }
         .matrix-table::before, .matrix-table::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 8px;
-            border: 2px solid #2c3e50;
+            content: ""; position: absolute; top: 0; bottom: 0; width: 8px; border: 2px solid #2c3e50;
         }
         .matrix-table::before { left: -4px; border-right: none; border-top-left-radius: 5px; border-bottom-left-radius: 5px; }
         .matrix-table::after { right: -4px; border-left: none; border-top-right-radius: 5px; border-bottom-right-radius: 5px; }
         .matrix-table table { border-collapse: collapse; }
         .matrix-table td { padding: 8px 15px; text-align: center; }
-        .augmented-col { border-left: 2px dashed #95a5a6; background-color: #f4f6f7; }
-        .highlight { background-color: #fcf3cf; font-weight: bold; }
-        .pivot { color: #c0392b; font-weight: bold; }
-
-        /* Animation */
-        #animation-container {
-            text-align: center;
-            background: #ffffff;
-            padding: 25px;
-            border-radius: 8px;
-            border: 1px solid #d5dbdb;
-        }
-        .btn {
-            background-color: #2980b9;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 15px;
-            font-weight: bold;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 5px;
-            transition: background 0.3s;
-        }
-        .btn:hover { background-color: #1f618d; }
-        .btn:disabled { background-color: #bdc3c7; cursor: not-allowed; }
-        #step-description {
-            font-size: 1.1em;
-            color: #2c3e50;
-            min-height: 50px;
-            margin-bottom: 20px;
-        }
+        
+        /* Badges de niveau */
+        .badge-n1 { background-color: #3498db; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; vertical-align: middle;}
+        .badge-n2 { background-color: #f39c12; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; vertical-align: middle;}
+        .badge-n3 { background-color: #e74c3c; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; vertical-align: middle;}
     </style>
 </head>
 <body>
 
-    <h1>Algèbre Linéaire & Calcul Matriciel</h1>
+    <h1>Algèbre Linéaire & Matrices : Préparation ITPE</h1>
 
-    <div class="tab-container">
-        <button class="tab-btn active" onclick="openTab(event, 'Cours')">📚 Cours Complet</button>
-        <button class="tab-btn" onclick="openTab(event, 'Methodes')">🛠️ Méthodes (Récurrence & Newton)</button>
-        <button class="tab-btn" onclick="openTab(event, 'Exercices')">📝 Exercices & Annales ITPE</button>
+    <nav class="navbar">
+        <a href="#partie-cours">📚 1. Cours Complet</a>
+        <a href="#partie-methodes">🛠️ 2. Méthodes (Récurrence & Newton)</a>
+        <a href="#partie-exercices">📝 3. Base d'Exercices & Annales</a>
+    </nav>
+
+    <h2 id="partie-cours" class="main-section-title">📚 Partie 1 : Cours Complet</h2>
+    
+    <div class="section-card">
+        <h2>1. Vocabulaire et Anatomie Matricielle</h2>
+        <div class="definition">
+            <strong>Matrice :</strong> Un tableau rectangulaire de nombres de type $(n, p)$, c'est-à-dire avec $n$ lignes et $p$ colonnes. On la note $A = [a_{i,j}]_{\substack{1 \le i \le n \\ 1 \le j \le p}}$. L'ensemble est noté $\mathcal{M}_{n,p}(\mathbb{K})$.
+        </div>
+        <ul>
+            <li><strong>Matrice Ligne :</strong> Type $(1, p)$.</li>
+            <li><strong>Matrice Colonne :</strong> Type $(n, 1)$.</li>
+            <li><strong>Matrice Carrée :</strong> Possède le même nombre de lignes que de colonnes ($n = p$). L'ensemble est noté $\mathcal{M}_n(\mathbb{K})$.</li>
+        </ul>
     </div>
 
-    <div id="Cours" class="tabcontent" style="display: block;">
-        
-        <div class="section-card">
-            <h2>1. Vocabulaire et Anatomie Matricielle</h2>
-            <div class="definition">
-                <strong>Matrice :</strong> Un tableau rectangulaire de nombres de type $(n, p)$, c'est-à-dire avec $n$ lignes et $p$ colonnes. On la note $A = [a_{i,j}]_{\substack{1 \le i \le n \\ 1 \le j \le p}}$. L'ensemble est noté $\mathcal{M}_{n,p}(\mathbb{K})$.
-            </div>
-            <ul>
-                <li><strong>Matrice Ligne :</strong> Type $(1, p)$.</li>
-                <li><strong>Matrice Colonne :</strong> Type $(n, 1)$.</li>
-                <li><strong>Matrice Carrée :</strong> Possède le même nombre de lignes que de colonnes ($n = p$). L'ensemble est noté $\mathcal{M}_n(\mathbb{K})$.</li>
-            </ul>
-            <div class="definition">
-                <strong>Symbole de Kronecker et Matrices Élémentaires :</strong><br>
-                On définit $\delta_{i,j} = 1$ si $i=j$, et $0$ sinon. <br>
-                Les matrices élémentaires $E_{k,l}$ sont des matrices remplies de zéros, sauf à la ligne $k$ et la colonne $l$ où se trouve un $1$. 
-            </div>
+    <div class="section-card">
+        <h2>2. Le Calcul Matriciel</h2>
+        <h3>2.1 Opérations linéaires</h3>
+        <p>L'addition ($A+B$) et la multiplication par un scalaire ($\lambda A$) se font "terme à terme". Elles nécessitent que les matrices soient de <strong>même dimension</strong>.</p>
+        <h3>2.2 Le Produit Matriciel ($AB$)</h3>
+        <p>Le produit n'est défini que si le <strong>nombre de colonnes de $A$ est égal au nombre de lignes de $B$</strong>.<br>
+        Le terme général s'obtient par le produit scalaire d'une ligne par une colonne :
+        $$ c_{i,j} = \sum_{k=1}^{p} a_{i,k}b_{k,j} $$</p>
+        <div class="attention">
+            <strong>Le produit n'est PAS commutatif !</strong> En général, $AB \neq BA$. De plus, on peut avoir $AB = 0_{n,p}$ même si $A \neq 0$ et $B \neq 0$.
         </div>
-
-        <div class="section-card">
-            <h2>2. Le Calcul Matriciel</h2>
-            <h3>2.1 Opérations linéaires</h3>
-            <p>L'addition ($A+B$) et la multiplication par un scalaire ($\lambda A$) se font "terme à terme". Elles nécessitent que les matrices soient de <strong>même dimension</strong>.</p>
-            <h3>2.2 Le Produit Matriciel ($AB$)</h3>
-            <p>Le produit n'est défini que si le <strong>nombre de colonnes de $A$ est égal au nombre de lignes de $B$</strong>. Si $A \in \mathcal{M}_{n,p}(\mathbb{K})$ et $B \in \mathcal{M}_{p,q}(\mathbb{K})$, le produit $AB$ est de taille $(n, q)$.<br>
-            Le terme général s'obtient par le produit scalaire d'une ligne par une colonne :
-            $$ c_{i,j} = \sum_{k=1}^{p} a_{i,k}b_{k,j} $$</p>
-            <div class="attention">
-                <strong>Le produit n'est PAS commutatif !</strong> En général, $AB \neq BA$. De plus, on peut avoir $AB = 0_{n,p}$ même si $A \neq 0$ et $B \neq 0$.
-            </div>
-            <div class="remarque">
-                <strong>Exceptions : Dans quels cas $AB = BA$ ?</strong><br>
-                On dit que deux matrices <em>commutent</em>. C'est le cas pour :<br>
-                1. Une matrice et l'identité : $AI_n = I_nA = A$.<br>
-                2. Une matrice et son inverse : $AA^{-1} = A^{-1}A = I_n$.<br>
-                3. Une matrice et ses propres puissances : $A \times A^k = A^k \times A = A^{k+1}$.<br>
-                4. Une matrice et la matrice nulle : $A \times 0_n = 0_n \times A = 0_n$.<br>
-                5. Deux matrices diagonales de même taille commutent toujours entre elles.
-            </div>
+        <div class="remarque">
+            <strong>Exceptions : Dans quels cas $AB = BA$ ?</strong><br>
+            On dit que deux matrices commutent. C'est le cas pour :<br>
+            1. Une matrice et l'identité : $AI_n = I_nA = A$.<br>
+            2. Une matrice et son inverse : $AA^{-1} = A^{-1}A = I_n$.<br>
+            3. Une matrice et ses propres puissances.<br>
+            4. Deux matrices diagonales de même taille.
         </div>
+    </div>
 
-        <div class="section-card">
-            <h2>3. Les Matrices Carrées $\mathcal{M}_n(\mathbb{K})$</h2>
-            <p><strong>Matrice Identité ($I_n$) :</strong> Matrice carrée avec des $1$ sur la diagonale et des $0$ ailleurs.</p>
-            <h3>Puissances de matrices et Puissance Zéro</h3>
-            <p>On définit les puissances par récurrence : $A^k = A \times A \dots \times A$ ($k$ fois).</p>
-            <div class="definition">
-                <strong>L'effet de la puissance 0 :</strong><br>
-                Par convention (absolument essentielle pour la formule du binôme), pour toute matrice carrée $A$ non nulle : 
-                $$A^0 = I_n$$
-                <em>Élever une matrice à la puissance 0 donne la matrice "unité" $I_n$.</em>
-            </div>
-            <h3>Matrices Particulières</h3>
-            <ul>
-                <li><strong>Nilpotente :</strong> S'il existe un entier $k$ tel que $A^k = 0_{n}$.</li>
-                <li><strong>Diagonale :</strong> Tous les coefficients hors de la diagonale sont nuls. Leurs puissances sont simples : $A^k = \text{diag}(d_1^k, \dots, d_n^k)$.</li>
-            </ul>
+    <div class="section-card">
+        <h2>3. Les Matrices Carrées $\mathcal{M}_n(\mathbb{K})$</h2>
+        <p><strong>Matrice Identité ($I_n$) :</strong> Matrice carrée avec des $1$ sur la diagonale et des $0$ ailleurs.</p>
+        <div class="definition">
+            <strong>L'effet de la puissance 0 :</strong> Par convention, pour toute matrice carrée $A$ non nulle : $A^0 = I_n$
         </div>
+        <ul>
+            <li><strong>Nilpotente :</strong> S'il existe un entier $k$ tel que $A^k = 0_{n}$.</li>
+            <li><strong>Diagonale :</strong> $A^k = \text{diag}(d_1^k, \dots, d_n^k)$.</li>
+        </ul>
+    </div>
 
-        <div class="section-card">
-            <h2>4. La Transposition</h2>
-            <div class="definition">
-                <strong>Transposée ($^tA$) :</strong> Matrice obtenue en échangeant les lignes et les colonnes de $A$. Son terme général est $a'_{i,j} = a_{j,i}$.
-            </div>
-            <p><strong>Propriétés fondamentales :</strong></p>
-            <ul>
-                <li>Symétrie : $A$ est symétrique si $^tA = A$. Antisymétrique si $^tA = -A$.</li>
-                <li><strong>Produit (Crucial) :</strong> $^t(AB) = ^tB ^tA$ (L'ordre des facteurs s'inverse).</li>
-            </ul>
-            
-            <h3>Propriétés avancées et Combinaisons classiques</h3>
-            <div class="theoreme">
-                L'opérateur de transposition permet de déduire des propriétés remarquables très utiles dans les démonstrations de concours.<br><br>
-                <strong>1. Construction de matrices symétriques :</strong><br>
-                Pour toute matrice carrée $A$, la matrice obtenue par la somme $A + ^tA$ est <strong>toujours symétrique</strong>. (En effet, $^t(A + ^tA) = ^tA + ^t(^tA) = ^tA + A$).<br>
-                <em>De la même manière, la matrice $A - ^tA$ est toujours antisymétrique.</em><br><br>
-                
-                <strong>2. Conservation de la symétrie par le produit :</strong><br>
-                Si on dispose d'une matrice $A$ symétrique et d'une matrice $B$ antisymétrique, la combinaison $AB - BA$ donne une nouvelle matrice <strong>symétrique</strong>. La démonstration repose sur le fait d'inverser l'ordre lors de la transposition du produit :<br>
-                $$ ^t(AB - BA) = ^t(AB) - ^t(BA) = ^tB^tA - ^tA^tB = (-B)A - A(-B) = -BA + AB = AB - BA $$
-            </div>
+    <div class="section-card">
+        <h2>4. La Transposition</h2>
+        <div class="definition">
+            <strong>Transposée ($^tA$) :</strong> Matrice obtenue en échangeant les lignes et les colonnes de $A$. Son terme général est $a'_{i,j} = a_{j,i}$.
         </div>
-
-        <div class="section-card">
-            <h2>5. Les Matrices de Transformation Élémentaire</h2>
-            <p>Toute opération élémentaire effectuée sur une matrice s'interprète comme la multiplication par une matrice inversible particulière.</p>
-            <h3>5.1 Opérations sur les lignes et Produit à Gauche</h3>
-            <div class="definition">
-                <strong>1. Transvection ($L_i \leftarrow L_i + \lambda L_j$) :</strong> $T = I_n + \lambda E_{i,j}$. Inverse : $I_n - \lambda E_{i,j}$.<br>
-                <strong>2. Transposition ($L_i \leftrightarrow L_j$) :</strong> $T = I_n - E_{i,i} - E_{j,j} + E_{i,j} + E_{j,i}$. Inverse : Elle-même.<br>
-                <strong>3. Dilatation ($L_i \leftarrow \lambda L_i$) :</strong> $T = I_n + (\lambda - 1)E_{i,i}$. Inverse : $I_n + (\frac{1}{\lambda} - 1)E_{i,i}$.
-            </div>
-            <div class="theoreme">
-                Deux matrices $A$ et $A'$ sont <strong>équivalentes par lignes</strong> si et seulement s'il existe une matrice $E$ (produit de matrices de transformations élémentaires) telle que <strong>$A' = EA$</strong>.<br>
-                <em>(Effectuer une opération sur les colonnes revient à multiplier par la droite : $A' = AE$).</em>
-            </div>
+        <ul>
+            <li>Symétrie : $A$ est symétrique si $^tA = A$. Antisymétrique si $^tA = -A$.</li>
+            <li><strong>Produit (Crucial) :</strong> $^t(AB) = ^tB ^tA$ (L'ordre des facteurs s'inverse).</li>
+        </ul>
+        <div class="theoreme">
+            <strong>Propriétés classiques :</strong><br>
+            1. $A + ^tA$ est <strong>toujours symétrique</strong>.<br>
+            2. Si $A$ est symétrique et $B$ antisymétrique, $AB - BA$ est <strong>symétrique</strong>.
         </div>
+    </div>
 
-        <div class="section-card">
-            <h2>6. Systèmes Linéaires et Algorithme de Gauss-Jordan</h2>
-            <p>Un système d'équations se traduit matriciellement par $AX = B$.</p>
-            
-            <h3>6.1 Échelonnement et Rang</h3>
-            <div class="theoreme">
-                <strong>Théorème de Gauss-Jordan :</strong><br>
-                Toute matrice est équivalente par lignes à une <strong>unique</strong> matrice échelonnée réduite.
-            </div>
-            <p>Le <strong>Rang ($r$)</strong> est le nombre de pivots non nuls à la fin de l'échelonnement. S'il y a $p$ inconnues et que $r < p$, il y a $p-r$ degrés de liberté et une infinité de solutions.</p>
-
-            <h3>6.2 Les Systèmes de Cramer</h3>
-            <p>C'est le cas idéal en algèbre linéaire, très fréquent en physique et en ingénierie.</p>
-            <div class="definition">
-                <strong>Système de Cramer :</strong> Un système linéaire est appelé "système de Cramer" s'il possède <strong>autant d'équations que d'inconnues</strong> (la matrice du système $A$ est donc carrée d'ordre $n$) ET si sa matrice $A$ est <strong>inversible</strong>.
-            </div>
-            <div class="theoreme">
-                <strong>Résolution directe :</strong><br>
-                Tout système de Cramer $AX = B$ admet une <strong>unique solution</strong>. Cette solution est donnée directement par le produit matriciel :
-                $$ X = A^{-1}B $$
-                <em>Remarque : Si le système est homogène ($B = 0_n$), l'unique solution est la solution nulle $X = 0_n$.</em>
-            </div>
+    <div class="section-card">
+        <h2>5. Les Matrices de Transformation Élémentaire</h2>
+        <p>Toute opération élémentaire s'interprète comme la multiplication par une matrice inversible particulière.</p>
+        <div class="definition">
+            <strong>1. Transvection ($L_i \leftarrow L_i + \lambda L_j$) :</strong> $T = I_n + \lambda E_{i,j}$. Inverse : $I_n - \lambda E_{i,j}$.<br>
+            <strong>2. Transposition ($L_i \leftrightarrow L_j$) :</strong> $T = I_n - E_{i,i} - E_{j,j} + E_{i,j} + E_{j,i}$. Inverse : Elle-même.<br>
+            <strong>3. Dilatation ($L_i \leftarrow \lambda L_i$) :</strong> $T = I_n + (\lambda - 1)E_{i,i}$. Inverse : $I_n + (\frac{1}{\lambda} - 1)E_{i,i}$.
         </div>
+    </div>
 
-        <div class="section-card">
-            <h2>Animation : La méthode de Gauss-Jordan</h2>
-            <div id="animation-container">
-                <div id="step-description">Chargement...</div>
-                <div id="matrix-display" class="matrix-table"></div>
-                <br><br>
-                <button id="btn-prev" class="btn" onclick="prevStep()">&#9664; Précédent</button>
-                <button id="btn-next" class="btn" onclick="nextStep()">Suivant &#9654;</button>
-            </div>
+    <div class="section-card">
+        <h2>6. Systèmes Linéaires et Inversibilité</h2>
+        <div class="theoreme">
+            <strong>Théorème de Gauss-Jordan :</strong> Toute matrice est équivalente par lignes à une unique matrice échelonnée réduite. Le Rang ($r$) est le nombre de pivots non nuls.
         </div>
-
-        <div class="section-card">
-            <h2>7. Matrices Inversibles (Groupe $GL_n(\mathbb{K})$)</h2>
-            <div class="definition">
-                Une matrice carrée $A$ est <strong>inversible</strong> s'il existe $B \in \mathcal{M}_n(\mathbb{K})$ telle que $AB = BA = I_n$. On note $B = A^{-1}$. 
-            </div>
-            <p class="remarque"><strong>Inverse d'un produit :</strong> $(AB)^{-1} = B^{-1}A^{-1}$ (L'ordre s'inverse).</p>
-            <div class="theoreme">
-                <strong>Propriétés caractéristiques :</strong><br>
-                Pour $A \in \mathcal{M}_n(\mathbb{K})$, les propositions suivantes sont équivalentes :<br>
-                1. $A \in GL_n(\mathbb{K})$ ($A$ est inversible).<br>
-                2. Le système homogène $AX = 0$ n'admet que la solution nulle ($X=0$).<br>
-                3. $\text{rg } A = n$ (Le rang est maximal).<br>
-                4. $A$ est équivalente par lignes à la matrice $I_n$.
-            </div>
-            <h3>Calcul pratique de l'inverse</h3>
-            <p>On accole la matrice identité à droite de $A$ pour former $(A | I_n)$. On applique l'algorithme sur l'ensemble. Lorsque le bloc de gauche $A$ se transforme en $I_n$, le bloc de droite se transforme en $A^{-1}$. On obtient $(I_n | A^{-1})$.</p>
+        <div class="definition">
+            <strong>Système de Cramer :</strong> Un système linéaire est un "système de Cramer" s'il possède autant d'équations que d'inconnues ET si sa matrice $A$ est inversible. Solution : $X = A^{-1}B$.
+        </div>
+        <div class="theoreme">
+            <strong>Propriétés de $GL_n(\mathbb{K})$ :</strong><br>
+            Pour $A \in \mathcal{M}_n(\mathbb{K})$, dire que $A$ est inversible équivaut à dire que $\text{rg } A = n$, ou que le système $AX = 0$ n'a que la solution nulle.
         </div>
     </div>
 
 
-    <div id="Methodes" class="tabcontent">
-        
-        <div class="section-card">
-            <h2>M1. Le Binôme de Newton (Application aux matrices)</h2>
-            <p>La formule du Binôme de Newton sert à développer rapidement la puissance d'une somme $(A+B)^n$. En algèbre linéaire, elle est l'outil principal pour calculer la puissance d'une matrice complexe en la décomposant en deux matrices simples.</p>
-            <div class="attention">
-                <strong>Condition absolue :</strong> On ne peut utiliser cette formule sur des matrices <strong>QUE SI ELLES COMMUTENT</strong> ($AB = BA$).
-            </div>
-            <div class="theoreme">
-                <strong>Formule :</strong><br>
-                Soit $A$ et $B$ deux matrices de $\mathcal{M}_n(\mathbb{K})$ telles que $AB = BA$. Pour tout $n \in \mathbb{N}$ :
-                $$ (A+B)^n = \sum_{k=0}^{n} \binom{n}{k} A^k B^{n-k} $$
-            </div>
-            <h3>Méthode Type Concours</h3>
-            <p>Pour calculer $M^n$ :
-            1. On cherche à écrire $M$ sous la forme $M = \lambda I_n + N$ (où $N$ est une matrice simple, souvent nilpotente).<br>
-            2. On vérifie qu'elles commutent : $I_n$ commute avec toutes les matrices.<br>
-            3. On applique la formule. Si $N$ est nilpotente (ex: $N^3=0$), la somme infinie s'arrête brusquement à $k=2$ !</p>
+    <h2 id="partie-methodes" class="main-section-title">🛠️ Partie 2 : Les Grandes Méthodes</h2>
+    
+    <div class="section-card">
+        <h2>M1. Le Binôme de Newton (Application aux matrices)</h2>
+        <div class="attention">
+            <strong>Condition absolue :</strong> On ne peut utiliser cette formule sur des matrices <strong>QUE SI ELLES COMMUTENT</strong> ($AB = BA$).
         </div>
-
-        <div class="section-card">
-            <h2>M2. La Démonstration par Récurrence</h2>
-            <p>La récurrence est le raisonnement indispensable pour prouver une formule qui dépend d'un entier $n$. Elle fonctionne comme un effet domino et se rédige TOUJOURS en 3 étapes strictes.</p>
-            <div class="definition">
-                Soit $P(n)$ la propriété mathématique à démontrer pour tout entier $n \ge n_0$.
-            </div>
-            <h3>Étape 1 : L'Initialisation</h3>
-            <p>On vérifie que la propriété est vraie pour le tout premier domino.<br>
-            <em>Rédaction :</em> "Pour $n = n_0$, on a d'une part ... et d'autre part ... Donc $P(n_0)$ est vraie."</p>
-
-            <h3>Étape 2 : L'Hérédité</h3>
-            <p>C'est le cœur de la preuve. On suppose qu'un domino $n$ tombe, et on prouve qu'il fait tomber le domino $n+1$.<br>
-            <em>Rédaction :</em> "Soit $n \ge n_0$ un entier fixé. Supposons que $P(n)$ soit vraie (HR). Montrons que $P(n+1)$ est vraie."<br>
-            <strong>Astuce :</strong> Lors de ton calcul pour prouver $P(n+1)$, tu <u>dois obligatoirement</u> utiliser ton HR à un moment donné.</p>
-
-            <h3>Étape 3 : La Conclusion</h3>
-            <p>On valide l'effet domino global.<br>
-            <em>Rédaction :</em> "La propriété est initialisée et héréditaire. D'après le principe de récurrence, $P(n)$ est vraie pour tout $n \ge n_0$."</p>
+        <div class="theoreme">
+            <strong>Formule :</strong> Pour tout $n \in \mathbb{N}$ :
+            $$ (A+B)^n = \sum_{k=0}^{n} \binom{n}{k} A^k B^{n-k} $$
         </div>
+        <h3>Méthode Type Concours</h3>
+        <p>1. On cherche à écrire $M$ sous la forme $M = \lambda I_n + N$ (où $N$ est nilpotente).<br>
+        2. On vérifie qu'elles commutent.<br>
+        3. On applique la formule. Si $N^3=0$, la somme s'arrête brusquement à $k=2$.</p>
+    </div>
+
+    <div class="section-card">
+        <h2>M2. La Démonstration par Récurrence</h2>
+        <div class="definition">Soit $P(n)$ la propriété mathématique à démontrer pour tout entier $n \ge n_0$.</div>
+        <p><strong>Étape 1 - Initialisation :</strong> Vérifier $P(n_0)$.<br>
+        <strong>Étape 2 - Hérédité :</strong> Soit $n \ge n_0$. Supposons $P(n)$ vraie. Montrons $P(n+1)$. Il faut obligatoirement utiliser $P(n)$ dans le calcul.<br>
+        <strong>Étape 3 - Conclusion :</strong> "La propriété est initialisée et héréditaire. Par récurrence, $P(n)$ est vraie pour tout $n \ge n_0$."</p>
     </div>
 
 
-    <div id="Exercices" class="tabcontent">
+    <h2 id="partie-exercices" class="main-section-title">📝 Partie 3 : Base d'Exercices du Manuel</h2>
+    
+    <div class="section-card">
+        <h2>Niveau 1 : Maîtrise des bases</h2>
         
-        <div class="section-card">
-            <h2>Partie A : L'Entraînement Fondamental</h2>
-            <p>Fais ces petits exercices au brouillon pour valider chaque partie du cours avant d'attaquer les problèmes de synthèse.</p>
+        <h3>Exercice 5 <span class="badge-n1">Niveau 1</span></h3>
+        <p>Calculer le rang des matrices :
+        $$ A = \begin{pmatrix} 2 & 3 & -2 \\ 4 & -1 & -2 \\ 0 & 1 & 0 \end{pmatrix} \quad \text{et} \quad B = \begin{pmatrix} 1 & 2 & -1 \\ 2 & -1 & -1 \\ -1 & 2 & 0 \end{pmatrix} $$
+        ainsi que l'inverse s'il y a lieu.</p>
+        <details class="correction-box">
+            <summary>▶ Indication & Trame</summary>
+            <p><strong>Méthode :</strong> Utilise l'algorithme de Gauss sur les lignes. Si tu trouves 3 pivots non nuls, le rang est 3 et la matrice est inversible.<br>
+            Pour $A$ : Tu devrais trouver qu'une ligne s'annule (rang < 3), donc $A$ n'est pas inversible.<br>
+            Pour $B$ : Le rang est 3. Applique la méthode $(B | I_3)$ pour trouver l'inverse.</p>
+        </details>
 
-            <h3>Exercice 1 (Définitions)</h3>
-            <p>Soit la matrice $A = (a_{i,j})$ de $\mathcal{M}_{2,3}(\mathbb{R})$ définie par la formule : $a_{i,j} = i + j$. Écrire explicitement la matrice $A$.</p>
-            <details class="correction-box">
-                <summary>▶ Voir la correction</summary>
-                <p>La matrice $A$ possède 2 lignes ($i \in \{1, 2\}$) et 3 colonnes ($j \in \{1, 2, 3\}$). On calcule chaque case en additionnant son numéro de ligne et son numéro de colonne.<br>
-                Ligne 1 : $a_{1,1} = 2$, $a_{1,2} = 3$, $a_{1,3} = 4$.<br>
-                Ligne 2 : $a_{2,1} = 3$, $a_{2,2} = 4$, $a_{2,3} = 5$.<br>
-                $$ A = \begin{pmatrix} 2 & 3 & 4 \\ 3 & 4 & 5 \end{pmatrix} $$</p>
-            </details>
+        <h3>Exercice 6 <span class="badge-n1">Niveau 1</span></h3>
+        <p>Soit $A \in \mathcal{M}_n(\mathbb{K})$ nilpotente. Montrer que $I_n - A$ est inversible et exprimer son inverse.</p>
+        <details class="correction-box">
+            <summary>▶ Indication & Trame</summary>
+            <p><strong>Indication du livre :</strong> Le calcul de $(I_n - A) \times (I_n + A + A^2 + \dots + A^{k-1})$ est classique.<br>
+            <strong>Trame :</strong> $A$ est nilpotente donc $A^k = 0$ pour un certain $k$. En développant le produit indiqué, tous les termes s'annulent en cascade (télescopage) sauf $I_n$ et $A^k$. Comme $A^k=0$, le produit vaut $I_n$. L'inverse est donc la somme $\sum_{j=0}^{k-1} A^j$.</p>
+        </details>
 
-            <h3>Exercice 2 (Calcul & Non-commutativité)</h3>
-            <p>Soient $A = \begin{pmatrix} 1 & 2 \\ 0 & 1 \end{pmatrix}$ et $B = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$. Calculer $AB$ et $BA$. Que remarque-t-on ?</p>
-            <details class="correction-box">
-                <summary>▶ Voir la correction</summary>
-                <p>Produit "Ligne $\times$ Colonne" :<br>
-                $$ AB = \begin{pmatrix} 1\times0 + 2\times1 & 1\times1 + 2\times0 \\ 0\times0 + 1\times1 & 0\times1 + 1\times0 \end{pmatrix} = \begin{pmatrix} 2 & 1 \\ 1 & 0 \end{pmatrix} $$<br>
-                $$ BA = \begin{pmatrix} 0\times1 + 1\times0 & 0\times2 + 1\times1 \\ 1\times1 + 0\times0 & 1\times2 + 0\times1 \end{pmatrix} = \begin{pmatrix} 0 & 1 \\ 1 & 2 \end{pmatrix} $$<br>
-                <strong>Remarque :</strong> $AB \neq BA$. Les matrices ne commutent pas.</p>
-            </details>
-        </div>
+        <h3>Exercice 7 <span class="badge-n1">Niveau 1</span></h3>
+        <p>Montrer que le produit de deux matrices symétriques est une matrice symétrique si et seulement si les deux matrices commutent.</p>
+        <details class="correction-box">
+            <summary>▶ Indication & Trame</summary>
+            <p><strong>Trame :</strong> Soient $A$ et $B$ symétriques ($^tA = A$, $^tB = B$). On étudie le produit $AB$.<br>
+            Calculons sa transposée : $^t(AB) = ^tB^tA = BA$.<br>
+            Pour que $AB$ soit symétrique, il faut que $^t(AB) = AB$. Donc il faut que $BA = AB$. C'est la définition exacte de la commutativité.</p>
+        </details>
 
-        <div class="section-card">
-            <h2>Partie B : Problèmes de Synthèse & Systèmes</h2>
-            
-            <h3>Problème 1 : Rang et Systèmes à paramètre</h3>
-            <p>Un système linéaire de 4 inconnues ($x, y, z, t$) a pour matrice augmentée échelonnée :
-            $$ \left(\begin{array}{cccc|c} 1 & 2 & 0 & -1 & 5 \\ 0 & 0 & 1 & 3 & 2 \\ 0 & 0 & 0 & a-2 & b \end{array}\right) $$
-            1. Discutez du nombre de solutions du système selon les valeurs du paramètre réel $a$ et $b$.<br>
-            2. Dans le cas où $a=2$ et $b=0$, exprimez la solution générale et le nombre de degrés de liberté.</p>
-            <details class="correction-box">
-                <summary>▶ Voir la correction</summary>
-                <p><strong>1. Discussion :</strong> La dernière ligne correspond à $(a-2)t = b$.<br>
-                - Si $a \neq 2$ : On a 3 pivots, $r=3$. L'inconnue $t = b/(a-2)$ est fixée. C'est un système compatible avec 4 inconnues et $r=3$, donc une infinité de solutions (1 degré de liberté).<br>
-                - Si $a = 2$ et $b \neq 0$ : L'équation devient $0 = b$ (impossible). Le système n'a aucune solution.<br>
-                - Si $a = 2$ et $b = 0$ : L'équation devient $0 = 0$. La ligne s'annule.</p>
-                <p><strong>2. Cas a=2, b=0 :</strong><br>
-                Le rang est $r = 2$. On a $p=4$ inconnues. Degrés de liberté = $4 - 2 = 2$.<br>
-                Variables principales : $x$ et $z$. Variables libres : $y$ et $t$.<br>
-                Système réduit : $z + 3t = 2 \implies z = 2 - 3t$<br>
-                $x + 2y - t = 5 \implies x = 5 - 2y + t$<br>
-                Solution : L'ensemble des quadruplets $(5 - 2y + t, \ y, \ 2 - 3t, \ t)$ pour tout $y, t \in \mathbb{R}$.</p>
-            </details>
-        </div>
-        
-        <div class="section-card">
-            <h2>Partie C : Extraits du Manuel (Niveau Avancé)</h2>
-            <p>Ces exercices sont tirés directement de ton manuel. Ils mélangent algèbre, récurrence et binôme de Newton.</p>
+        <h3>Exercice 8 <span class="badge-n1">Niveau 1</span></h3>
+        <p>On considère $D = \text{diag}(\alpha_1, \dots, \alpha_n)$ et $D' = \text{diag}(\beta_1, \dots, \beta_p)$ et $M \in \mathcal{M}_{n,p}(\mathbb{K})$. Exprimer les vecteurs-lignes de $DM$ et les vecteurs-colonnes de $MD'$ à l'aide de ceux de $M$.</p>
+        <details class="correction-box">
+            <summary>▶ Indication & Trame</summary>
+            <p><strong>Trame :</strong> La multiplication à gauche par une matrice diagonale $D$ multiplie chaque Ligne $i$ de $M$ par le coefficient $\alpha_i$.<br>
+            La multiplication à droite par $D'$ multiplie chaque Colonne $j$ de $M$ par le coefficient $\beta_j$.</p>
+        </details>
 
-            <h3 style="color:#117a65;">Extrait 1 : Matrices Nilpotentes (Exercice 6, Niveau 1)</h3>
-            <p>Soit $A \in \mathcal{M}_n(\mathbb{K})$ une matrice nilpotente. Montrer que la matrice $(I_n - A)$ est inversible et exprimer son inverse.</p>
-            <details class="correction-box">
-                <summary>▶ Voir la correction complète</summary>
-                <p><strong>Démonstration :</strong><br>
-                Puisque $A$ est nilpotente, il existe un entier $k \ge 1$ tel que $A^k = 0$.<br>
-                Rappelons l'identité algébrique remarquable (valable car $I_n$ et $A$ commutent) :<br>
-                $$ (I_n - A) \times (I_n + A + A^2 + \dots + A^{k-1}) = I_n^k - A^k $$
-                Or, puisque $A^k = 0$, l'équation devient :
-                $$ (I_n - A) \times \left( \sum_{j=0}^{k-1} A^j \right) = I_n $$
-                Par définition de l'inversibilité, on vient de trouver une matrice qui, multipliée par $(I_n - A)$, donne l'identité.<br>
-                <strong>Conclusion :</strong> $(I_n - A)$ est inversible et son inverse est $\sum_{j=0}^{k-1} A^j$.</p>
-            </details>
+        <h3>Exercice 9 <span class="badge-n1">Niveau 1</span></h3>
+        <p>Soit $A, B, C$ dans $\mathcal{M}_3(\mathbb{K})$, toutes trois non nulles et telles que $ABC = 0$. Montrer que deux d'entre elles, au moins, ne sont pas inversibles.</p>
+        <details class="correction-box">
+            <summary>▶ Indication & Trame</summary>
+            <p><strong>Trame :</strong> Raisonnement par l'absurde. Supposons qu'au moins deux soient inversibles, par exemple $A$ et $B$.<br>
+            Si $A$ et $B$ sont inversibles, alors $(AB)$ est inversible. On a $(AB)C = 0$. En multipliant à gauche par $(AB)^{-1}$, on obtient $C = 0$. C'est impossible car l'énoncé dit qu'elles sont non nulles. Donc au maximum une seule matrice peut être inversible.</p>
+        </details>
+    </div>
 
-            <h3 style="color:#117a65;">Extrait 2 : Puissances via le Binôme (Exercice 5, Manuel)</h3>
-            <p>Calculer $A^n$, pour $n \in \mathbb{N}$, avec $A = \begin{pmatrix} 1 & 2 & 3 \\ 0 & 1 & 2 \\ 0 & 0 & 1 \end{pmatrix}$.<br>
-            <em>Indication : Décomposer $A = I_3 + B$ et prouver que $B$ est nilpotente.</em></p>
-            <details class="correction-box">
-                <summary>▶ Voir la correction complète</summary>
-                <p><strong>1. Décomposition et Nilpotence :</strong><br>
-                On pose $B = A - I_3 = \begin{pmatrix} 0 & 2 & 3 \\ 0 & 0 & 2 \\ 0 & 0 & 0 \end{pmatrix}$.<br>
-                Calculons $B^2 = \begin{pmatrix} 0 & 2 & 3 \\ 0 & 0 & 2 \\ 0 & 0 & 0 \end{pmatrix} \times \begin{pmatrix} 0 & 2
+    <div class="section-card">
+        <h2>Niveau 2 : Entraînement Approfondi</h2>
+
+        <h3>Exercice 10 <span class="badge-n2">Niveau 2</span></h3>
+        <p>Calcul de l'inverse de $A = \begin{pmatrix} 1 & 1/2 & 1/3 \\ 1/2 & 1/3 & 1/4 \\ 1/3 & 1/4 & 1/5 \end{pmatrix}$. On fera le calcul avec les valeurs rationnelles exactes, et on fera un deuxième calcul avec des arrondis à $10^{-2}$. Comparer les résultats.</p>
+        <details class="correction-box">
+            <summary>▶ Indication & Trame</summary>
+            <p><strong>Indication du livre :</strong> Appliquer la méthode de Gauss avec la même suite d'opérations élémentaires dans les deux cas proposés.<br>
+            <strong>Remarque :</strong> C'est la célèbre matrice de Hilbert. Son inversion avec des arrondis crée des erreurs catastrophiques (matrice très mal conditionnée). C'est un exercice de sensibilisation aux erreurs numériques en ingénierie.</p>
+        </details>
+
+        <h3>Exercice 11 <span class="badge-n2">Niveau 2</span></h3>
+        <p>Soit $A = \begin{pmatrix} 1 & 1 & 1 \\ 1 & 0 & 0 \\ 1 & 0 & 0 \end{pmatrix}$. Montrer qu'il existe deux suites réelles $(\alpha_n)$ et $(\beta_n)$ telles que : $\forall n \in \mathbb{N}^*, A^n = \alpha_n A + \beta_n A^2$. Déterminer ces suites.</p>
+        <details class="correction-box">
+            <summary>▶ Indication & Trame</summary>
+            <p><strong>Indication du livre :</strong> Vérifier par le calcul que $A^3$ est combinaison linéaire de $A^2$ et $A$ pour amorcer une récurrence. Puis utiliser l'étude des suites récurrentes.<br>
+            <strong>Trame :</strong> Calcule $A^2$ et $A^3$. Tu trouveras que $A^3 = A^2 + 2A$. Ensuite, pose l'hypothèse de récurrence pour $A^n$. Pour l'hérédité, multiplie par $A$ : $A^{n+1} = \alpha_n A^2 + \beta_n A^3 = \alpha_n A^2 + \beta_n(A^2 + 2A)$. Tu pourras identifier les formules de récurrence des suites.</p>
+        </details>
+
+        <h3>Exercice 14 <span class="badge-n2">Niveau 2</span></h3>
+        <p>Soit $A = \begin{pmatrix} 0 & 0 & 4 \\ 1 & 2 & 1 \\ 2 & 4 & -2 \end{pmatrix}$. Calculer $A^3$ puis $A^6 - 8A^4 + A^3 - 9A + I_3$.</p>
+        <details class="correction-box">
+            <summary>▶ Indication & Trame</summary>
+            <p><strong>Trame :</strong> C'est un calcul de type polynôme annulateur. Calcule $A^2$, puis $A^3$. En injectant tes résultats dans le grand polynôme, beaucoup de termes vont s'annuler.</p>
+        </details>
+
+        <h3>Exercice 19 <span class="badge-n2">Niveau 2</span></h3>
+        <p>Calculer le rang des matrices suivant les valeurs de $\lambda$ et leurs inverses quand il y a lieu. ($A$ et $B$ sont des matrices $4 \times 4$ vues dans le manuel).</p>
+        <details class="correction-box">
+            <summary>▶ Indication & Trame</summary>
+            <p><strong>Indication :</strong> C'est du pivot de Gauss avec discussion de paramètre. Échelonne la matrice. Le rang dépendra de l'annulation ou non du dernier pivot contenant du $\lambda$.</p>
+        </details>
+    </div>
+
+    <div class="section-card">
+        <h2>Niveau 3 : Problèmes Ouverts & Annales</h2>
+
+        <h3>Exercice 20 <span class="badge-n3">Niveau 3</span></h3>
+        <p>On suppose $a, b, c, d$ réels et non tous nuls. Montrer que le système matriciel (matrice quaternionique) donné est de Cramer et le résoudre.</p>
+        <details class="correction-box">
+            <summary>▶ Indication & Trame</summary>
+            <p><strong>Trame :</strong> Il s'agit d'une matrice antisymétrique par blocs. Prouve que le produit de la matrice par sa transposée fait apparaître $(a^2+b^2+c^2+d^2)I_4 \neq 0_4$, garantissant l'inversibilité.</p>
+        </details>
+
+        <h3>Exercice 23 <span class="badge-n3">Niveau 3</span></h3>
+        <p>Soit $A$ et $B$ matrices carrées. $A$ est inversible, $B$ est nilpotente. Montrer que $I_n + A^{-1}BA$ est inversible et trouver son inverse.</p>
+        <details class="correction-box">
+            <summary>▶ Indication & Trame</summary>
+            <p><strong>Trame :</strong> Si $B$ est nilpotente ($B^k=0$), alors $(A^{-1}BA)$ est aussi nilpotente ! En effet, $(A^{-1}BA)^2 = A^{-1}BAA^{-1}BA = A^{-1}B^2A$. Par récurrence, c'est égal à $A^{-1}B^kA = 0$. <br>
+            On se ramène alors directement à l'exercice 6 : on a une matrice identité plus une matrice nilpotente, on applique la formule de la somme.</p>
+        </details>
+    </div>
+
+</body>
+</html>
