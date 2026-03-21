@@ -398,7 +398,7 @@
     <div id="Exercices" class="tabcontent">
         
         <div class="section-card">
-            <h2>Partie A : L'Entraînement Fondamental (1 Exercice par notion)</h2>
+            <h2>Partie A : L'Entraînement Fondamental</h2>
             <p>Fais ces petits exercices au brouillon pour valider chaque partie du cours avant d'attaquer les problèmes de synthèse.</p>
 
             <h3>Exercice 1 (Définitions)</h3>
@@ -420,69 +420,10 @@
                 $$ BA = \begin{pmatrix} 0\times1 + 1\times0 & 0\times2 + 1\times1 \\ 1\times1 + 0\times0 & 1\times2 + 0\times1 \end{pmatrix} = \begin{pmatrix} 0 & 1 \\ 1 & 2 \end{pmatrix} $$<br>
                 <strong>Remarque :</strong> $AB \neq BA$. Les matrices ne commutent pas.</p>
             </details>
-
-            <h3>Exercice 3 (Matrice Nilpotente)</h3>
-            <p>Soit $N = \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix}$. Calculer $N^2$ et $N^3$. Conclure.</p>
-            <details class="correction-box">
-                <summary>▶ Voir la correction</summary>
-                <p>$$ N^2 = \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix} \times \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix} $$<br>
-                $$ N^3 = N^2 \times N = \begin{pmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix} \times \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix} $$<br>
-                <strong>Conclusion :</strong> $N^3 = 0_3$. La matrice $N$ est nilpotente d'indice 3.</p>
-            </details>
-
-            <h3>Exercice 4 (Transposition et Symétrie)</h3>
-            <p>Pour toute matrice carrée $A$, démontrer que la matrice $M = A + ^tA$ est une matrice symétrique.</p>
-            <details class="correction-box">
-                <summary>▶ Voir la correction</summary>
-                <p>Pour prouver qu'une matrice est symétrique, on doit montrer que $^tM = M$. Calculons la transposée de $M$ :<br>
-                $ \begin{align*}
-                ^tM &= ^t(A + ^tA) \\
-                &= ^tA + ^t(^tA) \quad \text{(La transposée d'une somme est la somme des transposées)} \\
-                &= ^tA + A \quad \text{(L'involution : on transpose deux fois, on revient au point de départ)} \\
-                &= A + ^tA \quad \text{(L'addition matricielle est commutative)} \\
-                &= M
-                \end{align*} $<br>
-                Puisque $^tM = M$, la matrice $M$ est bien symétrique !</p>
-            </details>
-
-            <h3>Exercice 5 (Opérations élémentaires)</h3>
-            <p>Quelle est la matrice de transvection $E$ (de taille $3 \times 3$) qui correspond à l'opération $L_2 \leftarrow L_2 - 3L_1$ ? Écrire $E$ explicitement.</p>
-            <details class="correction-box">
-                <summary>▶ Voir la correction</summary>
-                <p>D'après le cours, la matrice d'une transvection $L_i \leftarrow L_i + \lambda L_j$ est $E = I_n + \lambda E_{i,j}$.<br>
-                Ici, $i=2$, $j=1$, et $\lambda = -3$.<br>
-                Donc $E = I_3 - 3E_{2,1}$. Il s'agit de la matrice identité dans laquelle on place un $-3$ à la ligne 2, colonne 1 :
-                $$ E = \begin{pmatrix} 1 & 0 & 0 \\ -3 & 1 & 0 \\ 0 & 0 & 1 \end{pmatrix} $$</p>
-            </details>
-
-            <h3>Exercice 6 (Systèmes et Gauss-Jordan)</h3>
-            <p>Résoudre par la méthode de Gauss le système : $\begin{cases} x + 2y = 5 \\ 2x - y = 0 \end{cases}$</p>
-            <details class="correction-box">
-                <summary>▶ Voir la correction</summary>
-                <p>Matrice augmentée : $\left(\begin{array}{cc|c} 1 & 2 & 5 \\ 2 & -1 & 0 \end{array}\right)$<br>
-                Opération $L_2 \leftarrow L_2 - 2L_1$ pour éliminer le 2 :<br>
-                $\left(\begin{array}{cc|c} 1 & 2 & 5 \\ 0 & -5 & -10 \end{array}\right)$<br>
-                Le système est échelonné. On résout en remontant :<br>
-                - Ligne 2 : $-5y = -10 \implies y = 2$<br>
-                - Ligne 1 : $x + 2(2) = 5 \implies x = 1$<br>
-                La solution unique est $(1, 2)$. Il s'agit d'un <strong>système de Cramer</strong> !</p>
-            </details>
-
-            <h3>Exercice 7 (Inversibilité)</h3>
-            <p>Soit $A = \begin{pmatrix} 1 & 1 \\ 2 & 3 \end{pmatrix}$. Vérifier que $A$ est inversible et calculer $A^{-1}$ via l'algorithme $(A|I_2)$.</p>
-            <details class="correction-box">
-                <summary>▶ Voir la correction</summary>
-                <p>On pose $(A | I_2)$ :
-                $$ \left(\begin{array}{cc|cc} 1 & 1 & 1 & 0 \\ 2 & 3 & 0 & 1 \end{array}\right) $$
-                <strong>Descente :</strong> $L_2 \leftarrow L_2 - 2L_1 \implies \left(\begin{array}{cc|cc} 1 & 1 & 1 & 0 \\ 0 & 1 & -2 & 1 \end{array}\right) $<br>
-                (La matrice a 2 pivots, donc son rang est 2, elle est bien inversible !)<br>
-                <strong>Remontée :</strong> $L_1 \leftarrow L_1 - L_2 \implies \left(\begin{array}{cc|cc} 1 & 0 & 3 & -1 \\ 0 & 1 & -2 & 1 \end{array}\right) $<br>
-                On lit à droite : $A^{-1} = \begin{pmatrix} 3 & -1 \\ -2 & 1 \end{pmatrix}$.</p>
-            </details>
         </div>
 
         <div class="section-card">
-            <h2>Partie B : Problèmes de Synthèse & Annales</h2>
+            <h2>Partie B : Problèmes de Synthèse & Systèmes</h2>
             
             <h3>Problème 1 : Rang et Systèmes à paramètre</h3>
             <p>Un système linéaire de 4 inconnues ($x, y, z, t$) a pour matrice augmentée échelonnée :
@@ -502,114 +443,31 @@
                 $x + 2y - t = 5 \implies x = 5 - 2y + t$<br>
                 Solution : L'ensemble des quadruplets $(5 - 2y + t, \ y, \ 2 - 3t, \ t)$ pour tout $y, t \in \mathbb{R}$.</p>
             </details>
-
-            <h3 style="color:#c0392b; border-bottom:1px solid #c0392b; padding-bottom:5px;">Problème 2 : Type Concours ITPE (Polynôme et Puissances)</h3>
-            <p>Soit la matrice $A = \begin{pmatrix} 0 & 1 & 1 \\ 1 & 0 & 1 \\ 1 & 1 & 0 \end{pmatrix}$. On note $J$ la matrice constituée uniquement de $1$, et $I_3$ l'identité.<br>
-            <strong>Partie A : Inversibilité</strong><br>
-            1. Calculez $A^2$ et trouvez deux réels $a$ et $b$ tels que $A^2 = aA + bI_3$.<br>
-            2. En déduire que $A$ est inversible et exprimez $A^{-1}$ en fonction de $A$ et $I_3$.<br>
-            <strong>Partie B : Puissances via le Binôme</strong><br>
-            3. Exprimez $A$ en fonction de $J$ et $I_3$.<br>
-            4. Sachant que pour tout $k \ge 1$, $J^k = 3^{k-1}J$, appliquez la formule du binôme de Newton pour exprimer $A^n$ en fonction de $n$, $J$ et $I_3$.</p>
-
-            <details class="correction-box">
-                <summary>▶ Voir la correction complète (Méthode ITPE)</summary>
-                <p><strong>Partie A :</strong><br>
-                1. $A^2 = \begin{pmatrix} 2 & 1 & 1 \\ 1 & 2 & 1 \\ 1 & 1 & 2 \end{pmatrix}$. On remarque que sur la diagonale on a $2$, et ailleurs on a $1$. En identifiant avec $aA + bI_3$, on trouve <strong>$a = 1$</strong> et <strong>$b = 2$</strong>. Donc $A^2 = A + 2I_3$.<br>
-                <br>
-                2. On réécrit l'équation : $A^2 - A = 2I_3 \implies A(A - I_3) = 2I_3$.<br>
-                On isole l'identité : $A \times \left[ \frac{1}{2}(A - I_3) \right] = I_3$.<br>
-                $A$ est donc inversible et <strong>$A^{-1} = \frac{1}{2}(A - I_3)$</strong>.</p>
-                
-                <p><strong>Partie B :</strong><br>
-                3. On observe les matrices : $A$ est la matrice $J$ à laquelle on a enlevé la diagonale de $1$. Donc <strong>$A = J - I_3$</strong>.<br>
-                <br>
-                4. $J$ et $-I_3$ commutent (l'identité commute avec tout). On applique Newton :<br>
-                $$ A^n = (J - I_3)^n = \sum_{k=0}^{n} \binom{n}{k} J^k (-I_3)^{n-k} $$<br>
-                <strong>Le piège :</strong> On sait que $J^k = 3^{k-1}J$ seulement pour $k \ge 1$. Il faut isoler le terme $k=0$ (où $J^0 = I_3$) :<br>
-                $$ A^n = (-1)^n I_3 + \sum_{k=1}^{n} \binom{n}{k} (3^{k-1}J) (-1)^{n-k} $$<br>
-                On sort le $J$ et on multiplie/divise par 3 pour faire apparaître $3^k$ :<br>
-                $$ A^n = (-1)^n I_3 + \frac{J}{3} \sum_{k=1}^{n} \binom{n}{k} 3^k (-1)^{n-k} $$<br>
-                La somme de $k=1$ à $n$ est égale à $(3 - 1)^n$ moins le terme manquant pour $k=0$ (qui vaut $3^0(-1)^n = (-1)^n$).<br>
-                Donc la somme vaut $2^n - (-1)^n$.<br>
-                <strong>Conclusion finale :</strong> 
-                $$ A^n = (-1)^n I_3 + \frac{2^n - (-1)^n}{3} J $$</p>
-            </details>
         </div>
-    </div>
+        
+        <div class="section-card">
+            <h2>Partie C : Extraits du Manuel (Niveau Avancé)</h2>
+            <p>Ces exercices sont tirés directement de ton manuel. Ils mélangent algèbre, récurrence et binôme de Newton.</p>
 
-    <script>
-        // Fonction pour les onglets
-        function openTab(evt, tabName) {
-            var i, tabcontent, tabbtns;
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            tabbtns = document.getElementsByClassName("tab-btn");
-            for (i = 0; i < tabbtns.length; i++) {
-                tabbtns[i].className = tabbtns[i].className.replace(" active", "");
-            }
-            document.getElementById(tabName).style.display = "block";
-            evt.currentTarget.className += " active";
-            
-            // Re-render MathJax in case equations were hidden during load
-            if (window.MathJax) {
-                MathJax.typesetPromise();
-            }
-        }
+            <h3 style="color:#117a65;">Extrait 1 : Matrices Nilpotentes (Exercice 6, Niveau 1)</h3>
+            <p>Soit $A \in \mathcal{M}_n(\mathbb{K})$ une matrice nilpotente. Montrer que la matrice $(I_n - A)$ est inversible et exprimer son inverse.</p>
+            <details class="correction-box">
+                <summary>▶ Voir la correction complète</summary>
+                <p><strong>Démonstration :</strong><br>
+                Puisque $A$ est nilpotente, il existe un entier $k \ge 1$ tel que $A^k = 0$.<br>
+                Rappelons l'identité algébrique remarquable (valable car $I_n$ et $A$ commutent) :<br>
+                $$ (I_n - A) \times (I_n + A + A^2 + \dots + A^{k-1}) = I_n^k - A^k $$
+                Or, puisque $A^k = 0$, l'équation devient :
+                $$ (I_n - A) \times \left( \sum_{j=0}^{k-1} A^j \right) = I_n $$
+                Par définition de l'inversibilité, on vient de trouver une matrice qui, multipliée par $(I_n - A)$, donne l'identité.<br>
+                <strong>Conclusion :</strong> $(I_n - A)$ est inversible et son inverse est $\sum_{j=0}^{k-1} A^j$.</p>
+            </details>
 
-        // Données Animation Gauss-Jordan
-        const steps = [
-            { desc: "Étape 0 : Matrice augmentée initiale", mat: [[1, 2, -1, 2], [2, 3, 1, 5], [-1, -1, 3, 2]], highlights: [] },
-            { desc: "Étape 1 : <b>L<sub>2</sub> &larr; L<sub>2</sub> - 2L<sub>1</sub></b>", mat: [[1, 2, -1, 2], [0, -1, 3, 1], [-1, -1, 3, 2]], highlights: [1] },
-            { desc: "Étape 2 : <b>L<sub>3</sub> &larr; L<sub>3</sub> + L<sub>1</sub></b>", mat: [[1, 2, -1, 2], [0, -1, 3, 1], [0, 1, 2, 4]], highlights: [2] },
-            { desc: "Étape 3 : <b>L<sub>3</sub> &larr; L<sub>3</sub> + L<sub>2</sub></b> (Échelonnement terminé)", mat: [[1, 2, -1, 2], [0, -1, 3, 1], [0, 0, 5, 5]], highlights: [2] },
-            { desc: "Étape 4 : <b>L<sub>3</sub> &larr; L<sub>3</sub> / 5</b>", mat: [[1, 2, -1, 2], [0, -1, 3, 1], [0, 0, 1, 1]], highlights: [2] },
-            { desc: "Étape 5 : <b>L<sub>2</sub> &larr; -L<sub>2</sub></b>", mat: [[1, 2, -1, 2], [0, 1, -3, -1], [0, 0, 1, 1]], highlights: [1] },
-            { desc: "Étape 6 : <b>L<sub>1</sub> &larr; L<sub>1</sub> + L<sub>3</sub></b> et <b>L<sub>2</sub> &larr; L<sub>2</sub> + 3L<sub>3</sub></b>", mat: [[1, 2, 0, 3], [0, 1, 0, 2], [0, 0, 1, 1]], highlights: [0, 1] },
-            { desc: "Étape 7 : <b>L<sub>1</sub> &larr; L<sub>1</sub> - 2L<sub>2</sub></b> (Matrice réduite)", mat: [[1, 0, 0, -1], [0, 1, 0, 2], [0, 0, 1, 1]], highlights: [0] },
-            { desc: "<b>Terminé !</b> Solution : $x = -1$, $y = 2$, $z = 1$.", mat: [[1, 0, 0, -1], [0, 1, 0, 2], [0, 0, 1, 1]], highlights: [] }
-        ];
-
-        let currentStep = 0;
-
-        function renderMatrix() {
-            const stepData = steps[currentStep];
-            document.getElementById('step-description').innerHTML = stepData.desc;
-            
-            let html = '<table>';
-            for (let i = 0; i < stepData.mat.length; i++) {
-                let rowClass = stepData.highlights.includes(i) ? 'highlight' : '';
-                html += `<tr class="${rowClass}">`;
-                for (let j = 0; j < stepData.mat[i].length; j++) {
-                    let colClass = (j === stepData.mat[i].length - 1) ? 'augmented-col' : '';
-                    let isPivot = (i === j) ? 'pivot' : '';
-                    html += `<td class="${colClass} ${isPivot}">${stepData.mat[i][j]}</td>`;
-                }
-                html += '</tr>';
-            }
-            html += '</table>';
-            
-            document.getElementById('matrix-display').innerHTML = html;
-            
-            document.getElementById('btn-prev').disabled = (currentStep === 0);
-            document.getElementById('btn-next').disabled = (currentStep === steps.length - 1);
-
-            if (window.MathJax) {
-                MathJax.typesetPromise([document.getElementById('step-description')]);
-            }
-        }
-
-        function nextStep() {
-            if (currentStep < steps.length - 1) { currentStep++; renderMatrix(); }
-        }
-
-        function prevStep() {
-            if (currentStep > 0) { currentStep--; renderMatrix(); }
-        }
-
-        window.onload = renderMatrix;
-    </script>
-</body>
-</html>
+            <h3 style="color:#117a65;">Extrait 2 : Puissances via le Binôme (Exercice 5, Manuel)</h3>
+            <p>Calculer $A^n$, pour $n \in \mathbb{N}$, avec $A = \begin{pmatrix} 1 & 2 & 3 \\ 0 & 1 & 2 \\ 0 & 0 & 1 \end{pmatrix}$.<br>
+            <em>Indication : Décomposer $A = I_3 + B$ et prouver que $B$ est nilpotente.</em></p>
+            <details class="correction-box">
+                <summary>▶ Voir la correction complète</summary>
+                <p><strong>1. Décomposition et Nilpotence :</strong><br>
+                On pose $B = A - I_3 = \begin{pmatrix} 0 & 2 & 3 \\ 0 & 0 & 2 \\ 0 & 0 & 0 \end{pmatrix}$.<br>
+                Calculons $B^2 = \begin{pmatrix} 0 & 2 & 3 \\ 0 & 0 & 2 \\ 0 & 0 & 0 \end{pmatrix} \times \begin{pmatrix} 0 & 2
