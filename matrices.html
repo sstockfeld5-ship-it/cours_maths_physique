@@ -17,24 +17,12 @@
 
     <style>
         html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #2c3e50;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f0f4f8;
-        }
-        h1 {
-            text-align: center; color: #1a5276; border-bottom: 4px solid #1a5276; padding-bottom: 15px; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 1px;
-        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #2c3e50; max-width: 1100px; margin: 0 auto; padding: 20px; background-color: #f0f4f8; }
+        h1 { text-align: center; color: #1a5276; border-bottom: 4px solid #1a5276; padding-bottom: 15px; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 1px; }
         h2 { color: #117a65; border-bottom: 2px solid #117a65; padding-bottom: 8px; margin-top: 40px; }
         h3 { color: #2471a3; margin-top: 25px; border-bottom: 1px solid #d5dbdb; padding-bottom: 5px; }
         
-        .navbar {
-            background-color: #1a5276; padding: 15px; border-radius: 8px; margin-bottom: 30px; position: sticky; top: 10px; z-index: 1000; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px;
-        }
+        .navbar { background-color: #1a5276; padding: 15px; border-radius: 8px; margin-bottom: 30px; position: sticky; top: 10px; z-index: 1000; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px; }
         .navbar a { color: white; text-decoration: none; font-weight: bold; padding: 10px 15px; border-radius: 5px; transition: background-color 0.3s; }
         .navbar a:hover { background-color: #2980b9; }
         .main-section-title { background-color: #2c3e50; color: white; padding: 20px; border-radius: 8px; margin-top: 50px; text-align: center; }
@@ -45,10 +33,8 @@
         .attention { background-color: #fdf2e9; border-left: 5px solid #d35400; }
         .remarque { background-color: #f8f9f9; border-left: 3px solid #bdc3c7; font-style: italic; color: #7f8c8d; }
         
-        details.correction-box {
-            background-color: #fdfbf7; border: 1px solid #e1d5c9; padding: 15px 20px; margin-top: 15px; border-radius: 8px;
-        }
-        details.correction-box summary { font-weight: bold; color: #27ae60; cursor: pointer; outline: none; padding: 5px 0; font-size: 1.1em; }
+        details.correction-box { background-color: #fdfbf7; border: 1px solid #e1d5c9; padding: 15px 20px; margin-top: 15px; border-radius: 8px; }
+        details.correction-box summary { font-weight: bold; color: #27ae60; cursor: pointer; outline: none; padding: 5px 0; font-size: 1.05em; }
         details.correction-box summary:hover { color: #2ecc71; }
         details.correction-box p { margin-top: 15px; border-top: 1px dashed #e1d5c9; padding-top: 15px; }
         
@@ -64,77 +50,41 @@
     <nav class="navbar">
         <a href="#partie-cours">📚 1. Cours Complet</a>
         <a href="#partie-methodes">🛠️ 2. Méthodes</a>
-        <a href="#partie-exercices">📝 3. L'Intégrale des Corrections</a>
+        <a href="#partie-exercices">📝 3. L'Intégrale des Exercices</a>
     </nav>
 
     <h2 id="partie-cours" class="main-section-title">📚 Partie 1 : Cours Complet</h2>
     
     <div class="section-card">
-        <h2>1. Vocabulaire et Anatomie Matricielle</h2>
-        <div class="definition">
-            <strong>Matrice :</strong> Un tableau rectangulaire de nombres de type $(n, p)$. On la note $A = [a_{i,j}]$. L'ensemble est noté $\mathcal{M}_{n,p}(\mathbb{K})$.
-        </div>
-        <ul>
-            <li><strong>Matrice Ligne :</strong> Type $(1, p)$.</li>
-            <li><strong>Matrice Colonne :</strong> Type $(n, 1)$.</li>
-            <li><strong>Matrice Carrée :</strong> Possède le même nombre de lignes que de colonnes ($n = p$). L'ensemble est noté $\mathcal{M}_n(\mathbb{K})$.</li>
-        </ul>
-    </div>
-
-    <div class="section-card">
-        <h2>2. Le Calcul Matriciel</h2>
-        <p>L'addition ($A+B$) et la multiplication par un scalaire ($\lambda A$) se font "terme à terme". Elles nécessitent que les matrices soient de <strong>même dimension</strong>.</p>
-        <h3>Le Produit Matriciel ($AB$)</h3>
-        <p>Le produit n'est défini que si le <strong>nombre de colonnes de $A$ est égal au nombre de lignes de $B$</strong>.<br>
-        Le terme général s'obtient par le produit scalaire d'une ligne par une colonne : $c_{i,j} = \sum_{k=1}^{p} a_{i,k}b_{k,j}$</p>
+        <h2>1. Le Calcul Matriciel</h2>
+        <p>Le produit matriciel $AB$ n'est défini que si le <strong>nombre de colonnes de $A$ est égal au nombre de lignes de $B$</strong>.</p>
         <div class="attention">
-            <strong>Le produit n'est PAS commutatif !</strong> En général, $AB \neq BA$. De plus, on peut avoir $AB = 0_{n,p}$ même si $A \neq 0$ et $B \neq 0$.
+            <strong>Le produit n'est PAS commutatif !</strong> $AB \neq BA$. De plus, on peut avoir $AB = 0$ avec $A \neq 0$ et $B \neq 0$.
         </div>
         <div class="remarque">
-            <strong>Exceptions : Dans quels cas $AB = BA$ ?</strong><br>
-            On dit que deux matrices commutent. C'est le cas pour :<br>
-            1. Une matrice et l'identité : $AI_n = I_nA = A$.<br>
-            2. Une matrice et son inverse : $AA^{-1} = A^{-1}A = I_n$.<br>
-            3. Une matrice et ses propres puissances.<br>
-            4. Deux matrices diagonales de même taille.
+            <strong>Commutativité ($AB = BA$) :</strong> Une matrice commute avec l'identité ($I_n$), avec son inverse ($A^{-1}$), avec ses propres puissances, ou si les deux matrices sont diagonales.
         </div>
     </div>
 
     <div class="section-card">
-        <h2>3. Les Matrices Carrées $\mathcal{M}_n(\mathbb{K})$</h2>
-        <p><strong>Matrice Identité ($I_n$) :</strong> Matrice carrée avec des $1$ sur la diagonale et des $0$ ailleurs.</p>
+        <h2>2. Transposition et Matrices Remarquables</h2>
         <div class="definition">
-            <strong>L'effet de la puissance 0 :</strong> Par convention, pour toute matrice carrée $A$ non nulle : $A^0 = I_n$
+            <strong>Transposée ($^tA$) :</strong> On échange lignes et colonnes. Propriété vitale : $^t(AB) = ^tB ^tA$ (L'ordre s'inverse).
         </div>
-        <ul>
-            <li><strong>Nilpotente :</strong> S'il existe un entier $k$ tel que $A^k = 0_{n}$.</li>
-            <li><strong>Diagonale :</strong> $A^k = \text{diag}(d_1^k, \dots, d_n^k)$.</li>
-        </ul>
+        <p><strong>Propriétés classiques :</strong><br>
+        1. $A + ^tA$ est <strong>toujours symétrique</strong>.<br>
+        2. Si $A$ est symétrique et $B$ antisymétrique, $AB - BA$ est <strong>symétrique</strong>.</p>
+        <p><strong>Puissance Zéro :</strong> Pour toute matrice carrée $A \neq 0$, on a $A^0 = I_n$.<br>
+        <strong>Matrice Nilpotente :</strong> S'il existe $k$ tel que $A^k = 0_{n}$.</p>
     </div>
 
     <div class="section-card">
-        <h2>4. La Transposition</h2>
-        <div class="definition">
-            <strong>Transposée ($^tA$) :</strong> Matrice obtenue en échangeant les lignes et les colonnes de $A$. Son terme général est $a'_{i,j} = a_{j,i}$.
-        </div>
-        <ul>
-            <li>Symétrie : $A$ est symétrique si $^tA = A$. Antisymétrique si $^tA = -A$.</li>
-            <li><strong>Produit (Crucial) :</strong> $^t(AB) = ^tB ^tA$ (L'ordre des facteurs s'inverse).</li>
-        </ul>
+        <h2>3. Systèmes Linéaires et Inversibilité ($GL_n$)</h2>
         <div class="theoreme">
-            <strong>Propriétés classiques :</strong><br>
-            1. $A + ^tA$ est <strong>toujours symétrique</strong>.<br>
-            2. Si $A$ est symétrique et $B$ antisymétrique, $AB - BA$ est <strong>symétrique</strong>.
-        </div>
-    </div>
-
-    <div class="section-card">
-        <h2>5. Systèmes Linéaires et Inversibilité</h2>
-        <div class="theoreme">
-            <strong>Théorème de Gauss-Jordan :</strong> Toute matrice est équivalente par lignes à une unique matrice échelonnée réduite. Le Rang ($r$) est le nombre de pivots non nuls.
+            <strong>Gauss-Jordan :</strong> Toute matrice est équivalente par lignes à une unique matrice échelonnée réduite. Le Rang ($r$) est le nombre de pivots.
         </div>
         <div class="definition">
-            <strong>Système de Cramer :</strong> Un système linéaire est un "système de Cramer" s'il possède autant d'équations que d'inconnues ET si sa matrice $A$ est inversible. Solution : $X = A^{-1}B$.
+            <strong>Système de Cramer :</strong> Autant d'équations que d'inconnues ET matrice $A$ inversible. Solution unique : $X = A^{-1}B$.
         </div>
     </div>
 
@@ -143,217 +93,136 @@
     <div class="section-card">
         <h2>M1. Le Binôme de Newton</h2>
         <div class="attention">
-            <strong>Condition absolue :</strong> On ne peut utiliser cette formule sur des matrices <strong>QUE SI ELLES COMMUTENT</strong> ($AB = BA$).
+            <strong>Condition absolue :</strong> Uniquement si les matrices <strong>COMMUTENT</strong> ($AB = BA$).
         </div>
-        <div class="theoreme">
-            <strong>Formule :</strong> Pour tout $n \in \mathbb{N}$ :
-            $$ (A+B)^n = \sum_{k=0}^{n} \binom{n}{k} A^k B^{n-k} $$
-        </div>
+        <p>Pour tout $n \in \mathbb{N}$ : $ (A+B)^n = \sum_{k=0}^{n} \binom{n}{k} A^k B^{n-k} $</p>
+        <p><em>Méthode :</em> Écrire $M = \lambda I_n + N$ (où $N$ est nilpotente). Comme $N^k=0$ à partir d'un certain rang, la somme s'arrête vite.</p>
     </div>
 
     <div class="section-card">
         <h2>M2. La Démonstration par Récurrence</h2>
-        <div class="definition">Soit $P(n)$ la propriété mathématique à démontrer pour tout entier $n \ge n_0$.</div>
-        <p><strong>Étape 1 - Initialisation :</strong> Vérifier $P(n_0)$.<br>
-        <strong>Étape 2 - Hérédité :</strong> Soit $n \ge n_0$. Supposons $P(n)$ vraie. Montrons $P(n+1)$. Il faut obligatoirement utiliser $P(n)$ dans le calcul.<br>
-        <strong>Étape 3 - Conclusion :</strong> "La propriété est initialisée et héréditaire. Par récurrence, $P(n)$ est vraie pour tout $n \ge n_0$."</p>
+        <p><strong>1 - Initialisation :</strong> Vérifier $P(n_0)$.<br>
+        <strong>2 - Hérédité :</strong> Soit $n \ge n_0$. Supposons $P(n)$ vraie. Montrons $P(n+1)$. (Utilisation obligatoire de HR).<br>
+        <strong>3 - Conclusion :</strong> "La propriété est initialisée et héréditaire."</p>
     </div>
 
-    <h2 id="partie-exercices" class="main-section-title">📝 Partie 3 : Les Corrections Détaillées</h2>
+    <h2 id="partie-exercices" class="main-section-title">📝 Partie 3 : L'Intégrale des Exercices du Manuel</h2>
     
     <div class="section-card">
-        <h2>Niveau 1 : Systèmes et Matrices <span class="badge-n1">Base</span></h2>
-
-        <h3>Exercice 5</h3>
-        <p>Calculer le rang des matrices :
-        $ A = \begin{pmatrix} 2 & 3 & -2 \\ 4 & -1 & -2 \\ 0 & 1 & 0 \end{pmatrix} \quad \text{et} \quad B = \begin{pmatrix} 1 & 2 & -1 \\ 2 & -1 & -1 \\ -1 & 2 & 0 \end{pmatrix} $
-        ainsi que l'inverse s'il y a lieu.</p>
+        <h2>Niveau 1 : Systèmes et Matrices <span class="badge-n1">Bases</span></h2>
+        
+        <h3>Exercice 1 : Résoudre les systèmes de matrices augmentées</h3>
+        <p>1) $\begin{bmatrix} 3 & 2 & 1 & | & 5 \\ 2 & 3 & 1 & | & 1 \\ 2 & 1 & 3 & | & 11 \end{bmatrix} \quad$ 
+           2) $\begin{bmatrix} 1 & 0 & -2 & 3 & | & -4 \\ 0 & 1 & -3 & 4 & | & -5 \\ 3 & 2 & 0 & -5 & | & 12 \\ 4 & 3 & -5 & 0 & | & 5 \end{bmatrix}$</p>
         <details class="correction-box">
-            <summary>✅ Afficher la correction complète</summary>
-            <p><strong>Pour $A$ :</strong><br>
-            Calculons son déterminant (en développant par rapport à la 3ème ligne car elle contient des zéros) :<br>
-            $\det(A) = 0 - 1 \times \det\begin{pmatrix} 2 & -2 \\ 4 & -2 \end{pmatrix} + 0 = -1 \times (2(-2) - (-2)(4)) = -1(-4 + 8) = -4$.<br>
-            Le déterminant est non nul, donc <strong>$\text{rg}(A) = 3$</strong> et $A$ est inversible.<br>
-            On résout le système $AX = Y$ pour trouver l'inverse, on obtient :
-            $ A^{-1} = \begin{pmatrix} -1/2 & 1/2 & 2 \\ 0 & 0 & 1 \\ -1 & 1/2 & 7/2 \end{pmatrix} $
-            </p>
-            <p><strong>Pour $B$ :</strong><br>
-            Déterminant par la règle de Sarrus :<br>
-            $\det(B) = (1)(-1)(0) + (2)(-1)(-1) + (-1)(2)(2) - [(-1)(-1)(-1) + (2)(2)(0) + (1)(-1)(2)]$<br>
-            $\det(B) = 0 + 2 - 4 - [-1 + 0 - 2] = -2 - (-3) = 1$.<br>
-            Le déterminant vaut 1, <strong>$\text{rg}(B) = 3$</strong>. $B$ est inversible et par la méthode des cofacteurs on trouve :<br>
-            $ B^{-1} = \begin{pmatrix} 2 & -2 & -3 \\ 1 & -1 & -1 \\ 3 & -4 & -5 \end{pmatrix} $</p>
+            <summary>✅ Indication & Résultat</summary>
+            <p><strong>Méthode :</strong> Pivot de Gauss standard.<br>
+            <strong>1)</strong> On échelonne pour obtenir un système triangulaire. La solution unique est $(x,y,z) = (2, -2, 5)$.<br>
+            <strong>2)</strong> Après échelonnement, le système possède 4 inconnues mais on remarque des lignes redondantes. Il y aura des degrés de liberté (paramètres).</p>
         </details>
 
-        <h3>Exercice 6</h3>
-        <p>Soit $A \in \mathcal{M}_n(\mathbb{K})$ nilpotente. Montrer que $I_n - A$ est inversible et exprimer son inverse.</p>
+        <h3>Exercice 2 : Systèmes à seconds membres multiples</h3>
+        <p>Résoudre simultanément : $\begin{bmatrix} 1 & 2 & 0 & -3 & | & 2 & 1 \\ 1 & -1 & -3 & 1 & | & -3 & 2 \\ 2 & -3 & 4 & -5 & | & 2 & 7 \\ 9 & -9 & 6 & -16 & | & 2 & 25 \end{bmatrix}$</p>
         <details class="correction-box">
-            <summary>✅ Afficher la correction complète</summary>
-            <p><strong>Démonstration :</strong><br>
-            $A$ est nilpotente, il existe donc un entier $k \ge 1$ tel que $A^k = 0_n$.<br>
-            On utilise l'identité géométrique matricielle (valable car $I_n$ et $A$ commutent) :<br>
-            $$ (I_n - A)(I_n + A + A^2 + \dots + A^{k-1}) = (I_n + A + \dots + A^{k-1}) - (A + A^2 + \dots + A^k) $$
-            Tous les termes s'annulent deux à deux (télescopage), il ne reste que le premier et le dernier :<br>
-            $$ = I_n - A^k $$
-            Or $A^k = 0_n$, donc l'expression vaut $I_n$.<br>
-            Par définition de l'inversibilité, on a trouvé une matrice qui multipliée par $(I_n - A)$ donne l'identité.<br>
-            Donc $(I_n - A)$ est inversible et son inverse est : <strong>$(I_n - A)^{-1} = \sum_{j=0}^{k-1} A^j$</strong>.</p>
+            <summary>✅ Indication</summary>
+            <p>C'est comme résoudre $AX = Y_1$ et $AX = Y_2$ en même temps. Fais les opérations sur les lignes pour échelonner la matrice $A$ de gauche, et applique ces mêmes opérations aux deux colonnes de droite en parallèle.</p>
         </details>
 
-        <h3>Exercice 7</h3>
-        <p>Montrer que le produit de deux matrices symétriques est symétrique ssi elles commutent.</p>
+        <h3>Exercice 3 : Conditions de Cramer</h3>
+        <p>Déterminer les conditions nécessaires et suffisantes pour que le système soit de Cramer : $\begin{cases} bx + ay = c \\ cx + az = b \\ cy + bz = a \end{cases}$</p>
         <details class="correction-box">
-            <summary>✅ Afficher la correction complète</summary>
-            <p><strong>Démonstration :</strong><br>
-            Soient $A$ et $B$ deux matrices symétriques. Par définition, $^tA = A$ et $^tB = B$.<br>
-            On étudie leur produit $AB$. Pour qu'il soit symétrique, il faut et il suffit que $^t(AB) = AB$.<br>
-            Or, d'après les propriétés de la transposition : $^t(AB) = ^tB ^tA$.<br>
-            En remplaçant par nos hypothèses : $^t(AB) = BA$.<br>
-            Ainsi, $AB$ est symétrique $\iff BA = AB$.<br>
-            Ce qui est exactement la définition de deux matrices qui commutent.</p>
+            <summary>✅ Correction</summary>
+            <p>La matrice du système est $A = \begin{pmatrix} b & a & 0 \\ c & 0 & a \\ 0 & c & b \end{pmatrix}$. Le système est de Cramer si son déterminant est non nul. $\det(A) = -2abc$. Il faut donc $a \neq 0$, $b \neq 0$ et $c \neq 0$.</p>
         </details>
 
-        <h3>Exercice 8</h3>
-        <p>Exprimer les lignes de $DM$ et colonnes de $MD'$ où $D$ et $D'$ sont diagonales.</p>
+        <h3>Exercice 4 : Discussion de système</h3>
+        <p>Discuter le système de matrice : $\begin{bmatrix} 2a+1 & -a & a+1 & | & a-1 \\ a-2 & a-1 & a-2 & | & a \\ 2a-1 & a-1 & 2a-1 & | & a \end{bmatrix}$</p>
         <details class="correction-box">
-            <summary>✅ Afficher la correction complète</summary>
-            <p>Soit $D = \text{diag}(\alpha_1, \dots, \alpha_n)$. En effectuant le produit $DM$, le coefficient $c_{i,j}$ est donné par $\sum_{k=1}^n d_{i,k}m_{k,j}$. Comme $D$ est diagonale, le seul terme non nul est pour $k=i$. Donc $c_{i,j} = \alpha_i m_{i,j}$.<br>
-            <strong>Conclusion 1 :</strong> La ligne $i$ de $DM$ est égale à la ligne $i$ de $M$ multipliée par le scalaire $\alpha_i$.<br><br>
-            De même pour $D' = \text{diag}(\beta_1, \dots, \beta_p)$. En effectuant $MD'$, on trouve $c_{i,j} = m_{i,j} \beta_j$.<br>
-            <strong>Conclusion 2 :</strong> La colonne $j$ de $MD'$ est égale à la colonne $j$ de $M$ multipliée par le scalaire $\beta_j$.</p>
+            <summary>✅ Indication</summary>
+            <p>On remarque que les colonnes 1 et 3 se ressemblent beaucoup. Avec l'opération $C_1 \leftarrow C_1 - C_3$, on simplifie grandement la matrice. Discuter ensuite l'annulation des pivots selon les valeurs de $a$.</p>
         </details>
 
-        <h3>Exercice 9</h3>
-        <p>Soient $A, B, C$ non nulles telles que $ABC = 0$. Montrer que 2 au moins ne sont pas inversibles.</p>
+        <h3>Exercice 5 : Rang et Inverse</h3>
+        <p>Calculer le rang des matrices $A = \begin{pmatrix} 2 & 3 & -2 \\ 4 & -1 & -2 \\ 0 & 1 & 0 \end{pmatrix}$ et $B = \begin{pmatrix} 1 & 2 & -1 \\ 2 & -1 & -1 \\ -1 & 2 & 0 \end{pmatrix}$ ainsi que l'inverse s'il y a lieu.</p>
         <details class="correction-box">
-            <summary>✅ Afficher la correction complète</summary>
-            <p><strong>Raisonnement par l'absurde :</strong><br>
-            Supposons que le système contienne au moins deux matrices inversibles.<br>
-            <em>Cas 1 :</em> Si $A$ et $B$ sont inversibles, alors le produit $(AB)$ est inversible, d'inverse $B^{-1}A^{-1}$.<br>
-            On a $(AB)C = 0$. En multipliant à gauche par $(AB)^{-1}$, on obtient $C = 0$. Or l'énoncé précise qu'aucune n'est nulle. Contradiction.<br>
-            <em>Cas 2 :</em> Si $B$ et $C$ sont inversibles, le produit $(BC)$ est inversible. $A(BC) = 0$. En multipliant à droite par $(BC)^{-1}$, on trouve $A = 0$. Contradiction.<br>
-            <em>Cas 3 :</em> Si $A$ et $C$ sont inversibles. $ABC=0$. On multiplie à gauche par $A^{-1}$ $\implies BC = 0$. Puis on multiplie à droite par $C^{-1}$ $\implies B = 0$. Contradiction.<br>
-            <strong>Conclusion :</strong> Il est impossible d'avoir 2 matrices inversibles ou plus. Donc au moins deux matrices ne sont pas inversibles.</p>
+            <summary>✅ Résultat</summary>
+            <p>$\det(A) = -4 \implies \text{rg}(A)=3$. $\det(B) = 1 \implies \text{rg}(B)=3$. Les deux sont inversibles. Appliquer $(M|I_3)$ pour trouver $M^{-1}$.</p>
         </details>
+
+        <h3>Exercices 6 à 9 : Démonstrations classiques</h3>
+        <ul>
+            <li><strong>Ex 6 :</strong> Soit $A$ nilpotente. Montrer que $I_n - A$ est inversible. <em>(Indication : développer $(I_n-A)(I_n+A+\dots+A^{k-1})$)</em>.</li>
+            <li><strong>Ex 7 :</strong> Produit de 2 symétriques est symétrique $\iff$ elles commutent. <em>(Indication : $^t(AB) = ^tB^tA = BA$)</em>.</li>
+            <li><strong>Ex 8 :</strong> Effet de la multiplication par une matrice diagonale.</li>
+            <li><strong>Ex 9 :</strong> $ABC=0 \implies$ au moins deux ne sont pas inversibles. <em>(Indication : Absurde)</em>.</li>
+        </ul>
     </div>
 
     <div class="section-card">
         <h2>Niveau 2 : Entraînement Approfondi <span class="badge-n2">Intermédiaire</span></h2>
 
-        <h3>Exercice 11</h3>
-        <p>Pour $A = \begin{pmatrix} 1 & 1 & 1 \\ 1 & 0 & 0 \\ 1 & 0 & 0 \end{pmatrix}$, montrer qu'il existe $(\alpha_n)$ et $(\beta_n)$ telles que $A^n = \alpha_n A + \beta_n A^2$.</p>
+        <h3>Exercices 10 & 11 : Le Binôme et les Suites</h3>
+        <p><strong>Ex 10 :</strong> Calculer l'inverse de la matrice de Hilbert (1, 1/2, 1/3...). <em>(Indication : Très mal conditionnée, différences majeures si calculé avec arrondis décimaux)</em>.</p>
+        <p><strong>Ex 11 :</strong> Pour $A = \begin{pmatrix} 1 & 1 & 1 \\ 1 & 0 & 0 \\ 1 & 0 & 0 \end{pmatrix}$, prouver l'existence de $\alpha_n, \beta_n$ tq $A^n = \alpha_nA + \beta_nA^2$.</p>
         <details class="correction-box">
-            <summary>✅ Afficher la correction complète</summary>
-            <p><strong>1. Amorce :</strong><br>
-            Calculons $A^2 = \begin{pmatrix} 3 & 1 & 1 \\ 1 & 1 & 1 \\ 1 & 1 & 1 \end{pmatrix}$ et $A^3 = \begin{pmatrix} 5 & 3 & 3 \\ 3 & 1 & 1 \\ 3 & 1 & 1 \end{pmatrix}$.<br>
-            En observant les coefficients, on remarque que $A^3 = A^2 + 2A$. L'équation est vérifiée au rang 3 avec $\alpha_3 = 2$ et $\beta_3 = 1$.</p>
-            <p><strong>2. Récurrence :</strong><br>
-            Soit $P(n) : A^n = \alpha_n A + \beta_n A^2$. Supposons $P(n)$ vraie.<br>
-            Au rang $n+1$ : $A^{n+1} = A^n \times A = (\alpha_n A + \beta_n A^2) \times A = \alpha_n A^2 + \beta_n A^3$.<br>
-            On remplace $A^3$ par $(A^2 + 2A)$ (notre amorce) :<br>
-            $A^{n+1} = \alpha_n A^2 + \beta_n(A^2 + 2A) = (\alpha_n + \beta_n)A^2 + 2\beta_n A$.<br>
-            On a bien $A^{n+1} = \alpha_{n+1}A + \beta_{n+1}A^2$, avec les relations de récurrence :<br>
-            <strong>$\alpha_{n+1} = 2\beta_n$</strong> et <strong>$\beta_{n+1} = \alpha_n + \beta_n$</strong>.</p>
+            <summary>✅ Indication (Ex 11)</summary>
+            <p>Calculer $A^3 = A^2 + 2A$. Amorcer la récurrence. On trouve $\alpha_{n+1} = 2\beta_n$ et $\beta_{n+1} = \alpha_n + \beta_n$.</p>
         </details>
 
-        <h3>Exercice 14</h3>
-        <p>Soit $A = \begin{pmatrix} 0 & 0 & 4 \\ 1 & 2 & 1 \\ 2 & 4 & -2 \end{pmatrix}$. Calculer $A^3$ puis $A^6 - 8A^4 + A^3 - 9A + I_3$.</p>
+        <h3>Exercices 12 & 13 : Systèmes croisés</h3>
+        <p><strong>Ex 12 :</strong> Suites $u_{n+1} = \alpha u_n + (1-\alpha)v_n$ et $v_{n+1} = (1-\beta)u_n + \beta v_n$. <em>(Calculer puissances de la matrice de transition)</em>.</p>
+        <p><strong>Ex 13 :</strong> Discuter le système $x+ay-bz=1$, $bx-y+az=b$, $by+az=0$. <em>(Substitution pour réduire à 2 inconnues)</em>.</p>
+
+        <h3>Exercices 14 & 15 : Puissances et Polynômes annulateurs</h3>
+        <p><strong>Ex 14 :</strong> $A = \begin{pmatrix} 0 & 0 & 4 \\ 1 & 2 & 1 \\ 2 & 4 & -2 \end{pmatrix}$. Calculer $A^3$ puis $A^6 - 8A^4 + A^3 - 9A + I_3$.</p>
+        <p><strong>Ex 15 :</strong> $A$ est strictement triangulaire supérieure. Calculer $A^p$ puis $(I_4 - A)^{-1}$.</p>
         <details class="correction-box">
-            <summary>✅ Afficher la correction complète</summary>
-            <p>Calculons $A^2$ : $A^2 = \begin{pmatrix} 8 & 16 & -8 \\ 4 & 8 & 4 \\ -4 & -8 & 16 \end{pmatrix}$.<br>
-            Calculons $A^3$ : $A^3 = A^2 \times A = \begin{pmatrix} 0 & 0 & 64 \\ 16 & 32 & 16 \\ 32 & 64 & -32 \end{pmatrix}$.<br>
-            On observe instantanément que <strong>$A^3 = 16A$</strong>. C'est le polynôme annulateur : $A^3 - 16A = 0_3$.</p>
-            <p>On cherche à calculer $P(A) = A^6 - 8A^4 + A^3 - 9A + I_3$. Utilisons notre découverte pour réduire les puissances :<br>
-            - $A^4 = A^3 \times A = 16A \times A = 16A^2$<br>
-            - $A^6 = (A^3)^2 = (16A)^2 = 256A^2$<br>
-            Remplaçons tout dans $P(A)$ :<br>
-            $P(A) = 256A^2 - 8(16A^2) + 16A - 9A + I_3$<br>
-            $P(A) = 256A^2 - 128A^2 + 7A + I_3 = 128A^2 + 7A + I_3$.<br>
-            Le calcul est maintenant trivial en remplaçant par les matrices $A^2$ et $A$ connues.</p>
+            <summary>✅ Indication</summary>
+            <p><strong>Ex 14 :</strong> On trouve $A^3 = 16A$. En remplaçant dans le polynôme, les puissances s'effondrent.<br>
+            <strong>Ex 15 :</strong> $A$ est nilpotente ($A^4=0$). On utilise la formule $I_4 + A + A^2 + A^3$.</p>
         </details>
 
-        <h3>Exercice 15</h3>
-        <p>Soit $A = \begin{pmatrix} 0 & 1 & -1 & 1 \\ 0 & 0 & 1 & -1 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 0 & 0 \end{pmatrix}$. Calculer $A^p$ puis $(I_4 - A)^{-1}$.</p>
-        <details class="correction-box">
-            <summary>✅ Afficher la correction complète</summary>
-            <p>$A$ est une matrice strictement triangulaire supérieure. On sait d'après le cours qu'elle est nilpotente.<br>
-            Calculons :<br>
-            $A^2 = \begin{pmatrix} 0 & 0 & 1 & -2 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix}$, $A^3 = \begin{pmatrix} 0 & 0 & 0 & 1 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix}$, et <strong>$A^4 = 0_4$</strong>.<br>
-            Pour tout $p \ge 4$, $A^p = 0_4$.</p>
-            <p>D'après l'exercice 6, on sait que $(I_4 - A)^{-1} = I_4 + A + A^2 + A^3$.<br>
-            Il suffit de faire la somme de ces 4 matrices :<br>
-            $(I_4 - A)^{-1} = \begin{pmatrix} 1 & 1 & 0 & 0 \\ 0 & 1 & 1 & 0 \\ 0 & 0 & 1 & 1 \\ 0 & 0 & 0 & 1 \end{pmatrix}$</p>
-        </details>
-
-        <h3>Exercice 16</h3>
-        <p>Montrer que : $\forall D \in \mathscr{D}_n(\mathbb{K}), AD = DA \iff A \in \mathscr{D}_n(\mathbb{K})$.</p>
-        <details class="correction-box">
-            <summary>✅ Afficher la correction complète</summary>
-            <p>L'énoncé dit : "A commute avec TOUTES les matrices diagonales si et seulement si A est elle-même diagonale".<br>
-            Soit $D = \text{diag}(d_1, \dots, d_n)$ une matrice diagonale avec tous les $d_i$ deux à deux <strong>distincts</strong> ($d_i \neq d_j$).<br>
-            Calculons le terme général de $AD$ et $DA$ (vu à l'exercice 8) :<br>
-            - Terme $(i,j)$ de $AD$ : $a_{i,j} \times d_j$<br>
-            - Terme $(i,j)$ de $DA$ : $d_i \times a_{i,j}$<br>
-            Puisque $AD = DA$, on a l'égalité : $a_{i,j}d_j = d_i a_{i,j} \implies a_{i,j}(d_j - d_i) = 0$.<br>
-            Pour tout $i \neq j$, on a choisi $d_j - d_i \neq 0$. La seule façon que le produit soit nul est donc que $a_{i,j} = 0$.<br>
-            Puisque tous les termes en dehors de la diagonale sont nuls, $A$ est une matrice diagonale.</p>
-        </details>
-
-        <h3>Exercice 17</h3>
-        <p>Soit $A \in \mathcal{M}_n(\mathbb{K})$ telle que $a_{i,j} = 1 - \delta_{i,j}$ ($n \ge 2$). Montrer qu'elle est inversible.</p>
-        <details class="correction-box">
-            <summary>✅ Afficher la correction complète</summary>
-            <p>La matrice $A$ a des $0$ sur la diagonale et des $1$ partout ailleurs. On peut l'écrire $A = J - I_n$ (où $J$ est la matrice remplie de $1$).<br>
-            Calculons $A^2$ : $A^2 = (J - I_n)^2 = J^2 - 2J + I_n$.<br>
-            Or, on sait que $J^2 = nJ$. Donc $A^2 = nJ - 2J + I_n = (n-2)J + I_n$.<br>
-            Puisque $J = A + I_n$, remplaçons $J$ :<br>
-            $A^2 = (n-2)(A + I_n) + I_n = (n-2)A + (n-2)I_n + I_n = (n-2)A + (n-1)I_n$.<br>
-            Réorganisons pour isoler $I_n$ : $A^2 - (n-2)A = (n-1)I_n \implies A[A - (n-2)I_n] = (n-1)I_n$.<br>
-            Comme $n \ge 2$, on a $n-1 \neq 0$. On peut diviser par $(n-1)$ :<br>
-            $A \times \left[ \frac{1}{n-1}(A - (n-2)I_n) \right] = I_n$.<br>
-            La matrice est donc inversible, et son inverse est entre les crochets.</p>
-        </details>
+        <h3>Exercices 16 à 19 : Algèbre théorique</h3>
+        <ul>
+            <li><strong>Ex 16 :</strong> $AD = DA$ pour toute matrice diagonale $D \implies A$ est diagonale.</li>
+            <li><strong>Ex 17 :</strong> $A$ tq $a_{i,j} = 1 - \delta_{i,j}$ est inversible. <em>(Indication : Poser $A = J - I_n$ et calculer $A^2$)</em>.</li>
+            <li><strong>Ex 18 :</strong> Centre de $\mathcal{M}_n(\mathbb{K})$ = matrices scalaires $\lambda I_n$.</li>
+            <li><strong>Ex 19 :</strong> Calcul des rangs des deux matrices $A$ et $B$ (matrices $4 \times 4$ de la photo) suivant le paramètre $\lambda$.</li>
+        </ul>
     </div>
 
     <div class="section-card">
-        <h2>Niveau 3 : Problèmes Ouverts & Abstraits <span class="badge-n3">Avancé</span></h2>
+        <h2>Niveau 3 : Problèmes Ouverts & Annales <span class="badge-n3">Avancé</span></h2>
 
-        <h3>Exercice 20</h3>
-        <p>On suppose $a, b, c, d$ réels et non tous nuls. Montrer que la matrice $A$ (dont les colonnes sont circulantes alternées avec des signes) est de Cramer.</p>
+        <h3>Exercice 20 : Matrice antisymétrique par blocs</h3>
+        <p>Montrer que le système matriciel (avec $a,b,c,d$ réels non tous nuls) est de Cramer.</p>
         <details class="correction-box">
-            <summary>✅ Afficher la correction complète</summary>
-            <p>C'est une matrice de type "quaternion". La méthode royale consiste à calculer le produit $^tAA$.<br>
-            En effectuant ce produit (Ligne par Colonne), on constate un miracle algébrique : tous les termes croisés s'annulent grâce aux signes alternés. Sur la diagonale, on obtient systématiquement $a^2 + b^2 + c^2 + d^2$.<br>
-            Donc $^tAA = (a^2+b^2+c^2+d^2)I_4$.<br>
-            On pose $S = a^2+b^2+c^2+d^2$. Puisque les réels ne sont pas tous nuls, une somme de carrés est strictement positive, donc $S \neq 0$.<br>
-            On a $A \times \left( \frac{1}{S} ^tA \right) = I_4$.<br>
-            $A$ est donc inversible, et le système associé est bien un système de Cramer.</p>
+            <summary>✅ Indication</summary>
+            <p>Calculer $^tAA$. On trouve $(a^2+b^2+c^2+d^2)I_4$. La matrice est donc inversible.</p>
         </details>
 
-        <h3>Exercice 21</h3>
-        <p>Conditions pour que le système $\sum_{j \neq i} b x_j + a x_i = c_i$ soit de Cramer.</p>
+        <h3>Exercice 21 : Système symétrique</h3>
+        <p>Conditions pour que $\sum_{j \neq i} b x_j + a x_i = c_i$ soit de Cramer.</p>
         <details class="correction-box">
-            <summary>✅ Afficher la correction complète</summary>
-            <p>La matrice associée $M$ comporte des $a$ sur la diagonale et des $b$ partout ailleurs. On peut l'écrire $M = (a-b)I_n + bJ$ (où $J$ est la matrice remplie de $1$).<br>
-            Si $a=b$, toutes les colonnes sont identiques. Le rang est 1. Le système n'est pas de Cramer.<br>
-            Si $a \neq b$, pour que le système soit de Cramer (c'est-à-dire que le noyau soit réduit à $\{0\}$), cherchons les solutions du système homogène $MX = 0$.<br>
-            En faisant la somme de toutes les lignes $L_1 \leftarrow L_1 + L_2 + \dots + L_n$, on obtient une ligne dont tous les coefficients valent $a + (n-1)b$.<br>
-            Si $a + (n-1)b = 0$, cette ligne s'annule, la matrice n'est pas de rang maximal.<br>
-            <strong>Conclusion :</strong> Le système est de Cramer si et seulement si $a \neq b$ ET $a + (n-1)b \neq 0$.</p>
+            <summary>✅ Indication</summary>
+            <p>Matrice $M = (a-b)I_n + bJ$. La condition est $a \neq b$ et $a + (n-1)b \neq 0$.</p>
         </details>
 
-        <h3>Exercice 23</h3>
-        <p>On suppose $A$ inversible et $B$ nilpotente. Montrer que $I_n + A^{-1}BA$ est inversible et trouver son inverse.</p>
+        <h3>Exercice 22 : Matrice triangulaire</h3>
+        <p>Soit $T$ triangulaire supérieure. $^tTT = T^tT \iff T$ est diagonale.</p>
+
+        <h3>Exercice 23 : Produit et Nilpotence</h3>
+        <p>Soit $A$ inversible et $B$ nilpotente. Montrer que $I_n + A^{-1}BA$ est inversible et trouver son inverse.</p>
         <details class="correction-box">
-            <summary>✅ Afficher la correction complète</summary>
-            <p>Posons $N = A^{-1}BA$. Étudions les puissances de cette nouvelle matrice $N$ :<br>
-            $N^2 = (A^{-1}BA)(A^{-1}BA)$.<br>
-            Puisque $AA^{-1} = I_n$, l'expression se simplifie en $A^{-1}B(I_n)BA = A^{-1}B^2A$.<br>
-            Par récurrence immédiate, on montre que pour tout entier $k$, $N^k = A^{-1}B^kA$.<br>
-            Or, $B$ est nilpotente, il existe un $k$ tel que $B^k = 0$. <br>
-            Donc $N^k = A^{-1}(0)A = 0$. La matrice $N$ est donc elle aussi nilpotente !<br><br>
-            Le problème nous demande de montrer que $I_n + N$ est inversible. C'est exactement le corollaire de l'exercice 6. <br>
-            $(I_n - (-N))$ est inversible, et son inverse est $\sum_{j=0}^{k-1} (-N)^j$, c'est-à-dire $\sum_{j=0}^{k-1} (-1)^j (A^{-1}B^jA)$.</p>
+            <summary>✅ Indication</summary>
+            <p>Poser $N = A^{-1}BA$. Montrer par récurrence que $N^k = A^{-1}B^kA = 0$. $N$ est nilpotente, on applique le résultat de l'Ex 6.</p>
+        </details>
+
+        <h3>Exercice 24 : Géométrie (Polygones)</h3>
+        <p>Condition pour qu'un polygone de sommets $P_k$ ait pour milieux les $M_k$.</p>
+        <details class="correction-box">
+            <summary>✅ Indication</summary>
+            <p>Équation d'affixes : $p_k + p_{k+1} = 2m_k$. Le système a une solution unique ssi $n$ est impair.</p>
         </details>
     </div>
 
