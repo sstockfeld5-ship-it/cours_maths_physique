@@ -38,7 +38,7 @@
         .exo-box { border-left: 4px solid #34495e; padding-left: 15px; margin-bottom: 30px; }
         .exo-title { font-weight: bold; color: #34495e; margin-bottom: 10px; font-size: 1.1em;}
         
-        details.correction-box { background-color: #fdfbf7; border: 1px solid #e1d5c9; padding: 12px 18px; margin-top: 10px; border-radius: 8px; }
+        details.correction-box { background-color: #fdfbf7; border: 1px solid #e1d5c9; padding: 15px 25px; margin-top: 10px; border-radius: 8px; font-size: 0.95em; }
         details.correction-box summary { font-weight: bold; color: #27ae60; cursor: pointer; outline: none; padding: 5px 0; font-size: 1.05em; }
         details.correction-box summary:hover { color: #2ecc71; }
         details.correction-box p { margin-top: 15px; border-top: 1px dashed #e1d5c9; padding-top: 15px; }
@@ -58,7 +58,7 @@
     <nav class="navbar">
         <a class="nav-btn active" onclick="openTab(event, 'Cours')">📚 1. Cours Complet</a>
         <a class="nav-btn" onclick="openTab(event, 'Methodes')">🛠️ 2. Méthodes</a>
-        <a class="nav-btn" onclick="openTab(event, 'Exercices')">📝 3. L'Intégrale des Exercices</a>
+        <a class="nav-btn" onclick="openTab(event, 'Exercices')">📝 3. L'Intégrale des Exercices (Corrigés)</a>
     </nav>
 
     <div id="Cours" class="tabcontent" style="display: block;">
@@ -88,9 +88,25 @@
         </div>
 
         <div class="section-card">
-            <h2>3. Systèmes Linéaires et Inversibilité ($GL_n$)</h2>
+            <h2>3. Les Opérations Élémentaires (Lignes et Colonnes)</h2>
+            <p>On peut modifier une matrice via trois opérations : Transvection, Dilatation, et Transposition (échange).</p>
+            <ul>
+                <li><strong>Opérer sur les lignes :</strong> Revient à multiplier la matrice <em>par la gauche</em> ($A' = EA$).</li>
+                <li><strong>Opérer sur les colonnes :</strong> Revient à multiplier la matrice <em>par la droite</em> ($A' = AE$).</li>
+            </ul>
+            <div class="attention">
+                <strong>⚠️ DANGER SUR LES COLONNES ($C_i \leftrightarrow C_j$)</strong><br>
+                <ul>
+                    <li><strong>Pour un Rang ou un Déterminant :</strong> Échanger deux colonnes est tout à fait autorisé (attention au signe du déterminant). Le rang est conservé.</li>
+                    <li><strong>Pour un Système Linéaire ($AX=B$) :</strong> Échanger deux colonnes <strong>échange la position de tes inconnues !</strong> Si tu échanges la colonne 1 (associée à $x$) et la 2 (associée à $y$), ton vecteur solution sera $(y, x, z)$. Il est fortement conseillé de s'en tenir aux opérations sur les lignes pour résoudre des systèmes.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2>4. Systèmes Linéaires et Inversibilité ($GL_n$)</h2>
             <div class="theoreme">
-                <strong>Gauss-Jordan :</strong> Toute matrice est équivalente par lignes à une unique matrice échelonnée réduite. Le Rang ($r$) est le nombre de pivots.
+                <strong>Gauss-Jordan :</strong> Toute matrice est équivalente <strong>par lignes</strong> à une unique matrice échelonnée réduite. Le Rang ($r$) est le nombre de pivots.
             </div>
             <div class="definition">
                 <strong>Système de Cramer :</strong> Autant d'équations que d'inconnues ET matrice $A$ inversible. Solution unique : $X = A^{-1}B$.
@@ -123,7 +139,7 @@
         
         <div class="section-card">
             <h2>Niveau 1 <span class="badge-n1">Bases et Systèmes</span></h2>
-            
+
             <div class="exo-box">
                 <div class="exo-title">Exercice 1 & 2 : Matrices augmentées</div>
                 <p>Résoudre les systèmes par la méthode de Gauss.</p>
@@ -139,7 +155,7 @@
                 <div class="exo-title">Exercice 2 : Discussion de système à paramètre</div>
                 <p>Discuter le système : $\begin{cases} (a+2)x + 2y + 3z = 0 \\ 6x + (a+1)y + 6z = 0 \\ -4x - 2y + (a-5)z = 0 \end{cases}$</p>
                 <details class="correction-box">
-                    <summary>✅ Correction détaillée</summary>
+                    <summary>✅ Correction détaillée (Manuel)</summary>
                     <p>On échelonne la matrice par la méthode de Gauss. Après opérations, la dernière ligne du système triangulaire nous donne l'équation :<br>
                     $6a^2 - 2a - 4 = 2(a-1)(3a+2) \times z = 0$<br>
                     <strong>Discussion :</strong><br>
@@ -159,6 +175,26 @@
                     $\det(A) = (b \times 0 \times b) + (a \times a \times 0) + (0 \times c \times c) - [ (0 \times 0 \times 0) + (a \times c \times b) + (b \times a \times c) ]$<br>
                     $\det(A) = 0 - [ abc + abc ] = -2abc$.<br>
                     Pour que $\det(A) \neq 0$, il faut et il suffit que $a \neq 0$, $b \neq 0$ et $c \neq 0$.</p>
+                </details>
+            </div>
+
+            <div class="exo-box">
+                <div class="exo-title">Exercice 4 : Discussion (Opérations sur colonnes)</div>
+                <p>Discuter le système (S) de matrice : $\begin{bmatrix} 2a+1 & -a & a+1 & a-1 \\ a-2 & a-1 & a-2 & a \\ 2a-1 & a-1 & 2a-1 & a \end{bmatrix}$</p>
+                <details class="correction-box">
+                    <summary>✅ Correction détaillée (Manuel)</summary>
+                    <p>En observant les lignes 2 et 3 du système (S), on effectue l'opération élémentaire $L_3 \leftarrow L_3 - L_2$, qui conduit au système équivalent de matrice augmentée :<br>
+                    $\begin{bmatrix} 2a+1 & -a & a+1 & a-1 \\ a-2 & a-1 & a-2 & a \\ a+1 & 0 & a+1 & 0 \end{bmatrix}$<br><br>
+                    Cela amène la discussion suivante :<br>
+                    ▪ Si <strong>$a = -1$</strong>, le système (S) équivaut à celui de matrice :
+                    $\begin{bmatrix} 1 & -1 & 0 & 2 \\ 3 & 2 & 3 & 1 \end{bmatrix}$<br>
+                    on le résout en choisissant $x$ pour paramètre : les solutions de (S) sont les $\left(x, x-2, -\frac{5}{3}x + \frac{5}{3}\right), x \in \mathbb{R}$.<br><br>
+                    ▪ Si <strong>$a \neq -1$</strong>, l'opération $L_3 \leftarrow \frac{L_3}{a+1}$ conduit à la matrice :<br>
+                    $\begin{bmatrix} 2a+1 & -a & a+1 & a-1 \\ a-2 & a-1 & a-2 & a \\ 1 & 0 & 1 & 0 \end{bmatrix}$<br>
+                    puis par $\begin{cases} L_1 \leftarrow L_1 - (a+1)L_3 \\ L_2 \leftarrow L_2 - (a-2)L_3 \end{cases}$ on aboutit à $\begin{bmatrix} a & -a & 0 & a-1 \\ 0 & a-1 & 0 & a \\ 1 & 0 & 1 & 0 \end{bmatrix}$.<br><br>
+                    • Si <strong>$a = 0$ ou $a = 1$</strong>, le système est impossible.<br>
+                    • Si <strong>$a \neq 0$ et $a \neq 1$</strong>, le système est de Cramer puisque les équations obtenues fournissent :<br>
+                    $y = \frac{a}{a-1}$ puis $x = \frac{2a^2-2a+1}{a(a-1)}$ et $z = - \frac{2a^2-2a+1}{a(a-1)}$.</p>
                 </details>
             </div>
 
@@ -186,15 +222,11 @@
                 <div class="exo-title">Exercice 6 : Matrice Nilpotente</div>
                 <p>Soit $A \in \mathcal{M}_n(\mathbb{K})$ nilpotente. Montrer que $I_n - A$ est inversible et exprimer son inverse.</p>
                 <details class="correction-box">
-                    <summary>✅ Correction détaillée</summary>
-                    <p>Puisque $A$ est nilpotente, il existe un entier $k$ tel que $A^k = 0_n$.<br>
-                    On étudie le produit : $(I_n - A)(I_n + A + A^2 + \dots + A^{k-1})$.<br>
-                    En développant :<br>
-                    $= (I_n + A + A^2 + \dots + A^{k-1}) - (A + A^2 + \dots + A^{k-1} + A^k)$<br>
-                    Tous les termes au centre s'annulent (télescopage). Il reste :<br>
-                    $= I_n - A^k$.<br>
-                    Or $A^k = 0_n$, donc l'expression vaut $I_n$.<br>
-                    On a trouvé une matrice qui, multipliée par $(I_n - A)$, donne l'identité. Donc $(I_n - A)$ est inversible et $(I_n - A)^{-1} = \sum_{j=0}^{k-1} A^j$.</p>
+                    <summary>✅ Correction détaillée (Manuel)</summary>
+                    <p>Il existe un entier $p \in \mathbb{N}^*$ tel que $A^p = 0$.<br>
+                    Alors : $I_n = I_n - A^p = (I_n - A)(I_n + A + A^2 + \dots + A^{p-1})$.<br>
+                    Ceci prouve que $I_n - A$ est inversible et que son inverse est :<br>
+                    $$(I_n - A)^{-1} = I_n + A + A^2 + \dots + A^{p-1} = \sum_{k=0}^{p-1} A^k$$</p>
                 </details>
             </div>
 
@@ -211,7 +243,16 @@
                     Conclusion : $AB$ est symétrique si et seulement si $A$ et $B$ commutent.</p>
                 </details>
             </div>
-            
+
+            <div class="exo-box">
+                <div class="exo-title">Exercice 8 : Produit par une matrice diagonale</div>
+                <p>On considère $D = \text{diag}(\alpha_1, \dots, \alpha_n) \in \mathcal{M}_n(\mathbb{K})$, $D' = \text{diag}(\beta_1, \dots, \beta_p) \in \mathcal{M}_p(\mathbb{K})$ et $M \in \mathcal{M}_{n,p}(\mathbb{K})$. Exprimer les vecteurs-lignes de $DM$ et les vecteurs-colonnes de $MD'$ à l'aide de ceux de $M$.</p>
+                <details class="correction-box">
+                    <summary>✅ Correction détaillée</summary>
+                    <p>Calcul direct du terme général. La ligne $i$ de $DM$ correspond à la ligne $i$ de $M$ multipliée par $\alpha_i$. La colonne $j$ de $MD'$ correspond à la colonne $j$ de $M$ multipliée par $\beta_j$.</p>
+                </details>
+            </div>
+
             <div class="exo-box">
                 <div class="exo-title">Exercice 9 : Produit nul</div>
                 <p>Soit $A, B, C$ dans $\mathcal{M}_3(\mathbb{K})$, toutes trois non nulles et telles que $ABC = 0$. Montrer que deux d'entre elles, au moins, ne sont pas inversibles.</p>
@@ -230,19 +271,61 @@
             <h2>Niveau 2 <span class="badge-n2">Entraînement Approfondi</span></h2>
 
             <div class="exo-box">
-                <div class="exo-title">Exercice 11 : Puissances et Suites</div>
-                <p>Soit $A = \begin{pmatrix} 1 & 1 & 1 \\ 1 & 0 & 0 \\ 1 & 0 & 0 \end{pmatrix}$. Montrer qu'il existe deux suites $(\alpha_n)$ et $(\beta_n)$ telles que $A^n = \alpha_n A + \beta_n A^2$.</p>
+                <div class="exo-title">Exercice 10 : Calculs avec arrondis</div>
+                <p>Calcul de l'inverse de la matrice de Hilbert $3\times3$. Comparer le calcul en valeurs exactes et le calcul avec méthode du pivot de Gauss en arrondissant à $10^{-2}$.</p>
                 <details class="correction-box">
-                    <summary>✅ Correction détaillée</summary>
-                    <p>Calculons $A^2 = \begin{pmatrix} 3 & 1 & 1 \\ 1 & 1 & 1 \\ 1 & 1 & 1 \end{pmatrix}$ et $A^3 = \begin{pmatrix} 5 & 3 & 3 \\ 3 & 1 & 1 \\ 3 & 1 & 1 \end{pmatrix}$.<br>
-                    On observe que $A^3 = A^2 + 2A$. C'est notre amorce.<br>
-                    <strong>Récurrence :</strong> Supposons qu'au rang $n$, $A^n = \alpha_n A + \beta_n A^2$.<br>
-                    Au rang $n+1$ : $A^{n+1} = A^n \times A = (\alpha_n A + \beta_n A^2) \times A = \alpha_n A^2 + \beta_n A^3$.<br>
-                    Remplaçons $A^3$ par notre amorce :<br>
-                    $A^{n+1} = \alpha_n A^2 + \beta_n(A^2 + 2A) = (\alpha_n + \beta_n)A^2 + 2\beta_n A$.<br>
-                    Ceci s'écrit bien sous la forme $\alpha_{n+1} A + \beta_{n+1} A^2$, avec les relations :<br>
-                    $\alpha_{n+1} = 2\beta_n$ et $\beta_{n+1} = \alpha_n + \beta_n$.<br>
-                    Ce sont des suites récurrentes que l'on sait résoudre (chapitre sur les suites).</p>
+                    <summary>✅ Correction détaillée (Manuel)</summary>
+                    <p><em>(Les calculs matriciels complets donnent un résultat très éloigné de l'inverse réel lorsqu'on arrondit)</em>.<br><br>
+                    <strong>Commentaire :</strong> Les erreurs d'arrondis ont des effets désastreux si les pivots choisis sont petits. Pour limiter les dégâts, dans la méthode du pivot, à chaque étape, on choisit un pivot maximal en valeur absolue.</p>
+                </details>
+            </div>
+
+            <div class="exo-box">
+                <div class="exo-title">Exercice 11 : Suites récurrentes et matrices</div>
+                <p>Pour $A = \begin{pmatrix} 1 & 1 & 1 \\ 1 & 0 & 0 \\ 1 & 0 & 0 \end{pmatrix}$, montrer qu'il existe $(\alpha_n), (\beta_n)$ tq $A^n = \alpha_nA + \beta_nA^2$.</p>
+                <details class="correction-box">
+                    <summary>✅ Correction détaillée (Manuel)</summary>
+                    <p>De $A^2 = \begin{pmatrix} 3 & 1 & 1 \\ 1 & 1 & 1 \\ 1 & 1 & 1 \end{pmatrix}$ et $A^3 = \begin{pmatrix} 5 & 3 & 3 \\ 3 & 1 & 1 \\ 3 & 1 & 1 \end{pmatrix}$, on déduit $A^3 = 2A + A^2$.<br>
+                    Considérons la proposition $(P_n) : \exists (\alpha_n, \beta_n) \in \mathbb{R}^2, A^n = \alpha_n A + \beta_n A^2$.<br>
+                    $(P_1), (P_2), (P_3)$ sont vraies, avec $\alpha_1=1, \alpha_2=0, \alpha_3=2$, $\beta_1=0, \beta_2=1, \beta_3=1$.<br><br>
+                    Pour établir $(P_{n+1})$ à partir de $(P_n)$ : <br>
+                    $A^{n+1} = \alpha_n A^2 + \beta_n A^3 = \alpha_n A^2 + \beta_n(2A + A^2) = 2\beta_n A + (\alpha_n + \beta_n)A^2$<br>
+                    Ce qui assure $(P_{n+1})$ avec $\alpha_{n+1} = 2\beta_n$ et $\beta_{n+1} = \alpha_n + \beta_n$.<br>
+                    Les suites existent et sont dans l'ensemble des suites réelles récurrentes vérifiant :<br>
+                    $\forall n \in \mathbb{N}^*, x_{n+2} = 2x_n + x_{n+1}$.<br><br>
+                    D'après l'étude faite au chapitre 5, on trouve :<br>
+                    $\alpha_n = \frac{1}{3}(2(-1)^{n-1} + 2^{n-1})$ et $\beta_n = \frac{1}{3}((-1)^n + 2^{n-1})$.</p>
+                </details>
+            </div>
+
+            <div class="exo-box">
+                <div class="exo-title">Exercice 12 : Limites de suites couplées</div>
+                <p>Étudier les suites $u_{n+1} = \alpha u_n + (1-\alpha)v_n$ et $v_{n+1} = (1-\beta)u_n + \beta v_n$.</p>
+                <details class="correction-box">
+                    <summary>✅ Correction détaillée (Manuel)</summary>
+                    <p>Soit $M = \begin{pmatrix} \alpha & 1-\alpha \\ 1-\beta & \beta \end{pmatrix} \in \mathcal{M}_2(\mathbb{R})$ et la suite $(X_n) : X_n = \begin{pmatrix} u_n \\ v_n \end{pmatrix}$.<br>
+                    Elle vérifie $\forall n \in \mathbb{N}, X_{n+1} = M X_n$, d'où $X_n = M^n X_0$. Il s'agit de déterminer $M^n$.<br>
+                    Le calcul de $M^2$ donne $M^2 = (\alpha + \beta)M + (1 - \alpha - \beta)I_2$, et de cette égalité on déduit qu'il existe des suites telles que $M^n = \lambda_n M + \mu_n I_2$.<br>
+                    Elles appartiennent à l'ensemble $E$ des suites vérifiant $x_{n+2} = (\alpha+\beta)x_{n+1} + (1-\alpha-\beta)x_n$.<br>
+                    L'équation caractéristique $r^2 - (\alpha+\beta)r + (\alpha+\beta-1) = 0$ admet pour racines $1$ et $\gamma = \alpha+\beta-1$. Celles-ci sont distinctes car $-1 < \gamma < 1$.<br>
+                    Or, $-1 < \gamma < 1$ donne $\lim_{n \to \infty} \gamma^n = 0$, et il en résulte :<br>
+                    $$\lim_{n \to \infty} u_n = \lim_{n \to \infty} v_n = \frac{(1-\beta)u_0 + (1-\alpha)v_0}{2-\alpha-\beta}$$</p>
+                </details>
+            </div>
+
+            <div class="exo-box">
+                <div class="exo-title">Exercice 13 : Discussion par substitution</div>
+                <p>Discuter le système (S) : $\begin{cases} x + ay - bz = 1 \\ bx - y + az = b \\ by + az = 0 \end{cases}$</p>
+                <details class="correction-box">
+                    <summary>✅ Correction détaillée (Manuel)</summary>
+                    <p>On remarque que $(S)$ admet toujours $(1,0,0)$ pour solution évidente. L'opération élémentaire $L_2 \leftarrow L_2 - bL_1$ conduit au système équivalent :<br>
+                    $(S') \begin{cases} x + ay - bz = 1 \\ -aby + (b^2-1)z = 0 \\ by + az = 0 \end{cases}$<br>
+                    Le sous-système en $y,z$ est de Cramer si et seulement si $a^2b + b(b^2-1) \neq 0$ c'est-à-dire $b(a^2+b^2-1) \neq 0$. Cela amène à la discussion suivante :<br>
+                    ▪ Si $b \neq 0$ et $a^2+b^2 \neq 1$, l'unique solution de (S) est $(1, 0, 0)$.<br>
+                    ▪ Si $b = 0$, $(S')$ s'écrit $\begin{cases} x + ay = 1 \\ z = 0 \\ az = 0 \end{cases}$. Les solutions sont les $(1-ay, y, 0), y \in \mathbb{R}$.<br>
+                    ▪ Si $a^2+b^2 = 1$, $(S')$ s'écrit $(S'') \begin{cases} x + ay - bz = 1 \\ by + az = 0 \end{cases}$.<br>
+                    - Si $a \neq 0$, $(S'') \iff \begin{cases} x + ay - bz = 1 \\ -bx + z = -b \end{cases}$. Solutions : $(x, a-ax, bx-b), x \in \mathbb{R}$.<br>
+                    - Si $a = 0$, on a $b^2=1$, $(S'')$ équivaut à $y=0$ et $x-bz=1$. Solutions : $(1+bz, 0, z), z \in \mathbb{R}$.</p>
                 </details>
             </div>
 
@@ -276,19 +359,16 @@
                     On additionne les matrices calculées précédemment pour obtenir le résultat final.</p>
                 </details>
             </div>
-
+            
             <div class="exo-box">
-                <div class="exo-title">Exercice 16 : Commutativité avec diagonales</div>
-                <p>Montrer que : $\forall D \in \mathscr{D}_n(\mathbb{K}), AD = DA \iff A \in \mathscr{D}_n(\mathbb{K})$.</p>
+                <div class="exo-title">Exercice 16 : Polynôme annulateur inverse</div>
+                <p>Soit $A = \begin{pmatrix} 0 & 0 & 4 \\ 1 & 2 & 1 \\ 2 & 4 & -2 \end{pmatrix}$. Calculer $(I_4 - A)^{-1}$.</p>
                 <details class="correction-box">
-                    <summary>✅ Correction détaillée</summary>
-                    <p>Soit $D = \text{diag}(d_1, \dots, d_n)$ une matrice diagonale avec tous les $d_i$ deux à deux <strong>distincts</strong> ($d_i \neq d_j$).<br>
-                    Calculons le terme général de $AD$ et $DA$ :<br>
-                    - Terme $(i,j)$ de $AD$ : $a_{i,j} \times d_j$<br>
-                    - Terme $(i,j)$ de $DA$ : $d_i \times a_{i,j}$<br>
-                    Puisque $AD = DA$, on a l'égalité : $a_{i,j}d_j = d_i a_{i,j} \implies a_{i,j}(d_j - d_i) = 0$.<br>
-                    Pour tout $i \neq j$, on a $d_j - d_i \neq 0$. La seule façon que le produit soit nul est donc que $a_{i,j} = 0$.<br>
-                    Puisque tous les termes en dehors de la diagonale sont nuls, $A$ est bien une matrice diagonale.</p>
+                    <summary>✅ Correction détaillée (Manuel)</summary>
+                    <p>On calcule $A^4 = 0$. Donc $\forall p \ge 4 : A^p = 0$.<br>
+                    $I_4 = I_4 - A^p = (I_4 - A)\sum_{k=0}^{p-1} A^k = (I_4 - A)(I_4 + A + A^2 + A^3)$.<br>
+                    Ce qui montre que $I_4 - A$ est inversible avec :<br>
+                    $(I_4 - A)^{-1} = I_4 + A + A^2 + A^3 = \begin{pmatrix} 1 & 1 & 0 & 0 \\ 0 & 1 & 1 & 0 \\ 0 & 0 & 1 & 1 \\ 0 & 0 & 0 & 1 \end{pmatrix}$</p>
                 </details>
             </div>
 
@@ -306,6 +386,19 @@
                     Comme $n \ge 2$, on a $n-1 \neq 0$. On peut diviser par $(n-1)$ :<br>
                     $A \times \left[ \frac{1}{n-1}(A - (n-2)I_n) \right] = I_n$.<br>
                     La matrice $A$ multipliée par l'expression entre crochets donne l'identité. $A$ est donc inversible.</p>
+                </details>
+            </div>
+
+            <div class="exo-box">
+                <div class="exo-title">Exercice 18 & 19 : Le centre de $\mathcal{M}_n$</div>
+                <p>Déterminer le centre de $\mathcal{M}_n(\mathbb{K})$, c'est-à-dire les matrices qui commutent avec toutes les autres.</p>
+                <details class="correction-box">
+                    <summary>✅ Correction détaillée (Manuel)</summary>
+                    <p>Toute matrice scalaire commute avec toute matrice $X$. On ne part pas dans le vide.<br>
+                    Soit $M \in \mathcal{M}_n(\mathbb{K})$ et $E_{kl}$ une matrice élémentaire. Avec $M = \sum m_{ij}E_{ij}$ et $E_{ij}E_{kl} = \delta_{jk}E_{il}$ il vient :<br>
+                    $ME_{kl} = \sum_{i} m_{ik}E_{il}$ et, de même $E_{kl}M = \sum_{j} m_{lj}E_{kj}$.<br>
+                    L'égalité $ME_{kl} = E_{kl}M$ exige $m_{kk} = m_{ll}$, par égalité des coefficients de $E_{kl}$ dans les deux membres et, pour $i \neq k, m_{ik} = 0$, car $E_{il}$ figure avec le coefficient $m_{ik}$ au premier membre et ne figure pas au second membre.<br>
+                    Donc toute matrice du centre est une matrice scalaire. En conclusion, le centre est l'ensemble des matrices scalaires, c'est-à-dire $\{ \alpha I_n \mid \alpha \in \mathbb{K} \}$.</p>
                 </details>
             </div>
         </div>
@@ -329,15 +422,24 @@
             </div>
 
             <div class="exo-box">
-                <div class="exo-title">Exercice 21 : Système et somme de lignes</div>
-                <p>Déterminer les conditions pour que le système soit de Cramer : $\left( \sum_{j \neq i} b x_j \right) + a x_i = c_i$</p>
+                <div class="exo-title">Exercice 21 : Système et diagonale modifiée</div>
+                <p>Conditions pour que $\sum_{j \neq i} b x_j + a x_i = c_i$ soit de Cramer.</p>
+                <details class="correction-box">
+                    <summary>✅ Correction détaillée (Manuel)</summary>
+                    <p>En posant $D = a^2+b^2+c^2+d^2$, le système (S) entraîne le système suivant.<br>
+                    $\begin{cases} Dx = aa' + bb' + cc' + dd' & (L_1 \leftarrow aL_1 + bL_2 + cL_3 + dL_4) \\ Dy = ba' - ab' + dc' - cd' & (L_2 \leftarrow bL_1 - aL_2 - dL_3 + cL_4) \\ Dz = ca' + db' - ac' - bd' & (L_3 \leftarrow cL_1 + dL_2 - aL_3 - bL_4) \\ Dt = da' - cb' + bc' - ad' & (L_4 \leftarrow dL_1 - cL_2 + bL_3 - aL_4) \end{cases}$<br>
+                    Puisque $D \neq 0$, cela montre que le système homogène associé à (S) admet, pour unique solution, la solution nulle.<br>
+                    On déduit que (S) est de Cramer, son unique solution ne peut être que :<br>
+                    $\left( \frac{aa'+bb'+cc'+dd'}{D}, \frac{ba'-ab'+dc'-cd'}{D}, \frac{ca'+db'-ac'-bd'}{D}, \frac{da'-cb'+bc'-ad'}{D} \right)$.</p>
+                </details>
+            </div>
+
+            <div class="exo-box">
+                <div class="exo-title">Exercice 22 : Matrice triangulaire</div>
+                <p>Soit $T \in \mathcal{M}_n(\mathbb{R})$, triangulaire supérieure. Montrer que $^tTT = T^tT \iff T$ est diagonale.</p>
                 <details class="correction-box">
                     <summary>✅ Correction détaillée</summary>
-                    <p>La matrice $M$ du système comporte des $a$ sur la diagonale et des $b$ partout ailleurs. On l'écrit $M = (a-b)I_n + bJ$.<br>
-                    Si $a=b$, toutes les colonnes sont identiques, la matrice est de rang 1 (non inversible).<br>
-                    Si $a \neq b$, on cherche le noyau de $M$. On fait la somme de toutes les lignes $L_1 \leftarrow L_1 + \dots + L_n$. La nouvelle première ligne ne contient que des termes égaux à $a + (n-1)b$.<br>
-                    Si $a + (n-1)b = 0$, cette ligne s'annule, la matrice n'est pas de rang maximal.<br>
-                    Conclusion : Le système est de Cramer si et seulement si $a \neq b$ et $a + (n-1)b \neq 0$.</p>
+                    <p>Calculer et égaliser les coefficients diagonaux des matrices $^tTT$ et $T^tT$. On remarque que pour $T^tT$, c'est la somme des carrés des éléments de la ligne, alors que pour $^tTT$, c'est la somme des carrés de la colonne. En procédant par récurrence sur l'indice, on montre que tous les termes hors-diagonale doivent être nuls.</p>
                 </details>
             </div>
 
@@ -355,7 +457,26 @@
                 </details>
             </div>
 
+            <div class="exo-box">
+                <div class="exo-title">Exercice 24 & 25 (Géométrie des polygones)</div>
+                <p>Polygone à $n$ côtés. Condition pour unicité du polygone construit par les milieux.</p>
+                <details class="correction-box">
+                    <summary>✅ Correction détaillée (Manuel)</summary>
+                    <p>Le plan usuel étant classiquement identifié à $\mathbb{C}$, notons $z_k$ l'affixe du point $P_k$ et $u_k$ celle de $M_k$, $1 \le k \le n$.<br>
+                    Alors le polygone $P_1P_2\dots P_n$ est solution du problème si et seulement si :<br>
+                    $\begin{cases} z_1 + z_2 = 2u_1 \\ z_2 + z_3 = 2u_2 \\ \dots \\ z_{n-1} + z_n = 2u_{n-1} \\ z_n + z_1 = 2u_n \end{cases}$<br>
+                    Les $u_k$ étant donnés avec les $M_k$, ces relations définissent un système linéaire (S) de $n$ équations aux inconnues $z_1, z_2, \dots, z_n$.<br>
+                    Il existe donc un polygone et un seul, solution du problème, si et seulement si (S) est de Cramer, ou encore, si le système homogène associé admet, pour unique solution, la solution nulle.<br>
+                    Or, on a :<br>
+                    $\begin{cases} z_1 + z_2 = 0 \\ z_2 + z_3 = 0 \\ \dots \\ z_n + z_1 = 0 \end{cases} \iff \begin{cases} \forall k \in \llbracket 1, n \rrbracket, z_k = (-1)^k z_1 \\ (1 + (-1)^{n-1})z_1 = 0 \end{cases}$<br>
+                    Par suite :<br>
+                    ▪ si $n$ est impair, il vient $z_1 = 0$ puis $z_1 = z_2 = \dots = z_n = 0$ et (S) est de Cramer ;<br>
+                    ▪ si $n$ est pair, (S) n'est pas de Cramer.<br>
+                    En conclusion, le problème admet une solution, et une seule, si et seulement si $n$ est impair.</p>
+                </details>
+            </div>
         </div>
+
     </div>
 
     <script>
